@@ -1,12 +1,13 @@
 package GameBoard;
 
+import Common.Board;
 import UI.ConsoleColors;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 
 import java.util.HashMap;
 import java.util.Random;
 
-public class Board {
+public class HMBoard extends Board<HMSquare> {
 
     final static Random random = new Random();
     final static HashMap<SquareType, Float> squareMakeup = new HashMap<>();
@@ -29,25 +30,25 @@ public class Board {
         }
     }
 
-    private Square[][] grid;
-    public Board(int n){
+    private HMSquare[][] grid;
+    public HMBoard(int n){
         validateDimension(n);
-        grid = new Square[n][n];
+        grid = new HMSquare[n][n];
 
         // Randomly create different types of Squares
         for(int r =0; r < n; r++){
             for(int c=0; c<n; c++){
                 SquareType type = squareChoiceArray[random.nextInt(squareChoiceArray.length)];
-                grid[r][c] = new Square(type);
+                grid[r][c] = new HMSquare(type);
             }
         }
     }
 
-    public Board(){
+    public HMBoard(){
         this(6);
     }
 
-    private void validateDimension(int n){
+    protected void validateDimension(int n){
         if (n  < 3 || n > 15){
             throw new ValueException(String.format("Provided Dimension (%d) is out of the valid range 3-15", n));
         }

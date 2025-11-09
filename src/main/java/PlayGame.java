@@ -1,5 +1,6 @@
-import GameBoard.Board;
-import GameBoard.Game;
+import Common.Game;
+import GameBoard.HMBoard;
+import GameBoard.HMGame;
 import UI.CommandType;
 import UI.ConsoleColors;
 import UI.UserInputs;
@@ -8,30 +9,53 @@ import java.util.Scanner;
 
 public class PlayGame {
 
-    private static final Scanner scanner = new Scanner(System.in);
 
 
     public static void main(String args[]){
-        Board b = pickBoard();
-        Game g = new Game(b);
+        displayMenu();
     }
 
-    private static Board pickBoard(){
+    private static void displayMenu(){
+        System.out.println("\n--- Welcome to Heroes & Monsters ---");
+        System.out.println("You can quit anytime by typing '" + CommandType.QUIT.getCode() + "'.\n");
 
-        Board b;
-        while(true){
-            b = new Board();
-            b.displayBoard();
-            ConsoleColors.printInColor(ConsoleColors.WHITE_BOLD, "Do you want to play on this map? (y,n)");
-            String input = scanner.next();
+        while (true) {
+            System.out.println("Choose an Option:");
+            System.out.println("[1] Play Heroes & Monsters");
+            System.out.println("[2] Instructions");
+            System.out.println("[3] Credits");
+            System.out.print("Enter choice: ");
+            String input = UserInputs.parseAndQuitIfAsked();
 
+            int choice;
+            try {
+                choice = Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid choice.\n");
+                continue;
+            }
+            Game g = new HMGame();
+            switch (choice) {
+                case 1:
+                    g.runGame();
+                    break;
+                case 2:
+                    g.printRules();
+                    break;
+                case 3:
+                    printCredits();
+                    break;
 
-
-            if (UserInputs.isCommand(input, CommandType.YES)) break;
-
+                default:
+                    System.out.println("Invalid choice.\n");
+            }
+            break;
         }
-
-        return b;
-
     }
+
+    private static void printCredits(){
+        ConsoleColors.printInColor(ConsoleColors.CYAN, "This was built by Owen Mariani in Novemeber of 2025. Check his GitHub @owenm-26");
+    }
+
+
 }
