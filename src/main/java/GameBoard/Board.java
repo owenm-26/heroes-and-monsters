@@ -14,8 +14,8 @@ public class Board {
 
     static{
         // Make square array to randomly choose from
-        squareMakeup.put(SquareType.COMMON, 0.5f);
-        squareMakeup.put(SquareType.MARKET, 0.3f);
+        squareMakeup.put(SquareType.COMMON, 0.7f);
+        squareMakeup.put(SquareType.MARKET, 0.1f);
         squareMakeup.put(SquareType.BLOCKED, 0.2f);
 
         int i=0;
