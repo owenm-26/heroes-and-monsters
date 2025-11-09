@@ -1,6 +1,7 @@
 package GameBoard;
 
 import Items.Inventory;
+import UI.ConsoleColors;
 
 public class Square {
 
@@ -19,5 +20,13 @@ public class Square {
 
     public Square(){
         this(SquareType.COMMON);
+    }
+
+    public void printSymbol(){
+        ConsoleColors.printInColor(type.getColor(), type.getSymbol(), false);
+    }
+
+    public SquareType getType() {
+        return type;
     }
 }

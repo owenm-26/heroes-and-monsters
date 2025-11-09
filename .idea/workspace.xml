@@ -5,17 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5c6bed8a-a4a5-4400-8bad-54511b842f03" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/GameBoard/Board.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/GameBoard/Square.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/GameBoard/SquareType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Items/Inventory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/UI/ConsoleColors.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GameBoard/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GameBoard/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GameBoard/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GameBoard/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GameBoard/Square.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GameBoard/Square.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GameBoard/SquareType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GameBoard/SquareType.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,6 +55,20 @@
     "project.structure.side.proportion": "0.0"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="PlayGame" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="PlayGame" />
+      <module name="HeroesAndMonsters" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
