@@ -1,0 +1,46 @@
+package Items;
+
+public abstract class Item {
+    protected String name;
+    protected int price; //(selling value /= 2, repairPrice /= 2)
+    protected int level;
+    protected ItemType type;
+    protected int usesLeft; //aka durability
+
+    protected abstract void printOutOfUsesMessage();
+
+    public boolean useItem(){
+        /*
+        Decrements uses left and returns True if the item is out of uses
+         */
+        usesLeft--;
+        if(usesLeft == 0){
+            printOutOfUsesMessage();
+            return true;
+        }
+        return false;
+    }
+
+//    GETTERS
+    public int getLevel() {
+        return level;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public ItemType getType() {
+        return type;
+    }
+
+    public int getUsesLeft() {
+        return usesLeft;
+    }
+
+    p
+}
