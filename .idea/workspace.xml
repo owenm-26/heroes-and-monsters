@@ -4,18 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5c6bed8a-a4a5-4400-8bad-54511b842f03" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/Common/Board.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Common/Game.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Common/Square.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/UI/GeneralPrints.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GameBoard/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GameBoard/HMBoard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GameBoard/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GameBoard/HMGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GameBoard/Square.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GameBoard/HMSquare.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/PlayGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/PlayGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/UI/UserInputs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/UI/UserInputs.java" afterDir="false" />
-    </list>
+    <list default="true" id="5c6bed8a-a4a5-4400-8bad-54511b842f03" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

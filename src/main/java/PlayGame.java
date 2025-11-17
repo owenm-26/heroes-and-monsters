@@ -35,8 +35,10 @@ public class PlayGame {
                 continue;
             }
             Game g = new HMGame();
+            boolean breakFlag = false;
             switch (choice) {
                 case 1:
+                    breakFlag=true;
                     g.runGame();
                     break;
                 case 2:
@@ -45,16 +47,16 @@ public class PlayGame {
                 case 3:
                     printCredits();
                     break;
-
                 default:
                     System.out.println("Invalid choice.\n");
             }
-            break;
+            if (breakFlag) break;
         }
     }
 
     private static void printCredits(){
         ConsoleColors.printInColor(ConsoleColors.CYAN, "This was built by Owen Mariani in Novemeber of 2025. Check his GitHub @owenm-26");
+        System.out.println();
     }
 
 

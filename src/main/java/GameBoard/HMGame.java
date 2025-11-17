@@ -34,6 +34,7 @@ public class HMGame extends Game<HMBoard> {
         printHorizontalLine();
         System.out.println("These the rules.");
         printHorizontalLine();
+        System.out.println();
     }
 
     private HMBoard pickBoard(int n){
