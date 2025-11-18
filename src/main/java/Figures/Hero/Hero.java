@@ -30,7 +30,7 @@ public class Hero extends Figure {
     private int strength;
     private int dexterity;
 
-    public Hero(String name, int hpMax, int mpMax, int hands, HeroType heroType){
+    public Hero(String name, int hpMax, int mpMax, int hands, HeroType heroType, int strength, int dexterity, int agility){
         validatePositiveIntegers(hpMax, mpMax, hands);
         this.name = name;
         this.hpMax = hpMax;
@@ -44,7 +44,9 @@ public class Hero extends Figure {
         mp = mpMax;
         level = 1;
 
-        //TODO: Set agility, strength, dexterity based on HeroType
+        this.strength = strength + heroType.getStrengthBonus();
+        this.dexterity = dexterity + heroType.getDexterityBonus();
+        this.agility = agility + heroType.getAgilityBonus();
     }
 
 
