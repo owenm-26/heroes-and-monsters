@@ -1,13 +1,19 @@
 package Figures.Hero;
 
 import Figures.Figure;
+import GameBoard.HMEffect;
 import Items.Armor;
 import Items.Item;
 import Items.ItemType;
+import Items.Potion.Potion;
+import Items.Potion.PotionType;
 import Items.Weapon;
 import UI.ConsoleColors;
 
 import java.util.*;
+
+import static Items.Potion.PotionType.POTION_DURATION_LENGTH;
+import static Validators.Integers.validatePositiveIntegers;
 
 public class Hero extends Figure {
     private int xp;
@@ -18,6 +24,11 @@ public class Hero extends Figure {
     private List<Weapon> weaponsEquipped;
     private int numberOfHands;
     private HeroType heroType;
+
+    // attributes
+    private int agility;
+    private int strength;
+    private int dexterity;
 
     public Hero(String name, int hpMax, int mpMax, int hands, HeroType heroType){
         validatePositiveIntegers(hpMax, mpMax, hands);
@@ -33,13 +44,10 @@ public class Hero extends Figure {
         mp = mpMax;
         level = 1;
 
+        //TODO: Set agility, strength, dexterity based on HeroType
     }
 
-    private void validatePositiveIntegers(int... numbers){
-        for (int num: numbers){
-            if (num < 1) throw new IllegalArgumentException("Values must be positive");
-        }
-    }
+
 
     public boolean canBuyItem(Item i){
         return i.getPrice() <= gold;
@@ -58,6 +66,10 @@ public class Hero extends Figure {
             xp = xp - xpMax;
             ConsoleColors.printInColor(ConsoleColors.YELLOW_BOLD, String.format("%s has leveled up to level %d", name, level));
         }
+    }
+
+    public void gainMp(int p){
+        mp = Math.max(mpMax, mp + p);
     }
 
     public void adjustGold(int g){
@@ -138,6 +150,34 @@ public class Hero extends Figure {
         }
         armorWorn.add(a);
         printItemEquipped(a);
+    }
+
+    public void usePotion(Potion p){
+        HashMap<PotionType, Integer> effects = p.getEffects();
+        String message = String.format("🧪 Taking %s potion...", p.getName());
+        ConsoleColors.printInColor(ConsoleColors.PURPLE_BOLD, message);
+        for (PotionType type: effects.keySet()){
+            triggerPotionEffect(p.getName(), type, effects.get(type));
+        }
+    }
+
+    private void triggerPotionEffect(String potionName, PotionType type, int val){
+        /*
+        Internal method to apply a single effect of a potion
+         */
+        if (type == PotionType.HP){
+            gainHp(val);
+        }
+        else if(type == PotionType.MP){
+            gainMp(val);
+        }
+        else{
+            String name = String.format("%s-%s", potionName, type.getName());
+            HMEffect e = new HMEffect(name, val, POTION_DURATION_LENGTH, type.getType());
+            activeEffects.add(e);
+        }
+        String message = String.format("- Gaining %s effect of %d", type.getName(), val);
+        ConsoleColors.printInColor(ConsoleColors.PURPLE, message);
     }
 
 //    GETTERS
