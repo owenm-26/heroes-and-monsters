@@ -1,5 +1,7 @@
 package Items;
 
+import UI.ConsoleColors;
+
 public abstract class Item {
     protected String name;
     protected int level;
@@ -8,7 +10,7 @@ public abstract class Item {
     protected ItemType type;
     protected int usesLeft; //aka durability
 
-    protected abstract void printOutOfUsesMessage();
+    protected abstract String printOutOfUsesMessage();
 
     public boolean useItem(){
         /*
@@ -16,7 +18,7 @@ public abstract class Item {
          */
         usesLeft--;
         if(usesLeft == 0){
-            printOutOfUsesMessage();
+            ConsoleColors.printInColor(ConsoleColors.RED, printOutOfUsesMessage());
             return true;
         }
         return false;
@@ -35,7 +37,7 @@ public abstract class Item {
         return price;
     }
 
-    public ItemType getType() {
+    public ItemType getItemType() {
         return type;
     }
 

@@ -29,7 +29,7 @@ public class Weapon extends Item{
     }
 
     @Override
-    protected void printOutOfUsesMessage() {
-        ConsoleColors.printInColor(ConsoleColors.RED, String.format("Your %s broke from wear!", name));
+    protected String printOutOfUsesMessage() {
+        return String.format("Your weapon %s broke from wear!", name);
     }
 }
