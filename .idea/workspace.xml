@@ -5,9 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5c6bed8a-a4a5-4400-8bad-54511b842f03" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/Items/Item.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Items/ItemType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Items/Weapon.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Items/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Items/Item.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,8 +18,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>

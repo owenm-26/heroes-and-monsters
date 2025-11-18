@@ -2,8 +2,9 @@ package Items;
 
 public abstract class Item {
     protected String name;
-    protected int price; //(selling value /= 2, repairPrice /= 2)
     protected int level;
+    protected int price; //(selling value /= 2, repairPrice /= 2)
+
     protected ItemType type;
     protected int usesLeft; //aka durability
 
@@ -41,6 +42,4 @@ public abstract class Item {
     public int getUsesLeft() {
         return usesLeft;
     }
-
-    p
 }
