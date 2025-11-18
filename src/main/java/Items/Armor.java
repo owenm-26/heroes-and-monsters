@@ -21,4 +21,8 @@ public class Armor extends Item{
     public int getDamageReduction() {
         return damageReduction;
     }
+
+    public boolean isEquipable(){
+        return true;
+    }
 }

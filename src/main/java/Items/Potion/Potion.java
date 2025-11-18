@@ -28,4 +28,8 @@ public class Potion extends Item {
     public HashMap<PotionType, Integer> getEffects() {
         return effects;
     }
+
+    public boolean isEquipable(){
+        return false;
+    }
 }

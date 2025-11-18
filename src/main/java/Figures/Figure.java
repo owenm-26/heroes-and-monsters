@@ -2,9 +2,13 @@ package Figures;
 
 import Common.Player;
 import GameBoard.HMEffect;
+import UI.ConsoleColors;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 public abstract class Figure extends Player {
 
@@ -12,7 +16,7 @@ public abstract class Figure extends Player {
     protected int level;
     protected int hp;
     protected int hpMax;
-    protected List<HMEffect> activeEffects;
+    protected Set<HMEffect> activeEffects;
 
 //    SETTERS
 
@@ -56,7 +60,28 @@ public abstract class Figure extends Player {
         return level;
     }
 
-    public List<HMEffect> getActiveEffects() {
+    public Set<HMEffect> getActiveEffects() {
         return activeEffects;
+    }
+
+    public void decrementTimeOnAllEffects(){
+        List<HMEffect> effectsEnded = new ArrayList<>();
+        for(HMEffect e: activeEffects){
+            e.decrementRoundsLeft();
+            int roundsLeft = e.getRoundsLeft();
+            if (roundsLeft == 0){
+                effectsEnded.add(e);
+                activeEffects.remove(e);
+            }
+
+        }
+        StringBuilder b = new StringBuilder();
+        b.append("Effects that ended: [");
+        for (HMEffect e: effectsEnded){
+            b.append(e.getName() + ",");
+        }
+        if (effectsEnded.size() != 0) b.deleteCharAt(b.length()-1); // remove the extra comma
+        b.append("]");
+        ConsoleColors.printInColor(ConsoleColors.YELLOW, b.toString());
     }
 }

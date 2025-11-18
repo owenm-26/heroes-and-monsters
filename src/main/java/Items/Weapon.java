@@ -32,4 +32,8 @@ public class Weapon extends Item{
     protected String printOutOfUsesMessage() {
         return String.format("Your weapon %s broke from wear!", name);
     }
+
+    public boolean isEquipable(){
+        return true;
+    }
 }

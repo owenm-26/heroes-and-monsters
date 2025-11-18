@@ -34,4 +34,8 @@ public class Spell extends Item {
     public SpellType getSpellType() {
         return spellType;
     }
+
+    public boolean isEquipable(){
+        return false;
+    }
 }

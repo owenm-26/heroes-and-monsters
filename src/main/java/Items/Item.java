@@ -2,7 +2,7 @@ package Items;
 
 import UI.ConsoleColors;
 
-public abstract class Item {
+public abstract class Item implements Equipable{
     protected String name;
     protected int level;
     protected int price; //(selling value /= 2, repairPrice /= 2)

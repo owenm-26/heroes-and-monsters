@@ -5,10 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5c6bed8a-a4a5-4400-8bad-54511b842f03" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/Figures/Hero/HeroType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Figures/Monster/MonsterType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Figures/TraitType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Figures/Hero/Hero.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Items/Equipable.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Common/Effect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Common/Effect.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Figures/Figure.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Figures/Figure.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GameBoard/HMEffect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GameBoard/HMEffect.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Items/Armor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Items/Armor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Items/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Items/Item.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Items/Potion/Potion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Items/Potion/Potion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Items/Spell/Spell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Items/Spell/Spell.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Items/Weapon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Items/Weapon.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,9 +25,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -56,6 +63,9 @@
   }
 }</component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="" />
     </key>
