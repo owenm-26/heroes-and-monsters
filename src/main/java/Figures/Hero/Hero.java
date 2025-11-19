@@ -1,5 +1,7 @@
 package Figures.Hero;
 
+import Data.LoadableFromText;
+import Data.TextDataLoader;
 import Figures.Figure;
 import GameBoard.HMEffect;
 import Items.Armor;
@@ -9,13 +11,17 @@ import Items.Potion.Potion;
 import Items.Potion.PotionType;
 import Items.Weapon;
 import UI.ConsoleColors;
+import UI.GeneralPrints;
+import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 
 import java.util.*;
 
+import static Data.TextDataLoader.getAllSourceFileNames;
 import static Items.Potion.PotionType.POTION_DURATION_LENGTH;
+import static UI.ConsoleColors.*;
 import static Validators.Integers.validatePositiveIntegers;
 
-public class Hero extends Figure {
+public class Hero extends Figure implements LoadableFromText {
     private int xp;
     private int mp;
     private int mpMax;
@@ -30,26 +36,168 @@ public class Hero extends Figure {
     private int strength;
     private int dexterity;
 
-    public Hero(String name, int hpMax, int mpMax, int hands, HeroType heroType, int strength, int dexterity, int agility){
-        validatePositiveIntegers(hpMax, mpMax, hands);
+    public Hero(String name, int mpMax, int hands, HeroType heroType, int strength, int dexterity, int agility){
+        validatePositiveIntegers(mpMax, hands);
         this.name = name;
-        this.hpMax = hpMax;
-        this.mpMax = mpMax;
         this.heroType = heroType;
         this.numberOfHands = hands;
-        weaponsEquipped = new ArrayList<>();
-        armorWorn = new ArrayList<>();
-        activeEffects = new HashSet<>();
-        hp = hpMax;
-        mp = mpMax;
         level = 1;
 
-        this.strength = strength + heroType.getStrengthBonus();
-        this.dexterity = dexterity + heroType.getDexterityBonus();
-        this.agility = agility + heroType.getAgilityBonus();
+        // Hero attributes
+        initializeAttributes(strength, dexterity, agility);
+        // Mana
+        setMana(mpMax);
+        // Health
+        calculateHpMax();
+        //equipment
+        initializeEmptyEquipment();
+    }
+
+    @Override
+    public String toString() {
+
+        StringBuilder b = new StringBuilder();
+
+        // Top border
+//        b.append(returnInColor(WHITE_BACKGROUND, GeneralPrints.returnDoubleThickHorizontalLine()));
+
+        // NAME AND TITLE
+        b.append(returnInColor(PURPLE_BOLD,
+                "HERO: " + name + "   (" + heroType + ")"));
+
+        // BASIC STATS
+        b.append(returnInColor(CYAN_BOLD,
+                "Level: " + level));
+        b.append(returnInColor(GREEN_BOLD,
+                "HP: " + hp + "/" + hpMax));
+        b.append(returnInColor(BLUE_BOLD,
+                "MP: " + mp + "/" + mpMax));
+        b.append(returnInColor(YELLOW_BOLD,
+                "XP: " + xp));
+        b.append(returnInColor(RED_BOLD,
+                "Gold: " + gold));
+
+        // ATTRIBUTES
+        b.append(returnInColor(WHITE_BOLD, "ATTRIBUTES"));
+        b.append(returnInColor(GREEN,
+                "Strength:  " + strength));
+        b.append(returnInColor(BLUE,
+                "Dexterity: " + dexterity));
+        b.append(returnInColor(PURPLE,
+                "Agility:   " + agility));
+
+        // EQUIPMENT SECTIONS
+        b.append(returnInColor(WHITE_BOLD, "EQUIPMENT"));
+
+        // ----- WEAPONS -----
+        b.append(returnInColor(YELLOW_BOLD, "Weapons Equipped:"));
+        if (weaponsEquipped == null || weaponsEquipped.isEmpty()) {
+            b.append(returnInColor(YELLOW, "  None"));
+        } else {
+            for (Weapon w : weaponsEquipped) {
+                b.append(returnInColor(YELLOW, "  - " + w.getName()));
+            }
+        }
+
+        // ----- ARMOR -----
+        b.append(returnInColor(CYAN_BOLD, "Armor Worn:"));
+        if (armorWorn == null || armorWorn.isEmpty()) {
+            b.append(returnInColor(CYAN, "  None"));
+        } else {
+            for (Armor a : armorWorn) {
+                b.append(returnInColor(CYAN, "  - " + a.getName()));
+            }
+        }
+
+        // Bottom border
+        b.append(returnInColor(WHITE_BACKGROUND, GeneralPrints.returnDoubleThickHorizontalLine(), false));
+
+        return b.toString();
     }
 
 
+    public Hero(){
+        //equipment
+        initializeEmptyEquipment();
+        this.xp= 0;
+    }
+
+    private void setMana(int mpMax){
+        this.mpMax = mpMax;
+        mp = mpMax;
+    }
+
+    private void calculateHpMax(){
+        hpMax = level * 100;
+        hp = hpMax;
+    }
+
+    private void initializeAttributes(int strength, int dexterity, int agility){
+        /*
+        Sets strength, dexterity, and agility
+         */
+        this.strength = strength + heroType.getStrengthBonus();
+        this.dexterity = dexterity + heroType.getDexterityBonus();
+        this.agility = agility + heroType.getAgilityBonus();
+
+    }
+    private void initializeEmptyEquipment(){
+        weaponsEquipped = new ArrayList<>();
+        armorWorn = new ArrayList<>();
+        activeEffects = new HashSet<>();
+    }
+
+    private void setHeroTypeFromFileName(String fileName){
+        if (fileName.length() == 0) throw new IllegalArgumentException("Filename is length 0 in setHeroTypeFromFileName()");
+        switch (fileName){
+            case "paladins":
+                heroType = HeroType.PALADIN;
+                break;
+            case "sorcerers":
+                heroType = HeroType.SORCERER;
+                break;
+            case "warriors":
+                heroType = HeroType.WARRIOR;
+                break;
+            default:
+                throw new ValueException("Something went wrong in setHeroTypeFromFileName()");
+        }
+    }
+
+    public void loadFromMap(Map<String, String> map){
+//        Name/mana/strength/agility/dexterity/starting money/starting experience
+        this.name = map.get("Name");
+        this.gold= Integer.parseInt(map.get("starting money"));
+        int xp_og = Integer.parseInt(map.get("starting experience"));
+        xp = 0;
+        level = 1;
+        addXP(xp_og);
+
+        // Hero Type
+        setHeroTypeFromFileName(map.get("file name"));
+
+        // Hero attributes
+        initializeAttributes(Integer.parseInt(map.get("strength")), Integer.parseInt(map.get("dexterity")), Integer.parseInt(map.get("agility")));
+        // Mana
+        setMana(Integer.parseInt(map.get("mana")));
+        // Health
+        calculateHpMax();
+    }
+
+
+
+    public static List<Hero> getAllHeroOptions(){
+        ArrayList<Hero> heroes = new ArrayList<>();
+        try{
+            for(String filename: getAllSourceFileNames("Heroes")){
+                heroes.addAll(TextDataLoader.load("Heroes", filename, Hero.class));
+            }
+        }catch (Exception e){
+            System.out.format("Failed to load all heroes: %s\n", e);
+        }
+//        System.out.format("Number of heroes gotten from the files: %d\n", heroes.size());
+        return heroes;
+    }
 
     public boolean canBuyItem(Item i){
         return i.getPrice() <= gold;

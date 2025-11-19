@@ -36,4 +36,31 @@ public class UserInputs {
         }
     }
 
+    public static int showMenuAndGetUserAnswer(String[] options) {
+        /*
+        Reusable way to generate menus and get user answers easier
+         */
+
+        while (true) {
+            int i =0;
+            System.out.println("Choose an Option:");
+            while (i < options.length){
+                System.out.format("[%d] %s", (i+1), options[i]);
+                System.out.println();
+                i++;
+            }
+            System.out.print("Enter choice: ");
+            String input = UserInputs.parseAndQuitIfAsked();
+
+            int choice;
+            try {
+                choice = Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid choice.\n");
+                continue;
+            }
+            return choice-1;
+        }
+    }
+
 }

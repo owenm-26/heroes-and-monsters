@@ -13,12 +13,28 @@ public class ConsoleColors {
         }
     }
 
+    public static String returnInColor(String color, String message, boolean newLine){
+        StringBuilder b = new StringBuilder();
+        b.append(color);
+        b.append(message);
+        b.append(RESET);
+
+        if (newLine) b.append(NEW_LINE);
+        return b.toString();
+    }
+
+    public static String returnInColor(String color, String message){
+       return returnInColor(color, message, true);
+    }
+
+
+
     public static void printInColor(String color, String message){
         printInColor(color, message, true);
     }
     // Reset
     public static final String RESET = "\033[0m";  // Text Reset
-
+    public static final String NEW_LINE = "\n";
     // Regular Colors
     public static final String BLACK = "\033[0;30m";   // BLACK
     public static final String RED = "\033[0;31m";     // RED

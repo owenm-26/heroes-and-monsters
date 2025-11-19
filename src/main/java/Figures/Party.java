@@ -34,7 +34,8 @@ public class Party<T extends Figure>{
         if(members.size() == maxSize) throw new IllegalArgumentException(String.format("Adding member %s would exceed the max size of %d", member.getName(), maxSize));
 
         members.add(member);
-        ConsoleColors.printInColor("🦸‍%s joined your party!", member.getName());
+        String message = String.format("🦸‍%s joined your party!", member.getName());
+        ConsoleColors.printInColor(ConsoleColors.YELLOW, message);
     }
 
     public void removeMember(T member){
