@@ -3,6 +3,7 @@ import GameBoard.HMBoard;
 import GameBoard.HMGame;
 import UI.CommandType;
 import UI.ConsoleColors;
+import UI.GeneralPrints;
 import UI.UserInputs;
 
 import java.util.Scanner;
@@ -20,31 +21,20 @@ public class PlayGame {
         System.out.println("You can quit anytime by typing '" + CommandType.QUIT.getCode() + "'.\n");
 
         while (true) {
-            System.out.println("Choose an Option:");
-            System.out.println("[1] Play Heroes & Monsters");
-            System.out.println("[2] Instructions");
-            System.out.println("[3] Credits");
-            System.out.print("Enter choice: ");
-            String input = UserInputs.parseAndQuitIfAsked();
+            String[] options = {"Play Heroes & Monsters", "Instructions", "Credits"};
+            int choice = UserInputs.showMenuAndGetUserAnswer(options);
 
-            int choice;
-            try {
-                choice = Integer.parseInt(input);
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid choice.\n");
-                continue;
-            }
             Game g = new HMGame();
             boolean breakFlag = false;
             switch (choice) {
-                case 1:
+                case 0:
                     breakFlag=true;
                     g.runGame();
                     break;
-                case 2:
+                case 1:
                     g.printRules();
                     break;
-                case 3:
+                case 2 :
                     printCredits();
                     break;
                 default:
