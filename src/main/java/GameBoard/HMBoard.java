@@ -2,7 +2,8 @@ package GameBoard;
 
 import Common.Board;
 import Figures.Party;
-import UI.ConsoleColors;
+import GameBoard.HMSquare.HMSquare;
+import GameBoard.HMSquare.HMSquareType;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 
 import java.util.Collections;
@@ -16,17 +17,17 @@ public class HMBoard extends Board<HMSquare> {
     private HMSquare[][] grid;
     private int[] heroPartyCoordinates= new int[2];
     final static Random random = new Random();
-    final static HashMap<SquareType, Float> squareMakeup = new HashMap<>();
-    final static SquareType[] squareChoiceArray = new SquareType[10];
+    final static HashMap<HMSquareType, Float> squareMakeup = new HashMap<>();
+    final static HMSquareType[] squareChoiceArray = new HMSquareType[10];
 
     static{
         // Make square array to randomly choose from
-        squareMakeup.put(SquareType.COMMON, 0.7f);
-        squareMakeup.put(SquareType.MARKET, 0.1f);
-        squareMakeup.put(SquareType.BLOCKED, 0.2f);
+        squareMakeup.put(HMSquareType.COMMON, 0.7f);
+        squareMakeup.put(HMSquareType.MARKET, 0.1f);
+        squareMakeup.put(HMSquareType.BLOCKED, 0.2f);
 
         int i=0;
-        for(SquareType key: squareMakeup.keySet()){
+        for(HMSquareType key: squareMakeup.keySet()){
             int j = (int)(squareMakeup.get(key) * 10);
             while (j > 0 && i < squareChoiceArray.length){
                 squareChoiceArray[i] = key;
@@ -46,10 +47,10 @@ public class HMBoard extends Board<HMSquare> {
         // Randomly create different types of Squares
         for(int r =0; r < n; r++){
             for(int c=0; c<n; c++){
-                SquareType type = squareChoiceArray[random.nextInt(squareChoiceArray.length)];
+                HMSquareType type = squareChoiceArray[random.nextInt(squareChoiceArray.length)];
                 HMSquare s;
                 if (r==heroPartyCoordinates[0] && c==heroPartyCoordinates[1]) {
-                    s = new HMSquare(SquareType.COMMON);
+                    s = new HMSquare(HMSquareType.COMMON);
                     s.setPartyOnSquare(new Party<>(0));// placeholder party for visuals
                 }
                 else{

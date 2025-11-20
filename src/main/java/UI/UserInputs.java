@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+import static UI.CommandType.getControlInstructions;
+
 public class UserInputs {
     final private static List<CommandType> MOVEMENT_COMMANDS = Arrays.asList(new CommandType[]{CommandType.UP, CommandType.DOWN, CommandType.LEFT, CommandType.RIGHT});
     public static final Scanner scanner = new Scanner(System.in);
@@ -34,6 +36,9 @@ public class UserInputs {
             ConsoleColors.printInColor(ConsoleColors.RED_BOLD, "User requested quit. Terminating.");
             System.exit(0);
         }
+        if(isCommand(input, CommandType.HELP)){
+            getControlInstructions();
+        }
     }
 
     public static int showMenuAndGetUserAnswer(String[] options) {
@@ -56,7 +61,8 @@ public class UserInputs {
             try {
                 choice = Integer.parseInt(input);
             } catch (NumberFormatException e) {
-                System.out.println("Invalid choice.\n");
+                if (!input.equals(CommandType.HELP.getCode()))System.out.println("Invalid choice.\n");
+
                 continue;
             }
             return choice-1;

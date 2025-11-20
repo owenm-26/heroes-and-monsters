@@ -19,8 +19,11 @@ public class HMGame extends Game<HMBoard> {
     private HMBoard board;
     private int dimension;
 
+    private HMGameState state;
+
     public HMGame(int n){
         dimension = n;
+        state = HMGameState.EXPLORING;
     }
     public HMGame(){
         this(6);
@@ -30,6 +33,37 @@ public class HMGame extends Game<HMBoard> {
     protected void initializeGame() {
         board = pickBoard(dimension);
         selectYourHeroes(MAX_PARTY_SIZE);
+    }
+
+    @Override
+    public void runGame() {
+        initializeGame();
+        playGame();
+    }
+
+    @Override
+    public void printRules() {
+        printHorizontalLine();
+        System.out.println("These the rules.");
+        printHorizontalLine();
+        System.out.println();
+    }
+
+    private HMBoard pickBoard(int n){
+        /*
+        Allows the user to cycle through randomly generated boards before selecting one
+         */
+        HMBoard b;
+        while(true){
+            b = new HMBoard(n);
+            b.displayBoard();
+            ConsoleColors.printInColor(ConsoleColors.WHITE_BOLD, "Do you want to play on this map? (y,n)");
+            String input = UserInputs.parseAndQuitIfAsked();
+
+            if (UserInputs.isCommand(input, CommandType.YES)) break;
+
+        }
+        return b;
     }
 
     private Party<Hero> selectYourHeroes(int maxPartySize){
@@ -77,34 +111,45 @@ public class HMGame extends Game<HMBoard> {
         return backMap.get(heroChoiceIndex);
     }
 
-    @Override
-    public void runGame() {
-        initializeGame();
-    }
-
-    @Override
-    public void printRules() {
-        printHorizontalLine();
-        System.out.println("These the rules.");
-        printHorizontalLine();
-        System.out.println();
-    }
-
-    private HMBoard pickBoard(int n){
+    private void playGame(){
         /*
-        Allows the user to cycle through randomly generated boards before selecting one
+        Handles all actions after picking map & characters through sub methods
          */
-        HMBoard b;
-        while(true){
-            b = new HMBoard(n);
-            b.displayBoard();
-            ConsoleColors.printInColor(ConsoleColors.WHITE_BOLD, "Do you want to play on this map? (y,n)");
-            String input = UserInputs.parseAndQuitIfAsked();
 
-            if (UserInputs.isCommand(input, CommandType.YES)) break;
+        while(true){
+            switch (state){
+                case EXPLORING:
+                    exploring();
+                    break;
+                case MARKET:
+                    market();
+                    break;
+                case BATTLING:
+                    battling();
+                    break;
+                default:
+                    throw new IllegalStateException("Impossible Game State. Something went wrong in playGame()");
+            }
+        }
+    }
+
+    private void exploring(){
+        while (state == HMGameState.EXPLORING){
+            board.displayBoard();
+            ConsoleColors.printInColor(ConsoleColors.GREEN_BOLD, "Press WASD to move or ");
+        }
+    }
+
+    private void market(){
+        while (state == HMGameState.MARKET){
 
         }
-        return b;
+    }
+
+    private void battling(){
+        while (state == HMGameState.BATTLING){
+
+        }
     }
 
 }

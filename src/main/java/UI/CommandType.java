@@ -4,7 +4,7 @@ public enum CommandType {
     QUIT("q"),
     INFO("i"),
     MARKET("m"),
-
+    HELP("h"),
     UP("w"),
     DOWN("s"),
     LEFT("a"),
@@ -19,5 +19,13 @@ public enum CommandType {
 
     public String getCode() {
         return code;
+    }
+
+    public static void getControlInstructions(){
+        System.out.println("\n== Movement Commands ==");
+        for(CommandType command: CommandType.values()){
+            System.out.format("+  %s - %s\n", command.name(), command.code);
+        }
+        System.out.println();
     }
 }
