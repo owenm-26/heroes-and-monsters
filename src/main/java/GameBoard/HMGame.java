@@ -21,7 +21,6 @@ public class HMGame extends Game<HMBoard> {
 
     public HMGame(int n){
         dimension = n;
-
     }
     public HMGame(){
         this(6);

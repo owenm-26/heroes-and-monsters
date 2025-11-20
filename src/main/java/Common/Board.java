@@ -11,7 +11,7 @@ import java.util.Random;
 public abstract class Board<T extends Square> {
 
     final static Random random = new Random();
-    protected HMSquare[][] grid;
+    protected Square[][] grid;
 
     public Board(int n) {
         validateDimension(n);

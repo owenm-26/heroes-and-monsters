@@ -1,14 +1,20 @@
 package GameBoard;
 
 import Common.Board;
+import Figures.Party;
 import UI.ConsoleColors;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Random;
 
+import static UI.GeneralPrints.padCenter;
+
 public class HMBoard extends Board<HMSquare> {
 
+    private HMSquare[][] grid;
+    private int[] heroPartyCoordinates= new int[2];
     final static Random random = new Random();
     final static HashMap<SquareType, Float> squareMakeup = new HashMap<>();
     final static SquareType[] squareChoiceArray = new SquareType[10];
@@ -30,16 +36,28 @@ public class HMBoard extends Board<HMSquare> {
         }
     }
 
-    private HMSquare[][] grid;
+
     public HMBoard(int n){
         validateDimension(n);
         grid = new HMSquare[n][n];
+        heroPartyCoordinates[0] = 0;
+        heroPartyCoordinates[1]= n / 2;
 
         // Randomly create different types of Squares
         for(int r =0; r < n; r++){
             for(int c=0; c<n; c++){
                 SquareType type = squareChoiceArray[random.nextInt(squareChoiceArray.length)];
-                grid[r][c] = new HMSquare(type);
+                HMSquare s;
+                if (r==heroPartyCoordinates[0] && c==heroPartyCoordinates[1]) {
+                    s = new HMSquare(SquareType.COMMON);
+                    s.setPartyOnSquare(new Party<>(0));// placeholder party for visuals
+                }
+                else{
+                    s = new HMSquare(type);
+                }
+
+
+                grid[r][c] = s;
             }
         }
     }
@@ -54,36 +72,31 @@ public class HMBoard extends Board<HMSquare> {
         }
     }
 
-    public void displayBoard(){
-        int n = this.grid.length;
-        // find how big each square should
-        int cellWidth = Integer.toString((n*n) -1).length();
-        StringBuilder topBuilder = new StringBuilder();
-        for(int l=0;l<cellWidth+2; l++){
-            topBuilder.append("-");
-        }
-        StringBuilder horizontalBuilder = new StringBuilder();
-        horizontalBuilder.append("+");
-        for (int c = 0; c < n; c++) {
-            for (int i = 0; i < cellWidth + 2; i++) {
-                horizontalBuilder.append("-");
-            }
-            horizontalBuilder.append("+");
-        }
-        String horizontal = horizontalBuilder.toString();
 
-        for(int row=0; row< n; row++){
-            System.out.println(horizontal); // print a horizontal above
-            System.out.print("|"); // The leftmost vertical bar
-            for(int col=0; col < n; col++){
-                SquareType t = grid[row][col].getType();
-                String content = t.getSymbol();
-                String formatted = String.format(" %" + cellWidth + "s ", content);
-                ConsoleColors.printInColor(t.getColor(), formatted, false);
-                System.out.print("|");
-            }
-            System.out.println(); // start new line
+    public void displayBoard() {
+        int n = grid.length;
+        int cellWidth = 5; // fixed width for each cell
+
+        // build horizontal border
+        String border = "+";
+        for (int c = 0; c < n; c++) {
+            border += String.join("", Collections.nCopies(cellWidth, "-")) + "+";
         }
-        System.out.println(horizontal); // the bottom horizontal
+
+        for (int row = 0; row < n; row++) {
+            System.out.println(border);
+            System.out.print("|");
+
+            for (int col = 0; col < n; col++) {
+                String symbol = grid[row][col].returnSymbol();
+                String padded = padCenter(symbol, cellWidth);
+                System.out.print(padded + "|");
+            }
+
+            System.out.println();
+        }
+
+        System.out.println(border);
     }
+
 }

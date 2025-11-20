@@ -3,14 +3,14 @@ package UI;
 // Source - https://stackoverflow.com/a
 // Posted by shakram02
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ConsoleColors {
 
     public static void printInColor(String color, String message, boolean newLine){
-        System.out.print(color + message + RESET);
-
-        if (newLine){
-            System.out.println();
-        }
+        System.out.print(returnInColor(color, message, false));
+        if (newLine) System.out.println();
     }
 
     public static String returnInColor(String color, String message, boolean newLine){
@@ -64,6 +64,18 @@ public class ConsoleColors {
     public static final String PURPLE_BACKGROUND = "\033[45m"; // PURPLE
     public static final String CYAN_BACKGROUND = "\033[46m";   // CYAN
     public static final String WHITE_BACKGROUND = "\033[47m";  // WHITE
+
+    public static final Map<String, String> BACKGROUND_MAP = new HashMap<>();
+    static {
+        BACKGROUND_MAP.put(BLACK, BLACK_BACKGROUND);
+        BACKGROUND_MAP.put(RED, RED_BACKGROUND);
+        BACKGROUND_MAP.put(GREEN, GREEN_BACKGROUND);
+        BACKGROUND_MAP.put(YELLOW, YELLOW_BACKGROUND);
+        BACKGROUND_MAP.put(BLUE, BLUE_BACKGROUND);
+        BACKGROUND_MAP.put(PURPLE, PURPLE_BACKGROUND);
+        BACKGROUND_MAP.put(CYAN, CYAN_BACKGROUND);
+        BACKGROUND_MAP.put(WHITE, WHITE_BACKGROUND);
+    }
 
 }
 
