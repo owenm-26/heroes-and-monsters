@@ -20,10 +20,12 @@ public class HMGame extends Game<HMBoard> {
     private int dimension;
 
     private HMGameState state;
+    private boolean viewingInventory;
 
     public HMGame(int n){
         dimension = n;
         state = HMGameState.EXPLORING;
+        viewingInventory = false;
     }
     public HMGame(){
         this(6);
@@ -117,6 +119,13 @@ public class HMGame extends Game<HMBoard> {
          */
 
         while(true){
+
+            if(viewingInventory) {
+                inventory();
+                continue;
+            }
+
+
             switch (state){
                 case EXPLORING:
                     exploring();
@@ -135,11 +144,15 @@ public class HMGame extends Game<HMBoard> {
 
     private void exploring(){
         while (state == HMGameState.EXPLORING){
+            if(viewingInventory){
+                inventory();
+                continue;
+            }
             board.displayBoard();
             ConsoleColors.printInColor(ConsoleColors.GREEN_BOLD, "Press WASD to move or check inventory with i");
-            String input = UserInputs.parseAndQuitIfAsked();
+            String input = UserInputs.toggleInventoryParseAndQuitIfAsked(this);
 
-            if(!isAnyCommand(input)) {
+            if(!isExploringCommand(input)) {
                 System.out.println("Invalid Command.");
                 continue;
             }
@@ -147,6 +160,24 @@ public class HMGame extends Game<HMBoard> {
                 board.handleMovement(input);
             }
 
+        }
+    }
+
+    private void inventory(){
+        /*
+        Shows two different views of the inventory:
+        - exploring
+        - battling
+         */
+        switch (state){
+            case BATTLING:
+                System.out.println("Battle Inventory View");
+                break;
+            case EXPLORING:
+                System.out.println("Exploring Inventory View");
+                break;
+            default:
+                System.out.println("Something went wrong, weird game state for inventory()");
         }
     }
 
@@ -162,4 +193,7 @@ public class HMGame extends Game<HMBoard> {
         }
     }
 
+    public void toggleInventory() {
+        this.viewingInventory = !viewingInventory;
+    }
 }

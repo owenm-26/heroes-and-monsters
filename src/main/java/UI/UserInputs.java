@@ -1,5 +1,7 @@
 package UI;
 
+import GameBoard.HMGame;
+
 import java.util.*;
 
 import static UI.CommandType.getControlInstructions;
@@ -14,6 +16,13 @@ public class UserInputs {
         Returns whether the user input is a valid command
          */
         return validCommandStrings.contains(input);
+    }
+
+    public static boolean isExploringCommand(String input){
+        /*
+        Returns whether this is a valid command for the exploring state
+         */
+        return isAnyCommand(input) && (isMovement(input) || isHelpOrQuitOrInfo(input));
     }
     public static boolean isCommand(String input, CommandType command){
         String s = prepInput(input);
@@ -35,6 +44,12 @@ public class UserInputs {
         return prepInput(input);
     }
 
+    public static String toggleInventoryParseAndQuitIfAsked(HMGame g){
+        String parsed = parseAndQuitIfAsked();
+        if (isCommand(parsed, CommandType.INFO)) g.toggleInventory();
+        return parsed;
+    }
+
     private static void terminateIfRequested(String input){
         if (isCommand(input, CommandType.QUIT)) {
             ConsoleColors.printInColor(ConsoleColors.RED_BOLD, "User requested quit. Terminating.");
@@ -43,6 +58,10 @@ public class UserInputs {
         if(isCommand(input, CommandType.HELP)){
             getControlInstructions();
         }
+    }
+
+    private static boolean isHelpOrQuitOrInfo(String input){
+        return isCommand(input, CommandType.HELP) || isCommand(input, CommandType.QUIT) || isCommand(input, CommandType.INFO) ;
     }
 
     public static int showMenuAndGetUserAnswer(String[] options) {
