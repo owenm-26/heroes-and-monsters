@@ -7,4 +7,8 @@ public class Integers {
             if (num < 1) throw new IllegalArgumentException("Values must be positive");
         }
     }
+
+    public static boolean integerInInclusiveRange(int i, int lb, int ub){
+        return i >= lb && i <= ub;
+    }
 }

@@ -1,16 +1,18 @@
 package GameBoard;
 
 import Common.Board;
+import Figures.Figure;
 import Figures.Party;
 import GameBoard.HMSquare.HMSquare;
 import GameBoard.HMSquare.HMSquareType;
+import UI.CommandType;
+import UI.UserInputs;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Random;
+import java.util.*;
 
 import static UI.GeneralPrints.padCenter;
+import static Validators.Integers.integerInInclusiveRange;
 
 public class HMBoard extends Board<HMSquare> {
 
@@ -19,6 +21,8 @@ public class HMBoard extends Board<HMSquare> {
     final static Random random = new Random();
     final static HashMap<HMSquareType, Float> squareMakeup = new HashMap<>();
     final static HMSquareType[] squareChoiceArray = new HMSquareType[10];
+
+    final static Map<String, Integer[]> dirs = new HashMap<>();
 
     static{
         // Make square array to randomly choose from
@@ -35,13 +39,19 @@ public class HMBoard extends Board<HMSquare> {
                 i++;
             }
         }
+
+        // populate directions
+        dirs.put(CommandType.UP.getCode(), new Integer[]{-1, 0});
+        dirs.put(CommandType.DOWN.getCode(), new Integer[]{1, 0});
+        dirs.put(CommandType.LEFT.getCode(), new Integer[]{0, -1});
+        dirs.put(CommandType.RIGHT.getCode(), new Integer[]{0, 1});
     }
 
 
     public HMBoard(int n){
         validateDimension(n);
         grid = new HMSquare[n][n];
-        heroPartyCoordinates[0] = 0;
+        heroPartyCoordinates[0] = n-1;
         heroPartyCoordinates[1]= n / 2;
 
         // Randomly create different types of Squares
@@ -73,6 +83,15 @@ public class HMBoard extends Board<HMSquare> {
         }
     }
 
+    private boolean partyCanMakeRequestedMovement(int[] prospectiveCoordinates){
+        /*
+        Returns whether the requested move by user is valid (in bounds and not on blocked square
+         */
+        return integerInInclusiveRange(prospectiveCoordinates[0], 0, grid.length-1) &&
+                integerInInclusiveRange(prospectiveCoordinates[1], 0, grid.length-1) &&
+                grid[prospectiveCoordinates[0]][prospectiveCoordinates[1]].getType() != HMSquareType.BLOCKED;
+    }
+
 
     public void displayBoard() {
         int n = grid.length;
@@ -98,6 +117,21 @@ public class HMBoard extends Board<HMSquare> {
         }
 
         System.out.println(border);
+    }
+
+    public void handleMovement(String input){
+        if(!UserInputs.isMovement(input)) throw new IllegalArgumentException(String.format("%s is not a movement command", input));
+        int[] prospectiveCoordinates = {heroPartyCoordinates[0] + dirs.get(input)[0], heroPartyCoordinates[1] + dirs.get(input)[1]};
+        if (!partyCanMakeRequestedMovement(prospectiveCoordinates)) {
+            System.out.println("⚠️ Move invalid.");
+            return;
+        }
+        //unset prev square
+        Party<Figure> p = grid[heroPartyCoordinates[0]][heroPartyCoordinates[1]].getPartyOnSquare();
+        grid[heroPartyCoordinates[0]][heroPartyCoordinates[1]].setPartyOnSquare(null);
+        //set new square
+        grid[prospectiveCoordinates[0]][prospectiveCoordinates[1]].setPartyOnSquare(p);
+        heroPartyCoordinates = prospectiveCoordinates;
     }
 
 }

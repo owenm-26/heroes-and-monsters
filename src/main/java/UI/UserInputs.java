@@ -1,24 +1,28 @@
 package UI;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 import static UI.CommandType.getControlInstructions;
+import static UI.CommandType.validCommandStrings;
 
 public class UserInputs {
-    final private static List<CommandType> MOVEMENT_COMMANDS = Arrays.asList(new CommandType[]{CommandType.UP, CommandType.DOWN, CommandType.LEFT, CommandType.RIGHT});
+    final private static List<String> MOVEMENT_COMMANDS = Arrays.asList(new String[]{CommandType.UP.getCode(), CommandType.DOWN.getCode(), CommandType.LEFT.getCode(), CommandType.RIGHT.getCode()});
     public static final Scanner scanner = new Scanner(System.in);
 
-
+    public static boolean isAnyCommand(String input){
+        /*
+        Returns whether the user input is a valid command
+         */
+        return validCommandStrings.contains(input);
+    }
     public static boolean isCommand(String input, CommandType command){
         String s = prepInput(input);
         return s.equals(command.getCode());
     }
 
-    public static boolean isMovement(String input, CommandType command){
+    public static boolean isMovement(String input){
         String s = prepInput(input);
-        return MOVEMENT_COMMANDS.contains(command);
+        return MOVEMENT_COMMANDS.contains(s);
     }
 
     private static String prepInput(String input){

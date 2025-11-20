@@ -1,5 +1,8 @@
 package UI;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public enum CommandType {
     QUIT("q"),
     INFO("i"),
@@ -11,6 +14,15 @@ public enum CommandType {
     RIGHT("d"),
     YES("y"),
     NO("n");
+
+    public static Set<String> validCommandStrings = new HashSet<>();
+
+    static{
+        for (CommandType command: CommandType.values()){
+            validCommandStrings.add(command.getCode());
+        }
+    }
+
 
     private String code;
     CommandType(String code){

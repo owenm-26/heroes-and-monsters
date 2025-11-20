@@ -11,11 +11,11 @@ import java.util.*;
 
 import static Figures.Hero.Hero.getAllHeroOptions;
 import static UI.GeneralPrints.printHorizontalLine;
-import static UI.UserInputs.showMenuAndGetUserAnswer;
+import static UI.UserInputs.*;
 
 public class HMGame extends Game<HMBoard> {
 
-    private final static int MAX_PARTY_SIZE=3;
+    private final static int MAX_PARTY_SIZE=1;
     private HMBoard board;
     private int dimension;
 
@@ -136,7 +136,17 @@ public class HMGame extends Game<HMBoard> {
     private void exploring(){
         while (state == HMGameState.EXPLORING){
             board.displayBoard();
-            ConsoleColors.printInColor(ConsoleColors.GREEN_BOLD, "Press WASD to move or ");
+            ConsoleColors.printInColor(ConsoleColors.GREEN_BOLD, "Press WASD to move or check inventory with i");
+            String input = UserInputs.parseAndQuitIfAsked();
+
+            if(!isAnyCommand(input)) {
+                System.out.println("Invalid Command.");
+                continue;
+            }
+            if(isMovement(input)){
+                board.handleMovement(input);
+            }
+
         }
     }
 
