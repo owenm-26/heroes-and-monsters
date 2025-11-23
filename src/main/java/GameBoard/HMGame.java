@@ -179,7 +179,6 @@ public class HMGame extends Game<HMBoard> {
                 System.out.println("Battle Stat View");
                 break;
             case EXPLORING:
-                System.out.println("Exploring Stat View");
                 HashMap<String, Party<? extends Figure>> input = new HashMap<>();
                 input.put("heroes", heroes);
                 pickTeamAndDisplayStatistics(input, this);

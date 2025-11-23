@@ -54,43 +54,50 @@ public class Hero extends Figure implements LoadableFromText {
     }
 
     public void displayFigureStatistics(HMGameState state){
-        System.out.println("===== HERO STATUS =====");
-        System.out.println("Name: " + name + " (" + heroType + ")");
-        System.out.println("Level: " + level);
-        System.out.println("HP: " + hp + "/" + hpMax);
-        System.out.println("MP: " + mp + "/" + mpMax);
+        final String COLOR = ConsoleColors.CYAN_BOLD;
+
+        ConsoleColors.printInColor(COLOR, "===== HERO STATUS =====");
+
+        ConsoleColors.printInColor(COLOR, "Name: " + name + " (" + heroType + ")");
+        ConsoleColors.printInColor(COLOR, "Level: " + level);
+        ConsoleColors.printInColor(COLOR, "HP: " + hp + "/" + hpMax);
+        ConsoleColors.printInColor(COLOR, "MP: " + mp + "/" + mpMax);
 
         // When OUTSIDE of battle
         if (state != HMGameState.BATTLING) {
-            System.out.println("XP: " + xp);
-            System.out.println("Gold: " + gold);
-            System.out.println("--- Attributes ---");
-            System.out.println("Strength:  " + strength);
-            System.out.println("Dexterity: " + dexterity);
-            System.out.println("Agility:   " + agility);
+
+            ConsoleColors.printInColor(COLOR, "XP: " + xp);
+            ConsoleColors.printInColor(COLOR, "Gold: " + gold);
+
+            ConsoleColors.printInColor(COLOR, "--- Attributes ---");
+            ConsoleColors.printInColor(COLOR, "Strength:  " + strength);
+            ConsoleColors.printInColor(COLOR, "Dexterity: " + dexterity);
+            ConsoleColors.printInColor(COLOR, "Agility:   " + agility);
 
         } else {
             // When IN battle
-            System.out.println("--- Equipped Weapons ---");
+            ConsoleColors.printInColor(COLOR, "--- Equipped Weapons ---");
+
             if (weaponsEquipped == null || weaponsEquipped.isEmpty()) {
-                System.out.println("None");
+                ConsoleColors.printInColor(COLOR, "None");
             } else {
                 for (Weapon w : weaponsEquipped) {
-                    System.out.println("- " + w.getName());
+                    ConsoleColors.printInColor(COLOR, "- " + w.getName());
                 }
             }
 
-            System.out.println("--- Armor Worn ---");
+            ConsoleColors.printInColor(COLOR, "--- Armor Worn ---");
+
             if (armorWorn == null || armorWorn.isEmpty()) {
-                System.out.println("None");
+                ConsoleColors.printInColor(COLOR, "None");
             } else {
                 for (Armor a : armorWorn) {
-                    System.out.println("- " + a.getName());
+                    ConsoleColors.printInColor(COLOR, "- " + a.getName());
                 }
             }
         }
 
-        System.out.println("========================\n");
+        ConsoleColors.printInColor(COLOR, "========================\n");
     }
 
 
