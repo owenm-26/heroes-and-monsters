@@ -1,5 +1,6 @@
 package GameBoard;
 
+import Battle.BattleCommand;
 import Common.Game;
 import Figures.Figure;
 import Figures.Hero.Hero;
@@ -7,6 +8,8 @@ import Figures.Party;
 import GameBoard.HMSquare.MarketActions;
 import Items.Inventory;
 import Items.Item;
+import Items.ItemType;
+import Items.Weapon;
 import UI.CommandType;
 import UI.ConsoleColors;
 import UI.UserInputs;
@@ -21,7 +24,7 @@ import static UI.UserInputs.*;
 
 public class HMGame extends Game<HMBoard> {
 
-    private final static int MAX_PARTY_SIZE=1;
+    private final static int MAX_PARTY_SIZE=3;
     private HMBoard board;
     private final int dimension;
 
@@ -101,17 +104,17 @@ public class HMGame extends Game<HMBoard> {
         if (optionsLeft.size() < 1) throw new IllegalArgumentException("Hero optionsLeft List is empty");
         int number_of_choices = 3;
         String[] choices = new String[number_of_choices];
-        Set<Integer> usedIndicies = new HashSet<>();
+        Set<Integer> usedIndices = new HashSet<>();
         int i =0;
 
         HashMap<Integer, Hero> backMap = new HashMap<>();
         while (i < number_of_choices){
             Random random = new Random();
             int randomIndex = random.nextInt(optionsLeft.size());
-            if (usedIndicies.contains(randomIndex)) continue; //prevent printing the same character twice
+            if (usedIndices.contains(randomIndex)) continue; //prevent printing the same character twice
             Hero h = optionsLeft.get(randomIndex);
             backMap.put(i, h);
-            usedIndicies.add(randomIndex);
+            usedIndices.add(randomIndex);
             choices[i] = h.getName();
             System.out.println(h);
             i++;
@@ -132,7 +135,6 @@ public class HMGame extends Game<HMBoard> {
                 viewStats();
                 continue;
             }
-
 
             switch (state){
                 case EXPLORING:
@@ -164,6 +166,9 @@ public class HMGame extends Game<HMBoard> {
                 state = HMGameState.MARKET;
                 continue;
             }
+            if (isCommand(input, CommandType.BACKPACK)){
+                backpack();
+            }
             if(!isExploringCommand(input)) {
                 System.out.println("Invalid Command.");
                 continue;
@@ -172,6 +177,31 @@ public class HMGame extends Game<HMBoard> {
                 board.handleMovement(input);
             }
 
+        }
+    }
+
+    private void backpack(){
+        /*
+        Only accessible when exploring. Allows user to equip / unequip and use potions.
+         */
+        //Pick Hero to view
+        Hero h = heroes.pickTeamMember(this, "Which team member's backpack?");
+        //Display current Equipped and stats
+        h.displayFigureStatistics(HMGameState.BATTLING);
+        //Ask them what they want to do (equip, unequip, take potion)
+        String[] options = BattleCommand.getBackpackActions();
+        int indexChosen = showMenuAndGetUserAnswer(options);
+        if (indexChosen < 0) return;
+
+        switch (BattleCommand.fromName(options[indexChosen])){
+            case CHANGE_WEAPON:
+                h.equipItem(ItemType.WEAPON);
+                break;
+            case CHANGE_ARMOR:
+                h.equipItem(ItemType.ARMOR);
+                break;
+            case TAKE_POTION:
+                h.equipItem(ItemType.POTION);
         }
     }
 

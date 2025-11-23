@@ -23,7 +23,7 @@ public class UserInputs {
         /*
         Returns whether this is a valid command for the exploring state
          */
-        return isAnyCommand(input) && (isMovement(input) || isHelpOrQuitOrInfo(input));
+        return isAnyCommand(input) && (isMovement(input) || isHelpOrQuitOrInfo(input) || isCommand(input, CommandType.MARKET) || isCommand(input, CommandType.BACKPACK));
     }
 
     public static boolean isCommand(String input, CommandType command) {

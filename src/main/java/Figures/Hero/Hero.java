@@ -18,6 +18,7 @@ import static Data.TextDataLoader.getAllSourceFileNames;
 import static Items.Inventory.tradeItem;
 import static Items.Potion.PotionType.POTION_DURATION_LENGTH;
 import static UI.ConsoleColors.*;
+import static UI.UserInputs.showMenuAndGetUserAnswer;
 import static Validators.Integers.validatePositiveIntegers;
 
 public class Hero extends Figure implements LoadableFromText {
@@ -72,16 +73,15 @@ public class Hero extends Figure implements LoadableFromText {
         ConsoleColors.printInColor(COLOR, "HP: " + hp + "/" + hpMax);
         ConsoleColors.printInColor(COLOR, "MP: " + mp + "/" + mpMax);
 
+        ConsoleColors.printInColor(COLOR, "--- Attributes ---");
+        ConsoleColors.printInColor(COLOR, "Strength:  " + strength);
+        ConsoleColors.printInColor(COLOR, "Dexterity: " + dexterity);
+        ConsoleColors.printInColor(COLOR, "Agility:   " + agility);
+
         // When OUTSIDE of battle
         if (state != HMGameState.BATTLING) {
-
             ConsoleColors.printInColor(COLOR, "XP: " + xp);
             ConsoleColors.printInColor(COLOR, "Gold: " + gold);
-
-            ConsoleColors.printInColor(COLOR, "--- Attributes ---");
-            ConsoleColors.printInColor(COLOR, "Strength:  " + strength);
-            ConsoleColors.printInColor(COLOR, "Dexterity: " + dexterity);
-            ConsoleColors.printInColor(COLOR, "Agility:   " + agility);
 
         } else {
             // When IN battle
@@ -235,8 +235,6 @@ public class Hero extends Figure implements LoadableFromText {
         calculateHpMax();
     }
 
-
-
     public static List<Hero> getAllHeroOptions(){
         ArrayList<Hero> heroes = new ArrayList<>();
         try{
@@ -294,14 +292,34 @@ public class Hero extends Figure implements LoadableFromText {
         ConsoleColors.printInColor(ConsoleColors.BLACK_BACKGROUND, String.format("%s has been unequipped.", i.getName()));
     }
 
-    public void equipItem(Item i){
+    public void equipItem(ItemType t){
         /*
         Public method that handles which equip and unequip logic to use
          */
-        if (!i.isEquipable()) throw new IllegalArgumentException("This item is not equipable");
+        Map<String, ? extends Item> map;
+        switch (t){
+            case WEAPON:
+                map = inventory.getSubInventoryOptions(inventory.getWeapons());
+                break;
+            case ARMOR:
+                map = inventory.getSubInventoryOptions(inventory.getArmor());
+                break;
+            case POTION:
+                map = inventory.getSubInventoryOptions(inventory.getPotions());
+                break;
+            default:
+                throw new IllegalArgumentException("Item Type given is not equipable");
+        }
 
-        if (i.getItemType() == ItemType.WEAPON) equipWeapon((Weapon) i);
-        else equipArmor((Armor) i);
+        String[] itemOptions = map.keySet().toArray(new String[0]);
+        int itemToEquipIndex = showMenuAndGetUserAnswer(itemOptions);
+        if (itemToEquipIndex < 0) return;
+        Item toEquip = map.get(itemOptions[itemToEquipIndex]);
+
+
+        if (toEquip.getItemType() == ItemType.WEAPON) equipWeapon((Weapon) toEquip);
+        else if (toEquip.getItemType() == ItemType.ARMOR) equipArmor((Armor) toEquip);
+        else usePotion((Potion) toEquip);
     }
 
     private void equipWeapon(Weapon w){

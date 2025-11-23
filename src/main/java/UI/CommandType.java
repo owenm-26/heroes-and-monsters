@@ -8,6 +8,7 @@ public enum CommandType {
     INFO("i"),
     MARKET("m"),
     HELP("h"),
+    BACKPACK("b"),
     UP("w"),
     DOWN("s"),
     LEFT("a"),
