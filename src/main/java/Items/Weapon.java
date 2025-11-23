@@ -51,8 +51,12 @@ public class Weapon extends Item implements LoadableFromText {
 
     @Override
     public String getItemDescriptionOneLiner() {
-        return String.format("🗡️ %s - lvl%d   %d damage points  %d required hands   %d uses left   %d gold", name, level, damage, handsRequired, usesLeft, price);
+        return String.format(
+                "🗡️ %-20s lvl:%-2d  dmg:%-4d  hands:%-2d  uses:%-3d  %4d gold",
+                name, level, damage, handsRequired, usesLeft, price
+        );
     }
+
 
     public boolean isEquipable(){
         return true;

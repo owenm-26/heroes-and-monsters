@@ -51,13 +51,17 @@ public class Potion extends Item implements LoadableFromText {
 
     @Override
     public String getItemDescriptionOneLiner() {
-        StringBuilder b = new StringBuilder();
-        for (PotionType name: effects.keySet()){
-            b.append(String.format("(%s - %d) ", name.getName(), effects.get(name)));
+        StringBuilder effectString = new StringBuilder();
+        for (PotionType p : effects.keySet()) {
+            effectString.append(String.format("%s:+%d  ", p.getName(), effects.get(p)));
         }
-        String effects = b.toString();
-        return String.format("🧪️ %s - lvl%d   %d uses left  EFFECTS: %s %d gold", name, level, usesLeft, effects, price);
+
+        return String.format(
+                "🧪 %-20s lvl:%-2d  uses:%-3d  %-40s %4d gold",
+                name, level, usesLeft, effectString.toString(), price
+        );
     }
+
 
     private void setAttributesAffected(String attributesAffected, int increase){
         if (attributesAffected.length() == 0) throw new IllegalArgumentException("attributesAffected is length 0 in setAttributesAffected()");

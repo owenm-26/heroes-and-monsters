@@ -45,8 +45,12 @@ public class Armor extends Item implements LoadableFromText {
 
     @Override
     public String getItemDescriptionOneLiner() {
-        return String.format("🛡️️ %s - lvl%d   %d damage reduction   %d usesLeft   %d gold", name, level, damageReduction, usesLeft, price);
+        return String.format(
+                "🛡️ %-20s lvl:%-2d  reduct:%-4d  uses:%-3d  %4d gold",
+                name, level, damageReduction, usesLeft, price
+        );
     }
+
 
     public void loadFromMap(Map<String, String> map){
 //        Name/cost/required level/damage reduction

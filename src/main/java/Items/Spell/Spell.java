@@ -59,8 +59,12 @@ public class Spell extends Item implements LoadableFromText {
 
     @Override
     public String getItemDescriptionOneLiner() {
-        return String.format("🪄️ %s - lvl%d   %d damage points  %s type   %d mana   %d uses left   %d gold", name, level, damage, spellType.getSymbol(), mpCost, usesLeft, price);
+        return String.format(
+                "🪄 %-20s lvl:%-2d  dmg:%-4d  type:%-2s  mana:%-4d  uses:%-3d  %4d gold",
+                name, level, damage, spellType.getSymbol(), mpCost, usesLeft, price
+        );
     }
+
 
     private void setSpellTypeFromFileName(String fileName){
         if (fileName.length() == 0) throw new IllegalArgumentException("Filename is length 0 in setHeroTypeFromFileName()");
