@@ -6,7 +6,6 @@ import GameBoard.HMGameState;
 
 public class Monster extends Figure {
     private int baseDamage;
-    private int baseDefense;
     private int baseDodge;
     private MonsterType type;
 

@@ -16,6 +16,7 @@ public abstract class Figure extends Player {
     protected int level;
     protected int hp;
     protected int hpMax;
+    protected int baseDefense;
     protected Set<HMEffect> activeEffects;
 
 //    SETTERS
@@ -25,7 +26,7 @@ public abstract class Figure extends Player {
             throw new ValueException("Cannot gain negative health");
         }
         int new_hp = val + hp;
-        hp = Math.max(new_hp, hpMax);
+        hp = Math.min(new_hp, hpMax);
     }
 
     public boolean loseHp(int val){

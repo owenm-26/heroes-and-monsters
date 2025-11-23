@@ -37,7 +37,6 @@ public class Hero extends Figure implements LoadableFromText {
     private int agility;
     private int strength;
     private int dexterity;
-    private int baseDefense;
 
     public Hero(String name, int mpMax, int hands, HeroType heroType, int strength, int dexterity, int agility){
         validatePositiveIntegers(mpMax, hands);
@@ -61,6 +60,7 @@ public class Hero extends Figure implements LoadableFromText {
         //equipment
         initializeEmptyEquipment();
         this.xp= 0;
+        this.baseDefense = 0;
     }
 
     public void displayFigureStatistics(HMGameState state){
@@ -268,7 +268,7 @@ public class Hero extends Figure implements LoadableFromText {
     }
 
     public void gainMp(int p){
-        mp = Math.max(mpMax, mp + p);
+        mp = Math.min(mpMax, mp + p);
     }
 
     public void adjustGold(int g){
@@ -411,7 +411,7 @@ public class Hero extends Figure implements LoadableFromText {
             ConsoleColors.printInColor(RED_BOLD, String.format("⚠️Hero %s's level is too low to buy this item: %d < %d", name, level, i.getLevel()));
 
         }
-        else if(this.gold < i.getPrice()) {
+        else if(canBuyItem(i)) {
             ConsoleColors.printInColor(RED_BOLD, String.format("⚠️Hero %s's gold is too low to buy this item: %d < %d", name, gold, i.getPrice()));
         }
         else{
