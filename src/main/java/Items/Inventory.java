@@ -143,6 +143,9 @@ public class Inventory {
     }
 
     public Map<String, ? extends Item> getSubInventoryOptions(List<? extends Item> subInventory){
+        return getSubInventoryOptions(subInventory, -1);
+    }
+    public Map<String, ? extends Item> getSubInventoryOptions(List<? extends Item> subInventory, int heroLevel){
         /*
         Returns the subInventory in a format to be used to create a menu to display
          */
@@ -151,6 +154,9 @@ public class Inventory {
         for (Item item : subInventory) {
 
             String key = item.getItemDescriptionOneLiner();
+            if (heroLevel > 0) {
+                key = heroLevel >= item.getLevel() ? key : ConsoleColors.returnInColor(ConsoleColors.RED, key, false);
+            }
 
             // Handle duplicate names to avoid overwriting
             if (map.containsKey(key)) {

@@ -238,7 +238,8 @@ public class HMGame extends Game<HMBoard> {
     private void buying(Hero h, Inventory marketInventory){
         ConsoleColors.printInColor(ConsoleColors.YELLOW, String.format("💰%s has %d gold left", h.getName(), h.getGold()));
         List<? extends Item> subSection = marketInventory.selectInventorySubsection();
-        Map<String, ? extends Item> subSectionOptions = marketInventory.getSubInventoryOptions(subSection);
+        int heroLevel = h.getLevel();
+        Map<String, ? extends Item> subSectionOptions = marketInventory.getSubInventoryOptions(subSection, heroLevel);
         String[] options = subSectionOptions.keySet().toArray(new String[0]);
         int chosenIndex = showMenuAndGetUserAnswer(options);
 
