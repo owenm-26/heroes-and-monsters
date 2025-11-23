@@ -66,6 +66,7 @@ public class HMBoard extends Board<HMSquare> {
                 }
                 else{
                     s = new HMSquare(type);
+                    if(type == HMSquareType.MARKET) s.setInventory(Inventory.generateMarketInventory());
                 }
 
 

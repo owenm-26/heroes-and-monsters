@@ -35,6 +35,7 @@ public class Hero extends Figure implements LoadableFromText {
     private int agility;
     private int strength;
     private int dexterity;
+    private int baseDefense;
 
     public Hero(String name, int mpMax, int hands, HeroType heroType, int strength, int dexterity, int agility){
         validatePositiveIntegers(mpMax, hands);
@@ -42,6 +43,7 @@ public class Hero extends Figure implements LoadableFromText {
         this.heroType = heroType;
         this.numberOfHands = hands;
         level = 1;
+        this.baseDefense = 0; //TODO: determine if this should be flexible (right now only change when have a potion)
 
         // Hero attributes
         initializeAttributes(strength, dexterity, agility);
@@ -51,6 +53,12 @@ public class Hero extends Figure implements LoadableFromText {
         calculateHpMax();
         //equipment
         initializeEmptyEquipment();
+    }
+
+    public Hero(){
+        //equipment
+        initializeEmptyEquipment();
+        this.xp= 0;
     }
 
     public void displayFigureStatistics(HMGameState state){
@@ -161,13 +169,6 @@ public class Hero extends Figure implements LoadableFromText {
         b.append(returnInColor(WHITE_BACKGROUND, GeneralPrints.returnDoubleThickHorizontalLine(), false));
 
         return b.toString();
-    }
-
-
-    public Hero(){
-        //equipment
-        initializeEmptyEquipment();
-        this.xp= 0;
     }
 
     private void setMana(int mpMax){

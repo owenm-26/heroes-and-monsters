@@ -1,12 +1,13 @@
 package Items.Potion;
 
 import Figures.TraitType;
+import GameBoard.HMSquare.MarketActions;
 
 public enum PotionType {
 
-
-    MP(null, "HP"),
-    HP(null, "MP"),
+    MP(null, "Mana"),
+    HP(null, "Health"),
+    DEFENSE(null, "Defense"),
 //    trait types
     STRENGTH(TraitType.STRENGTH, "Strength"),
     DEXTERITY(TraitType.DEXTERITY, "Dexterity"),
@@ -19,6 +20,14 @@ public enum PotionType {
     PotionType(TraitType t, String name){
         this.type = t;
         this.name = name;
+    }
+
+    public static PotionType fromName(String n) {
+        for (PotionType a : values()) {
+            if (a.name.equalsIgnoreCase(n))
+                return a;
+        }
+        throw new IllegalArgumentException("Invalid PotionType: " + n);
     }
 
     public TraitType getType() {

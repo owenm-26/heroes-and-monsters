@@ -15,14 +15,43 @@ public class Inventory {
     private List<Spell> spells;
     private List<Potion> potions;
 
+    private final static List<Weapon> allWeapons = Weapon.getAllWeaponOptions();
+    private final static List<Armor> allArmor = Armor.getAllArmorOptions();
+    private final static List<Spell> allSpells = Spell.getAllSpellOptions();
+    private final static List<Potion> allPotions = Potion.getAllPotionOptions();
+
     public Inventory(){
         weapons = new ArrayList<>();
         armor = new ArrayList<>();
         spells = new ArrayList<>();
         potions = new ArrayList<>();
     }
-    public static Inventory generateMarketInventory(){
-        return new Inventory();
+    public static Inventory generateMarketInventory() {
+        Inventory gen = new Inventory();
+        Random rand = new Random();
+
+        // Helper function to populate each category
+        populateRandomSubset(allWeapons, gen.weapons, rand);
+        populateRandomSubset(allArmor, gen.armor, rand);
+        populateRandomSubset(allSpells, gen.spells, rand);
+        populateRandomSubset(allPotions, gen.potions, rand);
+
+        return gen;
+    }
+
+    private static <T extends Item> void populateRandomSubset(
+            List<T> source, List<T> target, Random rand) {
+
+        if (source == null || source.isEmpty()) return;
+
+        int countToSelect = Math.max(1, (int) Math.floor(source.size() * 0.75));
+
+        // Copy and shuffle so original lists aren’t touched
+        List<T> shuffled = new ArrayList<>(source);
+        Collections.shuffle(shuffled, rand);
+
+        // Take the first 75%
+        target.addAll(shuffled.subList(0, countToSelect));
     }
 
     public static void tradeItem(Item i, Inventory owner, Inventory receiver){
