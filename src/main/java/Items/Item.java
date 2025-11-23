@@ -46,4 +46,8 @@ public abstract class Item implements Equipable{
     }
 
     public abstract String getItemDescriptionOneLiner();
+
+    public void setPrice(int p){
+        price = p;
+    }
 }

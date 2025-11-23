@@ -203,8 +203,18 @@ public class HMGame extends Game<HMBoard> {
 
         while (state == HMGameState.MARKET){
             Hero h = heroes.pickTeamMember(this, "Which team member is going to enter the market?");
+
+            if (h == null) {
+                state = HMGameState.EXPLORING;
+                break;
+            }
             String[] options = marketActionsToList();
             int indexChosen = showMenuAndGetUserAnswer(options);
+
+            if (indexChosen < 0) {
+                state = HMGameState.EXPLORING;
+                break;
+            }
 
             MarketActions chosenAction = MarketActions.fromName(options[indexChosen]);
 
@@ -238,6 +248,7 @@ public class HMGame extends Game<HMBoard> {
     private void buying(Hero h, Inventory marketInventory){
         ConsoleColors.printInColor(ConsoleColors.YELLOW, String.format("💰%s has %d gold left", h.getName(), h.getGold()));
         List<? extends Item> subSection = marketInventory.selectInventorySubsection();
+        if (subSection == null) return;
         int heroLevel = h.getLevel();
         Map<String, ? extends Item> subSectionOptions = marketInventory.getSubInventoryOptions(subSection, heroLevel);
         String[] options = subSectionOptions.keySet().toArray(new String[0]);
@@ -247,7 +258,7 @@ public class HMGame extends Game<HMBoard> {
         else{
             // TODO: Buy item logic
             Item selectedItem = subSectionOptions.get(options[chosenIndex]);
-            System.out.format("Buying %s for %d gold for level %d", selectedItem.getName(), selectedItem.getPrice(), selectedItem.getLevel());
+            h.buyItem(selectedItem, marketInventory);
         }
     }
 

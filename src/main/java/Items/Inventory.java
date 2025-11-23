@@ -57,7 +57,8 @@ public class Inventory {
     public static void tradeItem(Item i, Inventory owner, Inventory receiver){
         owner.removeItem(i);
         receiver.addItem(i);
-        ConsoleColors.printInColor(ConsoleColors.GREEN, String.format("🤝 %s successfully traded", i.getName()));
+        int originalPrice = i.getPrice();
+        ConsoleColors.printInColor(ConsoleColors.GREEN, String.format("🤝 %s was successfully traded for %d gold", i.getName(), originalPrice));
     }
 
     private void removeItem(Item i){
@@ -138,6 +139,8 @@ public class Inventory {
         Map<String, List<? extends Item>> subSections = getInventoryCategories();
         String[] options = subSections.keySet().toArray(new String[0]);
         int indexChosen = showMenuAndGetUserAnswer(options);
+
+        if (indexChosen < 0) return null;
 
         return subSections.get(options[indexChosen]);
     }

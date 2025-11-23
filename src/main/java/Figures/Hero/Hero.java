@@ -15,6 +15,7 @@ import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 import java.util.*;
 
 import static Data.TextDataLoader.getAllSourceFileNames;
+import static Items.Inventory.tradeItem;
 import static Items.Potion.PotionType.POTION_DURATION_LENGTH;
 import static UI.ConsoleColors.*;
 import static Validators.Integers.validatePositiveIntegers;
@@ -378,6 +379,30 @@ public class Hero extends Figure implements LoadableFromText {
         }
         String message = String.format("- Gaining %s effect of %d", type.getName(), val);
         ConsoleColors.printInColor(ConsoleColors.PURPLE, message);
+    }
+
+    // Trading mechanics
+
+    public void buyItem(Item i, Inventory merchant){
+        /*
+        Handles all validation, gold adjustment, and inventory swapping required
+         */
+
+        // eligible?
+        if(this.level < i.getLevel()){
+            ConsoleColors.printInColor(RED_BOLD, String.format("Hero %s's level is too low to buy this item: %d < %d", name, level, i.getLevel()));
+
+        }
+        else if(this.gold < i.getPrice()) {
+            ConsoleColors.printInColor(RED_BOLD, String.format("Hero %s's gold is too low to buy this item: %d < %d", name, gold, i.getPrice()));
+        }
+        else{
+            tradeItem(i, merchant, this.inventory);
+            gold -= i.getPrice();
+            i.setPrice(i.getPrice()/ 2);
+
+        }
+
     }
 
 //    GETTERS
