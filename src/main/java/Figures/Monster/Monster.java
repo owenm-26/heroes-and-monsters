@@ -2,6 +2,7 @@ package Figures.Monster;
 
 import Figures.Figure;
 import Figures.Hero.HeroType;
+import GameBoard.HMGameState;
 
 public class Monster extends Figure {
     private int baseDamage;
@@ -15,5 +16,11 @@ public class Monster extends Figure {
         this.baseDefense = baseDefense + type.getBaseDefenseBonus();
         this.baseDodge = baseDodge + type.getBaseAgilityBonus();
         this.type = type;
+    }
+
+    public void displayFigureStatistics(HMGameState state){
+        /*
+        Displays statistics of figure based on the game state
+         */
     }
 }

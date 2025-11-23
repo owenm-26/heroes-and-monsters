@@ -1,9 +1,11 @@
 package Figures;
 
+import GameBoard.HMGame;
+import GameBoard.HMGameState;
 import UI.ConsoleColors;
+import UI.UserInputs;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Party<T extends Figure>{
     private int maxSize;
@@ -16,6 +18,41 @@ public class Party<T extends Figure>{
 
     public List<T> getMembers() {
         return members;
+    }
+
+    public static void pickTeamAndDisplayStatistics(Map<String, Party<? extends Figure>> teams, HMGame g){
+        if(teams.size() == 0) throw new IllegalArgumentException("teams argument is an empty map in displayPartyStatistics()");
+        String[] options = teams.keySet().toArray(new String[0]);
+        if (teams.size() > 1){
+            ConsoleColors.printInColor(ConsoleColors.BLUE_BOLD, "Which group's statistics would you like to see?");
+
+            int optionChosenIndex = UserInputs.showMenuAndGetUserAnswer(options);
+            teams.get(options[optionChosenIndex]).displayPartyStatistics(g);
+        }
+        else{
+            teams.get(options[0]).displayPartyStatistics(g);
+        }
+    }
+
+    private void displayPartyStatistics(HMGame g){
+        HashMap<String, T> map = getMembersNamesMap();
+
+        ConsoleColors.printInColor(ConsoleColors.BLUE_BOLD, "Which statistics would you like to open?");
+
+        String[] options = map.keySet().toArray(new String[0]);
+        int optionChosenIndex = UserInputs.showMenuAndGetUserAnswer(options, true, g);
+
+        if (optionChosenIndex != -1){
+            map.get(options[optionChosenIndex]).displayFigureStatistics(g.getState());
+        }
+    }
+
+    public HashMap<String, T> getMembersNamesMap(){
+        HashMap<String, T> res = new HashMap<>();
+        for(T member: members){
+            res.put(member.name, member);
+        }
+        return res;
     }
 
     public boolean canAddAnotherMember(){

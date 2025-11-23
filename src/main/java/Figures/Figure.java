@@ -2,11 +2,11 @@ package Figures;
 
 import Common.Player;
 import GameBoard.HMEffect;
+import GameBoard.HMGameState;
 import UI.ConsoleColors;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -84,4 +84,6 @@ public abstract class Figure extends Player {
         b.append("]");
         ConsoleColors.printInColor(ConsoleColors.YELLOW, b.toString());
     }
+
+   public abstract void displayFigureStatistics(HMGameState state);
 }

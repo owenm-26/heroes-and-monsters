@@ -4,12 +4,10 @@ import Data.LoadableFromText;
 import Data.TextDataLoader;
 import Figures.Figure;
 import GameBoard.HMEffect;
-import Items.Armor;
-import Items.Item;
-import Items.ItemType;
+import GameBoard.HMGameState;
+import Items.*;
 import Items.Potion.Potion;
 import Items.Potion.PotionType;
-import Items.Weapon;
 import UI.ConsoleColors;
 import UI.GeneralPrints;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
@@ -30,6 +28,8 @@ public class Hero extends Figure implements LoadableFromText {
     private List<Weapon> weaponsEquipped;
     private int numberOfHands;
     private HeroType heroType;
+
+    private Inventory inventory;
 
     // attributes
     private int agility;
@@ -52,6 +52,47 @@ public class Hero extends Figure implements LoadableFromText {
         //equipment
         initializeEmptyEquipment();
     }
+
+    public void displayFigureStatistics(HMGameState state){
+        System.out.println("===== HERO STATUS =====");
+        System.out.println("Name: " + name + " (" + heroType + ")");
+        System.out.println("Level: " + level);
+        System.out.println("HP: " + hp + "/" + hpMax);
+        System.out.println("MP: " + mp + "/" + mpMax);
+
+        // When OUTSIDE of battle
+        if (state != HMGameState.BATTLING) {
+            System.out.println("XP: " + xp);
+            System.out.println("Gold: " + gold);
+            System.out.println("--- Attributes ---");
+            System.out.println("Strength:  " + strength);
+            System.out.println("Dexterity: " + dexterity);
+            System.out.println("Agility:   " + agility);
+
+        } else {
+            // When IN battle
+            System.out.println("--- Equipped Weapons ---");
+            if (weaponsEquipped == null || weaponsEquipped.isEmpty()) {
+                System.out.println("None");
+            } else {
+                for (Weapon w : weaponsEquipped) {
+                    System.out.println("- " + w.getName());
+                }
+            }
+
+            System.out.println("--- Armor Worn ---");
+            if (armorWorn == null || armorWorn.isEmpty()) {
+                System.out.println("None");
+            } else {
+                for (Armor a : armorWorn) {
+                    System.out.println("- " + a.getName());
+                }
+            }
+        }
+
+        System.out.println("========================\n");
+    }
+
 
     @Override
     public String toString() {
@@ -145,6 +186,7 @@ public class Hero extends Figure implements LoadableFromText {
         weaponsEquipped = new ArrayList<>();
         armorWorn = new ArrayList<>();
         activeEffects = new HashSet<>();
+        inventory = new Inventory();
     }
 
     private void setHeroTypeFromFileName(String fileName){
@@ -349,5 +391,9 @@ public class Hero extends Figure implements LoadableFromText {
 
     public HeroType getHeroType() {
         return heroType;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
     }
 }

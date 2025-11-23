@@ -1,6 +1,7 @@
 package GameBoard;
 
 import Common.Game;
+import Figures.Figure;
 import Figures.Hero.Hero;
 import Figures.Party;
 import UI.CommandType;
@@ -10,6 +11,7 @@ import UI.UserInputs;
 import java.util.*;
 
 import static Figures.Hero.Hero.getAllHeroOptions;
+import static Figures.Party.pickTeamAndDisplayStatistics;
 import static UI.GeneralPrints.printHorizontalLine;
 import static UI.UserInputs.*;
 
@@ -20,12 +22,14 @@ public class HMGame extends Game<HMBoard> {
     private int dimension;
 
     private HMGameState state;
-    private boolean viewingInventory;
+    private boolean viewingStatistics;
+
+    private Party<Hero> heroes;
 
     public HMGame(int n){
         dimension = n;
         state = HMGameState.EXPLORING;
-        viewingInventory = false;
+        viewingStatistics = false;
     }
     public HMGame(){
         this(6);
@@ -34,7 +38,7 @@ public class HMGame extends Game<HMBoard> {
     @Override
     protected void initializeGame() {
         board = pickBoard(dimension);
-        selectYourHeroes(MAX_PARTY_SIZE);
+        heroes = selectYourHeroes(MAX_PARTY_SIZE);
     }
 
     @Override
@@ -120,8 +124,8 @@ public class HMGame extends Game<HMBoard> {
 
         while(true){
 
-            if(viewingInventory) {
-                inventory();
+            if(viewingStatistics) {
+                viewStats();
                 continue;
             }
 
@@ -144,8 +148,9 @@ public class HMGame extends Game<HMBoard> {
 
     private void exploring(){
         while (state == HMGameState.EXPLORING){
-            if(viewingInventory){
-                inventory();
+            if(viewingStatistics){
+                //TODO: Display Inventory
+                viewStats();
                 continue;
             }
             board.displayBoard();
@@ -163,23 +168,27 @@ public class HMGame extends Game<HMBoard> {
         }
     }
 
-    private void inventory(){
+    private void viewStats(){
         /*
-        Shows two different views of the inventory:
+        Shows two different views of the Stats:
         - exploring
         - battling
          */
         switch (state){
             case BATTLING:
-                System.out.println("Battle Inventory View");
+                System.out.println("Battle Stat View");
                 break;
             case EXPLORING:
-                System.out.println("Exploring Inventory View");
+                System.out.println("Exploring Stat View");
+                HashMap<String, Party<? extends Figure>> input = new HashMap<>();
+                input.put("heroes", heroes);
+                pickTeamAndDisplayStatistics(input, this);
                 break;
             default:
-                System.out.println("Something went wrong, weird game state for inventory()");
+                System.out.println("Something went wrong, weird game state for viewStats()");
         }
     }
+
 
     private void market(){
         while (state == HMGameState.MARKET){
@@ -193,7 +202,11 @@ public class HMGame extends Game<HMBoard> {
         }
     }
 
-    public void toggleInventory() {
-        this.viewingInventory = !viewingInventory;
+    public void toggleStatistics() {
+        this.viewingStatistics = !viewingStatistics;
+    }
+
+    public HMGameState getState() {
+        return state;
     }
 }
