@@ -390,17 +390,48 @@ public class Hero extends Figure implements LoadableFromText {
 
         // eligible?
         if(this.level < i.getLevel()){
-            ConsoleColors.printInColor(RED_BOLD, String.format("Hero %s's level is too low to buy this item: %d < %d", name, level, i.getLevel()));
+            ConsoleColors.printInColor(RED_BOLD, String.format("⚠️Hero %s's level is too low to buy this item: %d < %d", name, level, i.getLevel()));
 
         }
         else if(this.gold < i.getPrice()) {
-            ConsoleColors.printInColor(RED_BOLD, String.format("Hero %s's gold is too low to buy this item: %d < %d", name, gold, i.getPrice()));
+            ConsoleColors.printInColor(RED_BOLD, String.format("⚠️Hero %s's gold is too low to buy this item: %d < %d", name, gold, i.getPrice()));
         }
         else{
             tradeItem(i, merchant, this.inventory);
             gold -= i.getPrice();
             i.setPrice(i.getPrice()/ 2);
 
+        }
+
+    }
+
+    private boolean itemIsEquipped(Item i){
+        /*
+        Helper method that tells whether an item is equipped
+         */
+        switch (i.getItemType()){
+            case WEAPON:
+                return weaponsEquipped.contains(i);
+            case ARMOR:
+                return armorWorn.contains(i);
+            default:
+                return false;
+        }
+    }
+
+    public void sellItem(Item i, Inventory merchant){
+        /*
+        Handles all handover logic and gold gaining and equipped or not validation
+         */
+
+        // not equipped?
+        if (itemIsEquipped(i)){
+            ConsoleColors.printInColor(RED_BOLD, String.format("⚠️Hero %s can't sell an item that is equipped", name));
+        }
+        else{
+            tradeItem(i, this.inventory, merchant);
+            gold += i.getPrice();
+            i.setPrice(i.getPrice() * 2);
         }
 
     }

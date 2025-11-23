@@ -208,6 +208,7 @@ public class HMGame extends Game<HMBoard> {
                 state = HMGameState.EXPLORING;
                 break;
             }
+            ConsoleColors.printInColor(ConsoleColors.BLUE_BOLD, "What do you want to do in market?");
             String[] options = marketActionsToList();
             int indexChosen = showMenuAndGetUserAnswer(options);
 
@@ -215,7 +216,6 @@ public class HMGame extends Game<HMBoard> {
                 state = HMGameState.EXPLORING;
                 break;
             }
-
             MarketActions chosenAction = MarketActions.fromName(options[indexChosen]);
 
             switch (chosenAction) {
@@ -228,7 +228,7 @@ public class HMGame extends Game<HMBoard> {
                     break;
 
                 case SELL:
-                    selling(h);
+                    selling(h, marketInventory);
                     break;
 
                 default:
@@ -247,23 +247,39 @@ public class HMGame extends Game<HMBoard> {
 
     private void buying(Hero h, Inventory marketInventory){
         ConsoleColors.printInColor(ConsoleColors.YELLOW, String.format("💰%s has %d gold left", h.getName(), h.getGold()));
+        ConsoleColors.printInColor(ConsoleColors.BLUE_BOLD, "What type of item are you looking to buy?");
         List<? extends Item> subSection = marketInventory.selectInventorySubsection();
         if (subSection == null) return;
         int heroLevel = h.getLevel();
         Map<String, ? extends Item> subSectionOptions = marketInventory.getSubInventoryOptions(subSection, heroLevel);
         String[] options = subSectionOptions.keySet().toArray(new String[0]);
+
+        ConsoleColors.printInColor(ConsoleColors.BLUE_BOLD, "Pick what you like!");
         int chosenIndex = showMenuAndGetUserAnswer(options);
 
         if (chosenIndex < 0)state = HMGameState.EXPLORING;
         else{
-            // TODO: Buy item logic
             Item selectedItem = subSectionOptions.get(options[chosenIndex]);
             h.buyItem(selectedItem, marketInventory);
         }
     }
 
-    private void selling(Hero h){
-        System.out.println("Selling now");
+    private void selling(Hero h, Inventory marketInventory){
+        Inventory i = h.getInventory();
+        ConsoleColors.printInColor(ConsoleColors.BLUE_BOLD, "What type of item are you looking to sell?");
+        List<? extends Item> subSection = i.selectInventorySubsection();
+        if (subSection == null) return;
+        Map<String, ? extends Item> subSectionOptions = i.getSubInventoryOptions(subSection);
+        String[] options = subSectionOptions.keySet().toArray(new String[0]);
+
+        ConsoleColors.printInColor(ConsoleColors.BLUE_BOLD, "What are you trying to get rid of?");
+        int chosenIndex = showMenuAndGetUserAnswer(options);
+
+        if (chosenIndex < 0)state = HMGameState.EXPLORING;
+        else{
+            Item selectedItem = subSectionOptions.get(options[chosenIndex]);
+            h.sellItem(selectedItem, marketInventory);
+        }
     }
 
     public void toggleStatistics() {
