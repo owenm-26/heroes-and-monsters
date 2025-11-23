@@ -20,31 +20,35 @@ public class Party<T extends Figure>{
         return members;
     }
 
-    public static void pickTeamAndDisplayStatistics(Map<String, Party<? extends Figure>> teams, HMGame g){
-        if(teams.size() == 0) throw new IllegalArgumentException("teams argument is an empty map in displayPartyStatistics()");
-        String[] options = teams.keySet().toArray(new String[0]);
-        if (teams.size() > 1){
-            ConsoleColors.printInColor(ConsoleColors.BLUE_BOLD, "Which group's statistics would you like to see?");
-
-            int optionChosenIndex = UserInputs.showMenuAndGetUserAnswer(options);
-            teams.get(options[optionChosenIndex]).displayPartyStatistics(g);
-        }
-        else{
-            teams.get(options[0]).displayPartyStatistics(g);
-        }
-    }
-
-    private void displayPartyStatistics(HMGame g){
+    public T pickTeamMember(HMGame g, String message){
+        /*
+        Helper method that displays a menu of party members to pick from and returns the one picked
+         */
         HashMap<String, T> map = getMembersNamesMap();
+        //"Which team member is going to enter the market?"
 
-        ConsoleColors.printInColor(ConsoleColors.BLUE_BOLD, "Which statistics would you like to open?");
+        ConsoleColors.printInColor(ConsoleColors.BLUE_BOLD, message);
 
         String[] options = map.keySet().toArray(new String[0]);
         int optionChosenIndex = UserInputs.showMenuAndGetUserAnswer(options, true, g);
 
-        if (optionChosenIndex != -1){
-            map.get(options[optionChosenIndex]).displayFigureStatistics(g.getState());
+        return optionChosenIndex >= 0 ? map.get(options[optionChosenIndex]) : null;
+    }
+
+    public static void pickTeamAndDisplayStatistics(Map<String, Party<? extends Figure>> teams, HMGame g){
+        if(teams.size() == 0) throw new IllegalArgumentException("teams argument is an empty map in displayPartyStatistics()");
+        String[] options = teams.keySet().toArray(new String[0]);
+        Party<?> p;
+        if (teams.size() > 1){
+            ConsoleColors.printInColor(ConsoleColors.BLUE_BOLD, "Which group's statistics would you like to see?");
+            int optionChosenIndex = UserInputs.showMenuAndGetUserAnswer(options);
+            p = teams.get(options[optionChosenIndex]);
         }
+        else{
+            p = teams.get(options[0]);
+        }
+        Figure member = p.pickTeamMember(g, "Which statistics would you like to open?");
+        if (member != null) member.displayFigureStatistics(g.getState());
     }
 
     public HashMap<String, T> getMembersNamesMap(){

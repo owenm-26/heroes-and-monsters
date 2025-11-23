@@ -1,6 +1,7 @@
 package UI;
 
 import GameBoard.HMGame;
+import GameBoard.HMGameState;
 
 import java.util.*;
 

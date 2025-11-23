@@ -4,6 +4,7 @@ import Common.Game;
 import Figures.Figure;
 import Figures.Hero.Hero;
 import Figures.Party;
+import Items.Inventory;
 import UI.CommandType;
 import UI.ConsoleColors;
 import UI.UserInputs;
@@ -19,7 +20,7 @@ public class HMGame extends Game<HMBoard> {
 
     private final static int MAX_PARTY_SIZE=1;
     private HMBoard board;
-    private int dimension;
+    private final int dimension;
 
     private HMGameState state;
     private boolean viewingStatistics;
@@ -149,7 +150,6 @@ public class HMGame extends Game<HMBoard> {
     private void exploring(){
         while (state == HMGameState.EXPLORING){
             if(viewingStatistics){
-                //TODO: Display Inventory
                 viewStats();
                 continue;
             }
@@ -164,6 +164,7 @@ public class HMGame extends Game<HMBoard> {
             if(isMovement(input)){
                 board.handleMovement(input);
             }
+            if(isCommand(input, CommandType.MARKET) && board.partyIsInMarket()) state = HMGameState.MARKET;
 
         }
     }
@@ -190,8 +191,12 @@ public class HMGame extends Game<HMBoard> {
 
 
     private void market(){
-        while (state == HMGameState.MARKET){
+        Inventory marketInventory = board.getMarketInventory();
+        HashMap<String, Party<? extends Figure>> input = new HashMap<>();
+        input.put("heroes", heroes);
 
+        while (state == HMGameState.MARKET){
+            pickTeamAndDisplayStatistics(input, this);
         }
     }
 
@@ -207,5 +212,9 @@ public class HMGame extends Game<HMBoard> {
 
     public HMGameState getState() {
         return state;
+    }
+
+    public void setState(HMGameState state) {
+        this.state = state;
     }
 }

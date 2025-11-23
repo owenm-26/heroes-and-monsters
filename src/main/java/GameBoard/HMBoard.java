@@ -5,6 +5,7 @@ import Figures.Figure;
 import Figures.Party;
 import GameBoard.HMSquare.HMSquare;
 import GameBoard.HMSquare.HMSquareType;
+import Items.Inventory;
 import UI.CommandType;
 import UI.UserInputs;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
@@ -132,6 +133,22 @@ public class HMBoard extends Board<HMSquare> {
         //set new square
         grid[prospectiveCoordinates[0]][prospectiveCoordinates[1]].setPartyOnSquare(p);
         heroPartyCoordinates = prospectiveCoordinates;
+    }
+
+    public boolean partyIsInMarket(){
+        /*
+        Returns whether the party is on a market square to determine if they can enter it
+         */
+
+        return grid[heroPartyCoordinates[0]][heroPartyCoordinates[1]].getType() == HMSquareType.MARKET;
+    }
+
+    public Inventory getMarketInventory(){
+        /*
+        Returns the inventory of the space that the players are on
+         */
+        if (!partyIsInMarket()) throw new ValueException("This square is not a market");
+        return grid[heroPartyCoordinates[0]][heroPartyCoordinates[1]].getInventory();
     }
 
 }
