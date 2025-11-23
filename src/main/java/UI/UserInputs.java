@@ -84,7 +84,7 @@ public class UserInputs {
             if (toggleMenuAbility) {
                 if (g == null) throw new IllegalArgumentException("Toggle Menu set but game is null");
 
-                System.out.print(", 'i' to un/toggle inventory): ");
+                System.out.print(", 'i' to un/toggle info): ");
                 input = UserInputs.toggleInventoryParseAndQuitIfAsked(g);
                 if (isCommand(input, CommandType.INFO)) return -1;
             } else {

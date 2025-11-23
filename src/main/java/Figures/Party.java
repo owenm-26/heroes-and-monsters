@@ -20,19 +20,25 @@ public class Party<T extends Figure>{
         return members;
     }
 
-    public T pickTeamMember(HMGame g, String message){
+    public T pickTeamMember(HMGame g, String message, boolean toggleAbility){
         /*
         Helper method that displays a menu of party members to pick from and returns the one picked
          */
         HashMap<String, T> map = getMembersNamesMap();
-        //"Which team member is going to enter the market?"
 
         ConsoleColors.printInColor(ConsoleColors.BLUE_BOLD, message);
 
         String[] options = map.keySet().toArray(new String[0]);
-        int optionChosenIndex = UserInputs.showMenuAndGetUserAnswer(options, true, g);
+        int optionChosenIndex;
+        optionChosenIndex = toggleAbility ? UserInputs.showMenuAndGetUserAnswer(options, true, g) : UserInputs.showMenuAndGetUserAnswer(options);
 
         return optionChosenIndex >= 0 ? map.get(options[optionChosenIndex]) : null;
+    }
+    public T pickTeamMember(HMGame g, String message){
+        /*
+        Helper method that displays a menu of party members to pick from and returns the one picked
+         */
+        return pickTeamMember(g, message, false);
     }
 
     public static void pickTeamAndDisplayStatistics(Map<String, Party<? extends Figure>> teams, HMGame g){
@@ -47,7 +53,7 @@ public class Party<T extends Figure>{
         else{
             p = teams.get(options[0]);
         }
-        Figure member = p.pickTeamMember(g, "Which statistics would you like to open?");
+        Figure member = p.pickTeamMember(g, "Which statistics would you like to open?", true);
         if (member != null) member.displayFigureStatistics(g.getState());
     }
 

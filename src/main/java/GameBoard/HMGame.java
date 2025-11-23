@@ -4,7 +4,9 @@ import Common.Game;
 import Figures.Figure;
 import Figures.Hero.Hero;
 import Figures.Party;
+import GameBoard.HMSquare.MarketActions;
 import Items.Inventory;
+import Items.Item;
 import UI.CommandType;
 import UI.ConsoleColors;
 import UI.UserInputs;
@@ -13,6 +15,7 @@ import java.util.*;
 
 import static Figures.Hero.Hero.getAllHeroOptions;
 import static Figures.Party.pickTeamAndDisplayStatistics;
+import static GameBoard.HMSquare.MarketActions.marketActionsToList;
 import static UI.GeneralPrints.printHorizontalLine;
 import static UI.UserInputs.*;
 
@@ -157,6 +160,10 @@ public class HMGame extends Game<HMBoard> {
             ConsoleColors.printInColor(ConsoleColors.GREEN_BOLD, "Press WASD to move or check inventory with i");
             String input = UserInputs.toggleInventoryParseAndQuitIfAsked(this);
 
+            if(isCommand(input, CommandType.MARKET) && board.partyIsInMarket()) {
+                state = HMGameState.MARKET;
+                continue;
+            }
             if(!isExploringCommand(input)) {
                 System.out.println("Invalid Command.");
                 continue;
@@ -164,7 +171,6 @@ public class HMGame extends Game<HMBoard> {
             if(isMovement(input)){
                 board.handleMovement(input);
             }
-            if(isCommand(input, CommandType.MARKET) && board.partyIsInMarket()) state = HMGameState.MARKET;
 
         }
     }
@@ -196,7 +202,30 @@ public class HMGame extends Game<HMBoard> {
         input.put("heroes", heroes);
 
         while (state == HMGameState.MARKET){
-            pickTeamAndDisplayStatistics(input, this);
+            Hero h = heroes.pickTeamMember(this, "Which team member is going to enter the market?");
+            String[] options = marketActionsToList();
+            int indexChosen = showMenuAndGetUserAnswer(options);
+
+            MarketActions chosenAction = MarketActions.fromName(options[indexChosen]);
+
+            switch (chosenAction) {
+                case EXIT:
+                    state = HMGameState.EXPLORING;
+                    break;
+
+                case BUY:
+                    buying(h, marketInventory);
+                    break;
+
+                case SELL:
+                    selling(h);
+                    break;
+
+                default:
+                    System.out.println("Unknown action chosen.");
+            }
+
+
         }
     }
 
@@ -204,6 +233,16 @@ public class HMGame extends Game<HMBoard> {
         while (state == HMGameState.BATTLING){
 
         }
+    }
+
+    private void buying(Hero h, Inventory marketInventory){
+        ConsoleColors.printInColor(ConsoleColors.YELLOW, String.format("💰%s had %d gold left", h.getName(), h.getGold()));
+        List<? extends Item> subSection = marketInventory.selectInventorySubsection();
+        //TODO: display subsection options for purchase
+    }
+
+    private void selling(Hero h){
+        System.out.println("Selling now");
     }
 
     public void toggleStatistics() {

@@ -5,7 +5,11 @@ import Items.Spell.Spell;
 import UI.ConsoleColors;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static UI.UserInputs.showMenuAndGetUserAnswer;
 
 public class Inventory {
 
@@ -90,5 +94,25 @@ public class Inventory {
 
     public List<Potion> getPotions() {
         return potions;
+    }
+
+    private Map<String, List<? extends Item>> getInventoryCategories(){
+        HashMap<String, List<? extends Item>> subSections = new HashMap<>();
+        subSections.put("Weapons", weapons);
+        subSections.put("Armor", armor);
+        subSections.put("Spells", spells);
+        subSections.put("Potions", potions);
+        return subSections;
+    }
+
+    public List<? extends Item> selectInventorySubsection(){
+        /*
+        Presents a menu for the user to pick which Item inventory to look at and returns it
+         */
+        Map<String, List<? extends Item>> subSections = getInventoryCategories();
+        String[] options = subSections.keySet().toArray(new String[0]);
+        int indexChosen = showMenuAndGetUserAnswer(options);
+
+        return subSections.get(options[indexChosen]);
     }
 }
