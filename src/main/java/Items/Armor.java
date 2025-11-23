@@ -25,4 +25,9 @@ public class Armor extends Item{
     public boolean isEquipable(){
         return true;
     }
+
+    @Override
+    public String getItemDescriptionOneLiner() {
+        return String.format("🛡️️ %s - lvl%d   %d damage reduction   %d usesLeft   %d gold", name, level, damageReduction, usesLeft, price);
+    }
 }

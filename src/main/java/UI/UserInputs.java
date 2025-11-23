@@ -79,7 +79,7 @@ public class UserInputs {
                 System.out.println();
                 i++;
             }
-            System.out.print("Enter choice ('q' to quit");
+            System.out.print("Enter choice ('q' to quit, '0' to go back to map");
             String input;
             if (toggleMenuAbility) {
                 if (g == null) throw new IllegalArgumentException("Toggle Menu set but game is null");
@@ -99,6 +99,11 @@ public class UserInputs {
             } catch (NumberFormatException e) {
                 if (!input.equals(CommandType.HELP.getCode())) System.out.println("Invalid choice.\n");
 
+                continue;
+            }
+
+            if (choice > options.length){
+                System.out.println("Invalid Choice. Out of bounds. Try again\n");
                 continue;
             }
             return choice - 1;

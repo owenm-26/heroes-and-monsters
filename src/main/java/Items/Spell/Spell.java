@@ -16,6 +16,7 @@ public class Spell extends Item {
         this.type = ItemType.SPELL;
         this.damage = damage;
         this.spellType = spellType;
+        this.mpCost = mpCost;
     }
 
     @Override
@@ -37,5 +38,10 @@ public class Spell extends Item {
 
     public boolean isEquipable(){
         return false;
+    }
+
+    @Override
+    public String getItemDescriptionOneLiner() {
+        return String.format("🪄️ %s - lvl%d   %d damage points  %s type   %d mana   %d uses left   %d gold", name, level, damage, spellType.getSymbol(), mpCost, usesLeft, price);
     }
 }

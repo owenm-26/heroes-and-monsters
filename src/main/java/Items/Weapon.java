@@ -33,6 +33,11 @@ public class Weapon extends Item{
         return String.format("Your weapon %s broke from wear!", name);
     }
 
+    @Override
+    public String getItemDescriptionOneLiner() {
+        return String.format("🗡️ %s - lvl%d   %d damage points  %d required hands   %d uses left   %d gold", name, level, damage, handsRequired, usesLeft, price);
+    }
+
     public boolean isEquipable(){
         return true;
     }

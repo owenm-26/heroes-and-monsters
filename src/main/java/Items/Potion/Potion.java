@@ -32,4 +32,14 @@ public class Potion extends Item {
     public boolean isEquipable(){
         return false;
     }
+
+    @Override
+    public String getItemDescriptionOneLiner() {
+        StringBuilder b = new StringBuilder();
+        for (PotionType name: effects.keySet()){
+            b.append(String.format("(%s - %d) ", name.getName(), effects.get(name)));
+        }
+        String effects = b.toString();
+        return String.format("🧪️ %s - lvl%d   %d uses left  EFFECTS: %s %d gold", name, level, usesLeft, effects, price);
+    }
 }

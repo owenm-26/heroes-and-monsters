@@ -239,6 +239,16 @@ public class HMGame extends Game<HMBoard> {
         ConsoleColors.printInColor(ConsoleColors.YELLOW, String.format("💰%s had %d gold left", h.getName(), h.getGold()));
         List<? extends Item> subSection = marketInventory.selectInventorySubsection();
         //TODO: display subsection options for purchase
+        Map<String, ? extends Item> subSectionOptions = marketInventory.getSubInventoryOptions(subSection);
+        String[] options = subSectionOptions.keySet().toArray(new String[0]);
+        int chosenIndex = showMenuAndGetUserAnswer(options);
+
+        if (chosenIndex < 0)state = HMGameState.EXPLORING;
+        else{
+            // TODO: Buy item logic
+            Item selectedItem = subSectionOptions.get(options[chosenIndex]);
+            System.out.format("Buying %s for %d gold for level %d", selectedItem.getName(), selectedItem.getPrice(), selectedItem.getLevel());
+        }
     }
 
     private void selling(Hero h){

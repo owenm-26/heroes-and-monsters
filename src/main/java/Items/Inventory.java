@@ -4,10 +4,7 @@ import Items.Potion.Potion;
 import Items.Spell.Spell;
 import UI.ConsoleColors;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static UI.UserInputs.showMenuAndGetUserAnswer;
 
@@ -114,5 +111,32 @@ public class Inventory {
         int indexChosen = showMenuAndGetUserAnswer(options);
 
         return subSections.get(options[indexChosen]);
+    }
+
+    public Map<String, ? extends Item> getSubInventoryOptions(List<? extends Item> subInventory){
+        /*
+        Returns the subInventory in a format to be used to create a menu to display
+         */
+        Map<String, Item> map = new LinkedHashMap<>();
+
+        for (Item item : subInventory) {
+
+            String key = item.getItemDescriptionOneLiner();
+
+            // Handle duplicate names to avoid overwriting
+            if (map.containsKey(key)) {
+                int i = 2;
+                String newKey = key + " (" + i + ")";
+                while (map.containsKey(newKey)) {
+                    i++;
+                    newKey = key + " (" + i + ")";
+                }
+                key = newKey;
+            }
+
+            map.put(key, item);
+        }
+
+        return map;
     }
 }

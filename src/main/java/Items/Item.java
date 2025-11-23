@@ -44,4 +44,6 @@ public abstract class Item implements Equipable{
     public int getUsesLeft() {
         return usesLeft;
     }
+
+    public abstract String getItemDescriptionOneLiner();
 }
