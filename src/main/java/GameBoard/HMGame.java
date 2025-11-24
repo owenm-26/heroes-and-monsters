@@ -174,7 +174,7 @@ public class HMGame extends Game<HMBoard> {
                 continue;
             }
             if(isMovement(input)){
-                board.handleMovement(input);
+                board.handleMovement(input, this);
             }
 
         }
@@ -271,7 +271,8 @@ public class HMGame extends Game<HMBoard> {
 
     private void battling(){
         while (state == HMGameState.BATTLING){
-
+            System.out.println("BATTLING@!!!!");
+            break;
         }
     }
 

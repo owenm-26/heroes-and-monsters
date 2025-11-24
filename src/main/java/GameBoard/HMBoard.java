@@ -12,6 +12,7 @@ import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 
 import java.util.*;
 
+import static GameBoard.HMSquare.HMSquare.battleProbability;
 import static UI.GeneralPrints.padCenter;
 import static Validators.Integers.integerInInclusiveRange;
 
@@ -121,7 +122,7 @@ public class HMBoard extends Board<HMSquare> {
         System.out.println(border);
     }
 
-    public void handleMovement(String input){
+    public void handleMovement(String input, HMGame g){
         if(!UserInputs.isMovement(input)) throw new IllegalArgumentException(String.format("%s is not a movement command", input));
         int[] prospectiveCoordinates = {heroPartyCoordinates[0] + dirs.get(input)[0], heroPartyCoordinates[1] + dirs.get(input)[1]};
         if (!partyCanMakeRequestedMovement(prospectiveCoordinates)) {
@@ -134,6 +135,11 @@ public class HMBoard extends Board<HMSquare> {
         //set new square
         grid[prospectiveCoordinates[0]][prospectiveCoordinates[1]].setPartyOnSquare(p);
         heroPartyCoordinates = prospectiveCoordinates;
+
+        //random chance of battling on common space
+        if (grid[heroPartyCoordinates[0]][heroPartyCoordinates[1]].getType() == HMSquareType.COMMON && Math.random() < battleProbability){
+            g.setState(HMGameState.BATTLING);
+        }
     }
 
     public boolean partyIsInMarket(){
