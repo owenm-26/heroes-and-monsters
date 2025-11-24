@@ -70,8 +70,8 @@ public class Potion extends Item implements LoadableFromText {
             PotionType p = fromName(attr);
             effects.put(p, increase);
         }
-        System.out.println(attributesAffected +" - " + increase);
-        System.out.println(this.getItemDescriptionOneLiner());
+//        System.out.println(attributesAffected +" - +" + increase);
+//        System.out.println(this.getItemDescriptionOneLiner());
 
     }
 
@@ -83,7 +83,6 @@ public class Potion extends Item implements LoadableFromText {
         String attributesAffected = map.get("attribute affected");
         int increase = Integer.parseInt(map.get("attribute increase"));
         setAttributesAffected(attributesAffected, increase);
-
     }
 
     public static List<Potion> getAllPotionOptions(){

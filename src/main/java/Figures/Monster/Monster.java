@@ -5,10 +5,12 @@ import Data.TextDataLoader;
 import Figures.Figure;
 import Figures.Hero.Hero;
 import Figures.Hero.HeroType;
+import Figures.Party;
 import GameBoard.HMGameState;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -76,5 +78,52 @@ public class Monster extends Figure implements LoadableFromText {
             System.out.format("Failed to load all monsters: %s\n", e);
         }
         return monsters;
+    }
+
+    private static HashMap<Integer, List<Monster>> getAllMonsterOptionsHashmap() {
+        /*
+        Helper method to more efficiently find the level-match via a HashMap data structure
+         */
+        HashMap<Integer, List<Monster>> map = new HashMap<>();
+        for (Monster m : getAllMonsterOptions()) {
+            int monsterLevel = m.level;
+            List<Monster> l;
+            if (map.containsKey(monsterLevel)) l = map.get(monsterLevel);
+            else l = new ArrayList<>();
+
+            l.add(m);
+            map.put(monsterLevel, l);
+        }
+        return map;
+    }
+
+    private static Monster pickMonster(HashMap<Integer, List<Monster>> monsterMap, Hero h){
+        /*
+        Logic that chooses the monster based on certain criteria that can be tweaked as needed.
+         */
+        int heroLevel; List<Monster> candidates; Monster m;
+        heroLevel = h.getLevel();
+        candidates = monsterMap.get(heroLevel);
+        Monster chosen = candidates.get((int)(candidates.size()*Math.random()));
+
+        //remove from options
+        candidates.remove(chosen);
+        monsterMap.put(heroLevel, candidates);
+        return chosen;
+    }
+
+    public static Party<Monster> assembleMonsterBattleParty(Party<Hero> heroes){
+        /*
+        Returns a party of monsters that matches the levels of the heroes battling
+         */
+        HashMap<Integer, List<Monster>> monsterMap = getAllMonsterOptionsHashmap();
+        Party<Monster> p = new Party<>(heroes.getMembers().size());
+
+
+        for(Hero h: heroes.getMembers()){
+            Monster m = pickMonster(monsterMap, h);
+            p.addMember(m, false);
+        }
+        return p;
     }
 }
