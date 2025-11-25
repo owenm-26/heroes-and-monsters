@@ -13,7 +13,7 @@ import java.util.Map;
 
 import static Data.TextDataLoader.getAllSourceFileNames;
 
-public class Weapon extends Item implements LoadableFromText {
+public class Weapon extends Item implements LoadableFromText, DamageDealing {
     private int damage;
     private int handsRequired;
     private static final int DEFAULT_USES_LEFT=10;
@@ -82,5 +82,10 @@ public class Weapon extends Item implements LoadableFromText {
             System.out.format("Failed to load all weapons: %s\n", e);
         }
         return weapons;
+    }
+
+    @Override
+    public int getDamageDealt(int strength) {
+        return (int)((strength + damage) * 0.05);
     }
 }

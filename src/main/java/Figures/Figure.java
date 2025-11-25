@@ -43,6 +43,8 @@ public abstract class Figure extends Player {
 
     }
 
+    public abstract boolean dodgedSuccessfully();
+
 //    GETTERS
 
     public String getName(){

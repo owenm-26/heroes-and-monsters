@@ -4,6 +4,7 @@ import Figures.Hero.Hero;
 import Figures.Monster.Monster;
 import Figures.Party;
 import UI.ConsoleColors;
+import UI.GeneralPrints;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +67,16 @@ public class Battle {
         /*
         Iterates through all alive heroes in the party and gives them a choice of actions
          */
+        GeneralPrints.printHorizontalLine();
+
+        ConsoleColors.printInColor(ConsoleColors.YELLOW_BOLD, String.format("TURN #%d: HEROES\n", turnNumber));
+        List<Hero> heroList = heroes.getMembers();
+        for(int index: heroesLeftIndices){
+            Hero currHero = heroList.get(index);
+            ConsoleColors.printInColor(ConsoleColors.BLUE_BOLD, String.format("🦸It is %s's turn to fight!", currHero.getName()));
+
+        }
+
     }
 
     private void executeMonstersTurn(){

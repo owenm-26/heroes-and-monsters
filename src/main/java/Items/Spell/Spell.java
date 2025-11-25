@@ -3,6 +3,7 @@ package Items.Spell;
 import Data.LoadableFromText;
 import Data.TextDataLoader;
 import Figures.Hero.HeroType;
+import Items.DamageDealing;
 import Items.Item;
 import Items.ItemType;
 import Items.Weapon;
@@ -14,7 +15,7 @@ import java.util.Map;
 
 import static Data.TextDataLoader.getAllSourceFileNames;
 
-public class Spell extends Item implements LoadableFromText {
+public class Spell extends Item implements LoadableFromText, DamageDealing {
     private int damage;
     private int mpCost;
     private SpellType spellType;
@@ -41,9 +42,9 @@ public class Spell extends Item implements LoadableFromText {
         return String.format("You have used up your last charge of your %s spell. Removing from inventory", name);
     }
 
-    public int getDamage() {
-        return damage;
-    }
+//    public int getDamage() {
+//        return damage;
+//    }
 
     public int getMpCost() {
         return mpCost;
@@ -65,6 +66,9 @@ public class Spell extends Item implements LoadableFromText {
         );
     }
 
+    public int getDamageDealt(int dexterity){
+        return damage + ((dexterity / 10000) * damage);
+    }
 
     private void setSpellTypeFromFileName(String fileName){
         if (fileName.length() == 0) throw new IllegalArgumentException("Filename is length 0 in setHeroTypeFromFileName()");

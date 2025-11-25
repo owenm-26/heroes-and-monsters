@@ -32,6 +32,11 @@ public class Monster extends Figure implements LoadableFromText {
     public Monster(){
     }
 
+    @Override
+    public boolean dodgedSuccessfully() {
+        return Math.random() > (baseDodge * 0.01);
+    }
+
     public void displayFigureStatistics(HMGameState state){
         /*
         Displays statistics of figure based on the game state

@@ -63,6 +63,11 @@ public class Hero extends Figure implements LoadableFromText {
         this.baseDefense = 0;
     }
 
+    @Override
+    public boolean dodgedSuccessfully() {
+        return Math.random() > (agility * 0.002);
+    }
+
     public void displayFigureStatistics(HMGameState state){
         final String COLOR = ConsoleColors.CYAN_BOLD;
 
