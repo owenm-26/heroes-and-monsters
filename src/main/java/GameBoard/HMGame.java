@@ -5,6 +5,7 @@ import Battle.BattleCommand;
 import Common.Game;
 import Figures.Figure;
 import Figures.Hero.Hero;
+import Figures.Monster.Monster;
 import Figures.Party;
 import GameBoard.HMSquare.MarketActions;
 import Items.Inventory;
@@ -32,7 +33,7 @@ public class HMGame extends Game<HMBoard> {
     private HMGameState state;
     private boolean viewingStatistics;
 
-    private Party<Hero> heroes;
+    private Map<String, Party<? extends Figure>> parties;
 
     public HMGame(int n){
         dimension = n;
@@ -46,7 +47,8 @@ public class HMGame extends Game<HMBoard> {
     @Override
     protected void initializeGame() {
         board = pickBoard(dimension);
-        heroes = selectYourHeroes(MAX_PARTY_SIZE);
+        parties = new HashMap<>();
+        parties.put("Heroes", selectYourHeroes(MAX_PARTY_SIZE));
     }
 
     @Override
@@ -191,7 +193,7 @@ public class HMGame extends Game<HMBoard> {
         Only accessible when exploring. Allows user to equip / unequip and use potions.
          */
         //Pick Hero to view
-        Hero h = heroes.pickTeamMember(this, "Which team member's backpack?");
+        Hero h = (Hero) parties.get("Heroes").pickTeamMember(this, "Which team member's backpack?");
         //Display current Equipped and stats
         h.displayFigureStatistics(HMGameState.BATTLING);
         //Ask them what they want to do (equip, unequip, take potion)
@@ -211,34 +213,22 @@ public class HMGame extends Game<HMBoard> {
         }
     }
 
-    private void viewStats(){
+    public void viewStats(){
         /*
         Shows two different views of the Stats:
         - exploring
         - battling
          */
-        switch (state){
-            case BATTLING:
-                System.out.println("Battle Stat View");
-                break;
-            case EXPLORING:
-                HashMap<String, Party<? extends Figure>> input = new HashMap<>();
-                input.put("heroes", heroes);
-                pickTeamAndDisplayStatistics(input, this);
-                break;
-            default:
-                System.out.println("Something went wrong, weird game state for viewStats()");
-        }
+        if (parties.size() < 1 ) throw new IllegalStateException("Parties state is empty. This is impossible. Should always exist heroes.");
+        pickTeamAndDisplayStatistics(parties, this);
     }
 
 
     private void market(){
         Inventory marketInventory = board.getMarketInventory();
-        HashMap<String, Party<? extends Figure>> input = new HashMap<>();
-        input.put("heroes", heroes);
 
         while (state == HMGameState.MARKET){
-            Hero h = heroes.pickTeamMember(this, "Which team member is going to enter the market?");
+            Hero h = (Hero) parties.get("Heroes").pickTeamMember(this, "Which team member is going to enter the market?");
 
             if (h == null) {
                 state = HMGameState.EXPLORING;
@@ -276,9 +266,12 @@ public class HMGame extends Game<HMBoard> {
     }
 
     private void battling(){
-        Battle b = new Battle(heroes);
+        Battle b = new Battle((Party<Hero>) parties.get("Heroes"), this);
+        Party<Monster> monsters = b.getMonsters();
+        parties.put("Monsters", monsters);
         boolean won = b.executeBattle();
         if (!won) endGame();
+        parties.remove("monsters");
         state = HMGameState.EXPLORING;
     }
 

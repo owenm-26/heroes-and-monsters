@@ -79,7 +79,7 @@ public class UserInputs {
                 System.out.println();
                 i++;
             }
-            System.out.print("Enter choice ('q' to quit, '0' to go back to map");
+            System.out.print("Enter choice ('q' to quit, '0' to go back");
             String input;
             if (toggleMenuAbility) {
                 if (g == null) throw new IllegalArgumentException("Toggle Menu set but game is null");

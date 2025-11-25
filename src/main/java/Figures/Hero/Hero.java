@@ -57,7 +57,7 @@ public class Hero extends Figure implements LoadableFromText {
 
         ConsoleColors.printInColor(COLOR, "===== HERO STATUS =====");
 
-        ConsoleColors.printInColor(COLOR, "Name: " + name + " (" + heroType + ")");
+        ConsoleColors.printInColor(COLOR, "Name: " + name + " (" + heroType.getName() + ")");
         ConsoleColors.printInColor(COLOR, "Level: " + level);
         ConsoleColors.printInColor(COLOR, "HP: " + hp + "/" + hpMax);
         ConsoleColors.printInColor(COLOR, "MP: " + mp + "/" + mpMax);

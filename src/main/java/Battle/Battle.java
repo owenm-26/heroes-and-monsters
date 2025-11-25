@@ -3,6 +3,7 @@ package Battle;
 import Figures.Hero.Hero;
 import Figures.Monster.Monster;
 import Figures.Party;
+import GameBoard.HMGame;
 import UI.ConsoleColors;
 import UI.GeneralPrints;
 
@@ -18,12 +19,15 @@ public class Battle {
     private List<Integer> monstersLeftIndices;
     private int turnNumber; // odd is heroes turn, even is monsters
 
-    public Battle(Party<Hero> heroes){
+    private HMGame game;
+
+    public Battle(Party<Hero> heroes, HMGame g){
         this.heroes = heroes;
         heroesLeftIndices = new ArrayList<>(getIntegerRange(heroes.size()));
         monsters = Monster.assembleMonsterBattleParty(heroes);
         monstersLeftIndices = new ArrayList<>(getIntegerRange(monsters.size()));
         turnNumber = 1;
+        game = g;
     }
 
     private List<Integer> getIntegerRange(int upperBound){
@@ -74,7 +78,7 @@ public class Battle {
         for(int index: heroesLeftIndices){
             Hero curr = heroList.get(index);
             ConsoleColors.printInColor(ConsoleColors.BLUE_BOLD, String.format("🦸 It is %s's turn to fight!", curr.getName()));
-
+            game.viewStats();
         }
 
     }
@@ -93,5 +97,9 @@ public class Battle {
             ConsoleColors.printInColor(ConsoleColors.BLUE_BOLD, String.format("🧌 It is %s's turn to fight!", curr.getName()));
 
         }
+    }
+
+    public Party<Monster> getMonsters() {
+        return monsters;
     }
 }

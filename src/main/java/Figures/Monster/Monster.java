@@ -7,6 +7,9 @@ import Figures.Hero.Hero;
 import Figures.Hero.HeroType;
 import Figures.Party;
 import GameBoard.HMGameState;
+import Items.Armor;
+import Items.Weapon;
+import UI.ConsoleColors;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 
 import java.util.ArrayList;
@@ -30,9 +33,21 @@ public class Monster extends Figure implements LoadableFromText {
     }
 
     public void displayFigureStatistics(HMGameState state){
-        /*
-        Displays statistics of figure based on the game state
-         */
+        final String COLOR = ConsoleColors.CYAN_BOLD;
+
+        ConsoleColors.printInColor(COLOR, "===== Monster STATUS =====");
+
+        ConsoleColors.printInColor(COLOR, "Name: " + name + " (" + monsterType.getName() + ")");
+        ConsoleColors.printInColor(COLOR, "Level: " + level);
+        ConsoleColors.printInColor(COLOR, "HP: " + hp + "/" + hpMax);
+        ConsoleColors.printInColor(COLOR, "Attack Strategy: " + monsterType.getStrategy().getName());
+
+        ConsoleColors.printInColor(COLOR, "--- Attributes ---");
+        ConsoleColors.printInColor(COLOR, "Base Damage:  " + baseDamage);
+        ConsoleColors.printInColor(COLOR, "Base Defense: " + baseDefense);
+        ConsoleColors.printInColor(COLOR, "Dodge Chance:   " + baseDodge);
+
+        ConsoleColors.printInColor(COLOR, "========================\n");
     }
 
     private void setMonsterTypeFromFileName(String fileName){

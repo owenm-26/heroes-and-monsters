@@ -48,6 +48,7 @@ public class Party<T extends Figure>{
         if (teams.size() > 1){
             ConsoleColors.printInColor(ConsoleColors.BLUE_BOLD, "Which group's statistics would you like to see?");
             int optionChosenIndex = UserInputs.showMenuAndGetUserAnswer(options);
+            if (optionChosenIndex < 0) return;
             p = teams.get(options[optionChosenIndex]);
         }
         else{
