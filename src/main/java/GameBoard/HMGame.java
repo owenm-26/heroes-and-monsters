@@ -1,5 +1,6 @@
 package GameBoard;
 
+import Battle.Battle;
 import Battle.BattleCommand;
 import Common.Game;
 import Figures.Figure;
@@ -152,6 +153,11 @@ public class HMGame extends Game<HMBoard> {
         }
     }
 
+    private void endGame(){
+        ConsoleColors.printInColor(ConsoleColors.BLACK_BACKGROUND, "☠️ Game Over. You lose.");
+        System.exit(0);
+    }
+
     private void exploring(){
         while (state == HMGameState.EXPLORING){
             if(viewingStatistics){
@@ -270,10 +276,10 @@ public class HMGame extends Game<HMBoard> {
     }
 
     private void battling(){
-        while (state == HMGameState.BATTLING){
-            System.out.println("BATTLING@!!!!");
-            break;
-        }
+        Battle b = new Battle(heroes);
+        boolean won = b.executeBattle();
+        if (!won) endGame();
+        state = HMGameState.EXPLORING;
     }
 
     private void buying(Hero h, Inventory marketInventory){

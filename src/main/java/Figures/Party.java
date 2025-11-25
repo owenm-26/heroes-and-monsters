@@ -65,6 +65,10 @@ public class Party<T extends Figure>{
         return res;
     }
 
+    public int size(){
+        return this.members.size();
+    }
+
     public boolean canAddAnotherMember(){
         return members.size() < maxSize;
     }
@@ -97,5 +101,13 @@ public class Party<T extends Figure>{
 
         members.remove(member);
         ConsoleColors.printInColor("👋 %s has left your party!", member.getName());
+    }
+
+    public Party<T> getFiguresWithHealthRemaining(){
+        Party<T> alive = new Party<>(this.maxSize);
+        for(T m: members){
+            if (m.isAlive()) alive.addMember(m);
+        }
+        return alive;
     }
 }

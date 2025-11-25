@@ -49,6 +49,10 @@ public abstract class Figure extends Player {
         return name;
     }
 
+    public boolean isAlive(){
+        return hp > 0;
+    }
+
     public int getHp() {
         return hp;
     }
