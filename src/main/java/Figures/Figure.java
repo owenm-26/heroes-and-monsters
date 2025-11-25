@@ -45,6 +45,11 @@ public abstract class Figure extends Player {
 
     public abstract boolean dodgedSuccessfully();
 
+    protected void calculateHpMax(){
+        hpMax = level * 100;
+        hp = hpMax;
+    }
+
 //    GETTERS
 
     public String getName(){

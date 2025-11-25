@@ -21,14 +21,6 @@ public class Monster extends Figure implements LoadableFromText {
     private int baseDodge;
     private MonsterType monsterType;
 
-    public Monster(String name, int baseDamage, int baseDefense, int baseDodge, MonsterType monsterType){
-        this.name = name;
-        this.baseDamage = baseDamage + monsterType.getBaseDamageBonus();
-        this.baseDefense = baseDefense + monsterType.getBaseDefenseBonus();
-        this.baseDodge = baseDodge + monsterType.getBaseAgilityBonus();
-        this.monsterType = monsterType;
-    }
-
     public Monster(){
     }
 
@@ -43,7 +35,7 @@ public class Monster extends Figure implements LoadableFromText {
          */
     }
 
-    private void setMonsterTypeFromFileNae(String fileName){
+    private void setMonsterTypeFromFileName(String fileName){
         if (fileName.length() == 0) throw new IllegalArgumentException("Filename is length 0 in setMonsterTypeFromFileNae()");
         switch (fileName){
             case "dragons":
@@ -60,17 +52,25 @@ public class Monster extends Figure implements LoadableFromText {
         }
     }
 
+    private void initializeAttributes(int baseDamage, int baseDefense, int baseDodge){
+        this.baseDamage = baseDamage + monsterType.getBaseDamageBonus();
+        this.baseDefense = baseDefense + monsterType.getBaseDefenseBonus();
+        this.baseDodge = baseDodge + monsterType.getBaseAgilityBonus();
+    }
+
     public void loadFromMap(Map<String, String> map){
 //        Name/level/damage/defense/dodge chance
         this.name = map.get("Name");
         this.level= Integer.parseInt(map.get("level"));
-        this.baseDamage = Integer.parseInt(map.get("damage"));
-        this.baseDefense = Integer.parseInt(map.get("defense"));
-        this.baseDodge = Integer.parseInt(map.get("dodge chance"));
 
         // Hero Type
-        setMonsterTypeFromFileNae(map.get("file name"));
+        setMonsterTypeFromFileName(map.get("file name"));
+        initializeAttributes(Integer.parseInt(map.get("damage")),
+                             Integer.parseInt(map.get("defense")),
+                             Integer.parseInt(map.get("dodge chance")));
 
+        // Health
+        calculateHpMax();
     }
 
     public static List<Monster> getAllMonsterOptions(){

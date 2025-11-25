@@ -38,29 +38,13 @@ public class Hero extends Figure implements LoadableFromText {
     private int strength;
     private int dexterity;
 
-    public Hero(String name, int mpMax, int hands, HeroType heroType, int strength, int dexterity, int agility){
-        validatePositiveIntegers(mpMax, hands);
-        this.name = name;
-        this.heroType = heroType;
-        this.numberOfHands = hands;
-        level = 1;
-        this.baseDefense = 0; //TODO: determine if this should be flexible (right now only change when have a potion)
-
-        // Hero attributes
-        initializeAttributes(strength, dexterity, agility);
-        // Mana
-        setMana(mpMax);
-        // Health
-        calculateHpMax();
-        //equipment
-        initializeEmptyEquipment();
-    }
-
     public Hero(){
         //equipment
         initializeEmptyEquipment();
-        this.xp= 0;
-        this.baseDefense = 0;
+        xp= 0;
+        baseDefense = 0;
+        level = 1;
+        numberOfHands = 2;
     }
 
     @Override
@@ -182,11 +166,6 @@ public class Hero extends Figure implements LoadableFromText {
         mp = mpMax;
     }
 
-    private void calculateHpMax(){
-        hpMax = level * 100;
-        hp = hpMax;
-    }
-
     private void initializeAttributes(int strength, int dexterity, int agility){
         /*
         Sets strength, dexterity, and agility
@@ -225,19 +204,18 @@ public class Hero extends Figure implements LoadableFromText {
         this.name = map.get("Name");
         this.gold= Integer.parseInt(map.get("starting money"));
         int xp_og = Integer.parseInt(map.get("starting experience"));
-        xp = 0;
-        level = 1;
         addXP(xp_og);
 
         // Hero Type
         setHeroTypeFromFileName(map.get("file name"));
-
         // Hero attributes
         initializeAttributes(Integer.parseInt(map.get("strength")), Integer.parseInt(map.get("dexterity")), Integer.parseInt(map.get("agility")));
         // Mana
         setMana(Integer.parseInt(map.get("mana")));
         // Health
         calculateHpMax();
+
+        validatePositiveIntegers(gold, numberOfHands, xp_og, mp, strength, dexterity, agility);
     }
 
     public static List<Hero> getAllHeroOptions(){

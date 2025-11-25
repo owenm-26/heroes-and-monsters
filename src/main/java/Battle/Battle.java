@@ -72,8 +72,8 @@ public class Battle {
         ConsoleColors.printInColor(ConsoleColors.YELLOW_BOLD, String.format("TURN #%d: HEROES\n", turnNumber));
         List<Hero> heroList = heroes.getMembers();
         for(int index: heroesLeftIndices){
-            Hero currHero = heroList.get(index);
-            ConsoleColors.printInColor(ConsoleColors.BLUE_BOLD, String.format("🦸It is %s's turn to fight!", currHero.getName()));
+            Hero curr = heroList.get(index);
+            ConsoleColors.printInColor(ConsoleColors.BLUE_BOLD, String.format("🦸 It is %s's turn to fight!", curr.getName()));
 
         }
 
@@ -83,5 +83,15 @@ public class Battle {
         /*
         Iterates through all alive monsters in the party and they take action based on their given strategy
          */
+
+        GeneralPrints.printHorizontalLine();
+
+        ConsoleColors.printInColor(ConsoleColors.YELLOW_BOLD, String.format("TURN #%d: MONSTERS\n", turnNumber));
+        List<Monster> monsterList = monsters.getMembers();
+        for(int index: monstersLeftIndices){
+            Monster curr = monsterList.get(index);
+            ConsoleColors.printInColor(ConsoleColors.BLUE_BOLD, String.format("🧌 It is %s's turn to fight!", curr.getName()));
+
+        }
     }
 }

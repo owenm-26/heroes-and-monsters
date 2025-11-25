@@ -106,7 +106,8 @@ public class Party<T extends Figure>{
     public List<Integer> getFigureIndexesWithHealthRemaining(){
         List<Integer> aliveIndexes = new ArrayList<>();
         for(int i = 0; i < maxSize && members.get(i) != null; i++){
-            if(members.get(i).isAlive()) aliveIndexes.add(i);
+            T m = members.get(i);
+            if(m.isAlive()) aliveIndexes.add(i);
         }
         return aliveIndexes;
     }
