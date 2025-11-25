@@ -103,11 +103,11 @@ public class Party<T extends Figure>{
         ConsoleColors.printInColor("👋 %s has left your party!", member.getName());
     }
 
-    public Party<T> getFiguresWithHealthRemaining(){
-        Party<T> alive = new Party<>(this.maxSize);
-        for(T m: members){
-            if (m.isAlive()) alive.addMember(m);
+    public List<Integer> getFigureIndexesWithHealthRemaining(){
+        List<Integer> aliveIndexes = new ArrayList<>();
+        for(int i = 0; i < maxSize && members.get(i) != null; i++){
+            if(members.get(i).isAlive()) aliveIndexes.add(i);
         }
-        return alive;
+        return aliveIndexes;
     }
 }

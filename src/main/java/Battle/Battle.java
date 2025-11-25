@@ -5,16 +5,35 @@ import Figures.Monster.Monster;
 import Figures.Party;
 import UI.ConsoleColors;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Battle {
 
     private Party<Hero> heroes;
     private Party<Monster> monsters;
+
+    private List<Integer> heroesLeftIndices;
+    private List<Integer> monstersLeftIndices;
     private int turnNumber; // odd is heroes turn, even is monsters
 
     public Battle(Party<Hero> heroes){
         this.heroes = heroes;
+        heroesLeftIndices = new ArrayList<>(getIntegerRange(heroes.size()));
         monsters = Monster.assembleMonsterBattleParty(heroes);
+        monstersLeftIndices = new ArrayList<>(getIntegerRange(monsters.size()));
         turnNumber = 1;
+    }
+
+    private List<Integer> getIntegerRange(int upperBound){
+        /*
+        Returns a list of integers from 0 to upperBound (not inclusive)
+         */
+        List<Integer> range = new ArrayList<>();
+        for(int i =0;i < upperBound; i++){
+            range.add(i);
+        }
+        return range;
     }
 
     public boolean executeBattle(){
@@ -22,19 +41,17 @@ public class Battle {
         Handles full lifecycle of battle and returns whether the heroes won
          */
         ConsoleColors.printInColor(ConsoleColors.BLUE_BACKGROUND, "A new battle has begun!");
-        Party<Hero> heroesLeft = heroes;
-        Party<Monster> monstersLeft = monsters;
-        while(monstersLeft.size() > 0 && heroesLeft.size() > 0){
+        while(monstersLeftIndices.size() > 0 && heroesLeftIndices.size() > 0){
             executeTurn();
 
             // update figures alive
-            heroesLeft = heroes.getFiguresWithHealthRemaining();
-            monstersLeft = monsters.getFiguresWithHealthRemaining();
+            heroesLeftIndices = heroes.getFigureIndexesWithHealthRemaining();
+            monstersLeftIndices = monsters.getFigureIndexesWithHealthRemaining();
 
             turnNumber++;
         }
 
-        return heroesLeft.size() > 0;
+        return heroesLeftIndices.size() > 0;
     }
 
     private void executeTurn(){
@@ -46,10 +63,14 @@ public class Battle {
     }
 
     private void executeHeroesTurn(){
-
+        /*
+        Iterates through all alive heroes in the party and gives them a choice of actions
+         */
     }
 
     private void executeMonstersTurn(){
-
+        /*
+        Iterates through all alive monsters in the party and they take action based on their given strategy
+         */
     }
 }
