@@ -99,9 +99,18 @@ public class Hero extends Figure implements LoadableFromText {
     }
 
     @Override
-    public int getPunchDamage() {
-        return strength/10;
+    public int getDamageBlocked() {
+        int protection = 0;
+        for (Armor a: armorWorn) protection += a.getDamageReduction();
+        return (int)(baseDefense + protection * 0.05);
     }
+
+    @Override
+    public int getPunchDamage() {
+        return strength/25;
+    }
+
+
 
 
     @Override
@@ -284,23 +293,7 @@ public class Hero extends Figure implements LoadableFromText {
         /*
         Returns item selected by user
          */
-        Map<String, ? extends Item> map;
-        switch (t){
-            case WEAPON:
-                map = inventory.getSubInventoryOptions(inventory.getWeapons());
-                break;
-            case ARMOR:
-                map = inventory.getSubInventoryOptions(inventory.getArmor());
-                break;
-            case POTION:
-                map = inventory.getSubInventoryOptions(inventory.getPotions());
-                break;
-            case SPELL:
-                map = inventory.getSubInventoryOptions(inventory.getSpells());
-                break;
-            default:
-                throw new IllegalArgumentException("Item Type given is not equipable");
-        }
+        Map<String, ? extends Item> map = getNonEquippedItemsOfSubCategory(t);
 
         String[] itemOptions = map.keySet().toArray(new String[0]);
         int itemToEquipIndex = showMenuAndGetUserAnswer(itemOptions);
@@ -308,16 +301,47 @@ public class Hero extends Figure implements LoadableFromText {
         return map.get(itemOptions[itemToEquipIndex]);
     }
 
-    public void equipItem(ItemType t){
+    public boolean equipItem(ItemType t){
         /*
-        Public method that handles which equip and unequip logic to use
+        Public method that handles which equip and unequip logic to use. Returns true if successful
          */
-        Item toEquip = selectItem(t);
-        if (toEquip == null) return;
 
-        if (toEquip.getItemType() == ItemType.WEAPON) equipWeapon((Weapon) toEquip);
-        else if (toEquip.getItemType() == ItemType.ARMOR) equipArmor((Armor) toEquip);
+        if(getNonEquippedItemsOfSubCategory(t).size() == 0){
+            ConsoleColors.printInColor(ConsoleColors.RED, String.format("⚠️%s does not have any other %ss that aren't already equipped", name, t));
+            return false;
+        }
+        Item toEquip = selectItem(t);
+        if (toEquip == null) return false;
+
+        if (t == ItemType.WEAPON) equipWeapon((Weapon) toEquip);
+        else if (t == ItemType.ARMOR) equipArmor((Armor) toEquip);
         else usePotion((Potion) toEquip);
+        return true;
+    }
+
+    public Map<String, ? extends Item> getNonEquippedItemsOfSubCategory(ItemType t){
+        /*
+        Returns whether the user has more items they could equip instead of what they current have
+         */
+        Map<String, ? extends Item> map = new LinkedHashMap<>();
+        switch (t) {
+            case WEAPON:
+                map = inventory.getSubInventoryOptions(inventory.getWeapons());
+                map.remove(weaponsEquipped);
+                break;
+            case ARMOR:
+                map = inventory.getSubInventoryOptions(inventory.getArmor());
+                map.remove(armorWorn);
+                break;
+            case POTION:
+                map = inventory.getSubInventoryOptions(inventory.getPotions());
+                break;
+            case SPELL:
+                map = inventory.getSubInventoryOptions(inventory.getSpells());
+                break;
+        }
+
+        return map;
     }
 
     private void equipWeapon(Weapon w){
@@ -483,5 +507,9 @@ public class Hero extends Figure implements LoadableFromText {
 
     public int getStrength() {
         return strength;
+    }
+
+    public List<Weapon> getWeaponsEquipped() {
+        return weaponsEquipped;
     }
 }

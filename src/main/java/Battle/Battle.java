@@ -58,10 +58,6 @@ public class Battle {
         while(monstersLeftIndices.size() > 0 && heroesLeftIndices.size() > 0){
             executeTurn();
 
-            // update figures alive
-            heroesLeftIndices = heroes.getFigureIndexesWithHealthRemaining();
-            monstersLeftIndices = monsters.getFigureIndexesWithHealthRemaining();
-
             turnNumber++;
         }
 
@@ -92,6 +88,10 @@ public class Battle {
             Hero curr = heroList.get(index);
             ConsoleColors.printInColor(ConsoleColors.BLUE_BOLD, String.format("🦸 It is %s's turn to fight!", curr.getName()));
             presentHeroActionsMenu(curr);
+
+            // update figures alive
+            heroesLeftIndices = heroes.getFigureIndexesWithHealthRemaining();
+            monstersLeftIndices = monsters.getFigureIndexesWithHealthRemaining();
         }
 
     }
@@ -114,18 +114,25 @@ public class Battle {
                 game.viewStats();
             }
         }
+        boolean usedTurn = false;
+
         switch (BattleCommand.fromName(options[optionIndexChosen])){
             case CHANGE_WEAPON:
-                h.equipItem(ItemType.WEAPON);
+                usedTurn = h.equipItem(ItemType.WEAPON);
                 break;
             case CHANGE_ARMOR:
-                h.equipItem(ItemType.ARMOR);
+                usedTurn =h.equipItem(ItemType.ARMOR);
                 break;
             case TAKE_POTION:
-                h.equipItem(ItemType.POTION);
+                usedTurn = h.equipItem(ItemType.POTION);
+                break;
             case ATTACK:
                 heroAttack(h);
+                usedTurn = true;
+                break;
         }
+        if (!usedTurn) presentHeroActionsMenu(h);
+
     }
 
     private void executeMonstersTurn(){
@@ -169,13 +176,22 @@ public class Battle {
          */
 
         // What type of tool?
-        String[] options = {ItemType.WEAPON.toString(), ItemType.SPELL.toString()};
-        int optionChosenIndex = UserInputs.showMenuAndGetUserAnswer(options);
-        if (optionChosenIndex < 0) return;
-        ItemType t = ItemType.fromName(options[optionChosenIndex]);
+        //Check if there are any valid ones, if so ask which they choose
+        String[] toolOptions = new String[2];
+        int i =0;
+        if(h.getWeaponsEquipped().size() != 0) toolOptions[i++] = ItemType.WEAPON.toString();
+        if(h.getNonEquippedItemsOfSubCategory(ItemType.SPELL).size() != 0) toolOptions[i] = ItemType.SPELL.toString(); // add spell if they have any
 
-        // Select from that type
-        DamageDealing tool = (DamageDealing)h.selectItem(t);
+        DamageDealing tool = null;
+        if (toolOptions[0] != null){
+            int optionChosenIndex = UserInputs.showMenuAndGetUserAnswer(toolOptions);
+            if (optionChosenIndex < 0) return;
+            ItemType t = ItemType.fromName(toolOptions[optionChosenIndex]);
+
+            // Select from that type
+            tool = (DamageDealing)h.selectItem(t);
+        }
+
 
         //Select opponent
         Map<String, Figure> eligibleTargets = getEligibleTargets(monstersLeftIndices, monsters.getMembers());
@@ -208,7 +224,6 @@ public class Battle {
             return 0;
         }
         int toolDamage = tool.getDamageDealt(h.getStrength());
-        System.out.println(toolDamage + " - "+  m.getBaseDefense());
-        return Math.max((tool.getDamageDealt(h.getStrength()) - m.getBaseDefense()), 0);
+        return Math.max((tool.getDamageDealt(h.getStrength()) - m.getDamageBlocked()), 0);
     }
 }

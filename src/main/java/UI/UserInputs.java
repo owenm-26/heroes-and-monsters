@@ -74,7 +74,7 @@ public class UserInputs {
         while (true) {
             int i = 0;
             System.out.println("Choose an Option:");
-            while (i < options.length) {
+            while (i < options.length && options[i] != null) {
                 System.out.format("[%d] %s", (i + 1), options[i]);
                 System.out.println();
                 i++;

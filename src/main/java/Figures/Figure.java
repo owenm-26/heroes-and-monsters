@@ -103,5 +103,7 @@ public abstract class Figure extends Player {
         return baseDefense;
     }
 
+    public abstract int getDamageBlocked();
+
     public abstract int getPunchDamage();
 }

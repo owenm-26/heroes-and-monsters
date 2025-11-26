@@ -55,6 +55,12 @@ public class Monster extends Figure implements LoadableFromText {
         return baseDamage;
     }
 
+    @Override
+    public int getDamageBlocked() {
+
+        return (int)(baseDefense * 0.05);
+    }
+
     private void setMonsterTypeFromFileName(String fileName){
         if (fileName.length() == 0) throw new IllegalArgumentException("Filename is length 0 in setMonsterTypeFromFileNae()");
         switch (fileName){
