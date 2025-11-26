@@ -50,6 +50,11 @@ public class Monster extends Figure implements LoadableFromText {
         ConsoleColors.printInColor(COLOR, "========================\n");
     }
 
+    @Override
+    public int getPunchDamage() {
+        return baseDamage;
+    }
+
     private void setMonsterTypeFromFileName(String fileName){
         if (fileName.length() == 0) throw new IllegalArgumentException("Filename is length 0 in setMonsterTypeFromFileNae()");
         switch (fileName){
@@ -146,4 +151,10 @@ public class Monster extends Figure implements LoadableFromText {
         }
         return p;
     }
+
+    public int getBaseDamage() {
+        return baseDamage;
+    }
+
+
 }

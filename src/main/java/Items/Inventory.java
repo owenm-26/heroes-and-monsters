@@ -61,7 +61,7 @@ public class Inventory {
         ConsoleColors.printInColor(ConsoleColors.GREEN, String.format("🤝 %s was successfully traded for %d gold", i.getName(), originalPrice));
     }
 
-    private void removeItem(Item i){
+    public void removeItem(Item i){
         /*
         Internal Method that removes a specific item from the player's or market's inventory
          */

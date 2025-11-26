@@ -98,6 +98,11 @@ public class Hero extends Figure implements LoadableFromText {
         ConsoleColors.printInColor(COLOR, "========================\n");
     }
 
+    @Override
+    public int getPunchDamage() {
+        return strength/10;
+    }
+
 
     @Override
     public String toString() {
@@ -275,9 +280,9 @@ public class Hero extends Figure implements LoadableFromText {
         ConsoleColors.printInColor(ConsoleColors.BLACK_BACKGROUND, String.format("%s has been unequipped.", i.getName()));
     }
 
-    public void equipItem(ItemType t){
+    public Item selectItem(ItemType t){
         /*
-        Public method that handles which equip and unequip logic to use
+        Returns item selected by user
          */
         Map<String, ? extends Item> map;
         switch (t){
@@ -290,15 +295,25 @@ public class Hero extends Figure implements LoadableFromText {
             case POTION:
                 map = inventory.getSubInventoryOptions(inventory.getPotions());
                 break;
+            case SPELL:
+                map = inventory.getSubInventoryOptions(inventory.getSpells());
+                break;
             default:
                 throw new IllegalArgumentException("Item Type given is not equipable");
         }
 
         String[] itemOptions = map.keySet().toArray(new String[0]);
         int itemToEquipIndex = showMenuAndGetUserAnswer(itemOptions);
-        if (itemToEquipIndex < 0) return;
-        Item toEquip = map.get(itemOptions[itemToEquipIndex]);
+        if (itemToEquipIndex < 0) return null;
+        return map.get(itemOptions[itemToEquipIndex]);
+    }
 
+    public void equipItem(ItemType t){
+        /*
+        Public method that handles which equip and unequip logic to use
+         */
+        Item toEquip = selectItem(t);
+        if (toEquip == null) return;
 
         if (toEquip.getItemType() == ItemType.WEAPON) equipWeapon((Weapon) toEquip);
         else if (toEquip.getItemType() == ItemType.ARMOR) equipArmor((Armor) toEquip);
@@ -394,7 +409,7 @@ public class Hero extends Figure implements LoadableFromText {
             ConsoleColors.printInColor(RED_BOLD, String.format("⚠️Hero %s's level is too low to buy this item: %d < %d", name, level, i.getLevel()));
 
         }
-        else if(canBuyItem(i)) {
+        else if(!canBuyItem(i)) {
             ConsoleColors.printInColor(RED_BOLD, String.format("⚠️Hero %s's gold is too low to buy this item: %d < %d", name, gold, i.getPrice()));
         }
         else{
@@ -460,5 +475,13 @@ public class Hero extends Figure implements LoadableFromText {
 
     public Inventory getInventory() {
         return inventory;
+    }
+
+    public int getDexterity() {
+        return dexterity;
+    }
+
+    public int getStrength() {
+        return strength;
     }
 }

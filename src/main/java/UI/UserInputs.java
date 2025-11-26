@@ -79,12 +79,12 @@ public class UserInputs {
                 System.out.println();
                 i++;
             }
-            System.out.print("Enter choice ('q' to quit, '0' to go back");
+            System.out.print("Enter choice ('q' to quit game, '0' to go back");
             String input;
             if (toggleMenuAbility) {
                 if (g == null) throw new IllegalArgumentException("Toggle Menu set but game is null");
 
-                System.out.print(", 'i' to un/toggle info): ");
+                System.out.print(", 'i' to get character statistics): ");
                 input = UserInputs.toggleInventoryParseAndQuitIfAsked(g);
                 if (isCommand(input, CommandType.INFO)) return -1;
             } else {

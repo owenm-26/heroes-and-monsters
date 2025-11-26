@@ -221,6 +221,7 @@ public class HMGame extends Game<HMBoard> {
          */
         if (parties.size() < 1 ) throw new IllegalStateException("Parties state is empty. This is impossible. Should always exist heroes.");
         pickTeamAndDisplayStatistics(parties, this);
+        toggleStatistics();
     }
 
 
@@ -314,6 +315,10 @@ public class HMGame extends Game<HMBoard> {
 
     public void toggleStatistics() {
         this.viewingStatistics = !viewingStatistics;
+    }
+
+    public boolean isViewingStatistics() {
+        return viewingStatistics;
     }
 
     public HMGameState getState() {

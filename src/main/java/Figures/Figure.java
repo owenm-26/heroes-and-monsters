@@ -98,4 +98,10 @@ public abstract class Figure extends Player {
     }
 
    public abstract void displayFigureStatistics(HMGameState state);
+
+    public int getBaseDefense() {
+        return baseDefense;
+    }
+
+    public abstract int getPunchDamage();
 }
