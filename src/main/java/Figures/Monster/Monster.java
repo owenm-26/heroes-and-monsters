@@ -52,7 +52,7 @@ public class Monster extends Figure implements LoadableFromText {
 
     @Override
     public int getPunchDamage() {
-        return baseDamage;
+        return baseDamage/10;
     }
 
     @Override
@@ -157,10 +157,7 @@ public class Monster extends Figure implements LoadableFromText {
         }
         return p;
     }
-
-    public int getBaseDamage() {
-        return baseDamage;
+    public MonsterType getMonsterType() {
+        return monsterType;
     }
-
-
 }

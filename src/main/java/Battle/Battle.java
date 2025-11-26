@@ -148,9 +148,23 @@ public class Battle {
         ConsoleColors.printInColor(ConsoleColors.YELLOW_BOLD, String.format("TURN #%d: MONSTERS\n", turnNumber));
         List<Monster> monsterList = monsters.getMembers();
         for(int index: monstersLeftIndices){
+            // dont execute if the battle is over
+            if(heroesLeftIndices.size() == 0) break;
+
             Monster curr = monsterList.get(index);
             ConsoleColors.printInColor(ConsoleColors.BLUE_BOLD, String.format("\n🧌 It is %s's turn to fight!", curr.getName()));
 
+            // pick what hero to attack based on monster strategy
+            int victimIndex = curr.getMonsterType().getStrategy().getVictimPartyIndex(heroes.getMembers(), heroesLeftIndices);
+            Hero victim = heroes.getMembers().get(victimIndex);
+
+            // attack them
+            int damageDealt = calculateNetDamageDoneOnHero(curr, victim);
+            dealDamage(curr, victim, null, damageDealt);
+
+            // update figures alive
+            heroesLeftIndices = heroes.getFigureIndexesWithHealthRemaining();
+            monstersLeftIndices = monsters.getFigureIndexesWithHealthRemaining();
         }
     }
 
@@ -232,6 +246,15 @@ public class Battle {
         }
 
         return Math.max((tool.getDamageDealt(h.getStrength()) - m.getDamageBlocked()), 0);
+    }
+
+    private int calculateNetDamageDoneOnHero(Monster m, Hero h){
+        if (h.dodgedSuccessfully()){
+            ConsoleColors.printInColor(ConsoleColors.RED_BACKGROUND, String.format("Nice, %s dodged %s's attack!", h.getName(), m.getName()));
+            return 0;
+        }
+
+        return Math.max(0, m.getPunchDamage());
     }
 
     public void handleHeroWinAndRewards(){

@@ -11,11 +11,10 @@ public class LeastHealthTarget extends MonsterAttackStrategy{
         name = "Least Health";
     }
     @Override
-    public int getVictimPartyIndex(Party<Figure> victimParty) {
-        List<Figure> victims = victimParty.getMembers();
+    public int getVictimPartyIndex(List<? extends Figure> victims, List<Integer> availableTargetIndexes) {
         int leastHealth = victims.get(0).getHp();
         int i = 0;
-        for(int j = 1; j < victims.size(); j++){
+        for(int j: availableTargetIndexes){
             if (victims.get(j).getHp() < leastHealth){
                 leastHealth = victims.get(j).getHp();
                 i = j;

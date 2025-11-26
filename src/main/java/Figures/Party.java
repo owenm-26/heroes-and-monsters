@@ -112,4 +112,6 @@ public class Party<T extends Figure>{
         }
         return aliveIndexes;
     }
+
+
 }
