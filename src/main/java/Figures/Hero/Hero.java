@@ -70,7 +70,7 @@ public class Hero extends Figure implements LoadableFromText {
 
         // When OUTSIDE of battle
         if (state != HMGameState.BATTLING) {
-            ConsoleColors.printInColor(COLOR, "XP: " + xp);
+            ConsoleColors.printInColor(COLOR, "XP: " + xp + "/" + getXpUntilLevelUp());
             ConsoleColors.printInColor(COLOR, "Gold: " + gold);
 
         } else {

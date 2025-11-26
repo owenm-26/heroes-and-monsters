@@ -70,6 +70,8 @@ public class Battle {
         /*
         Handles a single turn of either the monsters or heroes
          */
+        System.out.format("HEROES REMAINING: %d\n", heroesLeftIndices.size());
+        System.out.format("MONSTERS REMAINING: %d\n", monstersLeftIndices.size());
         if(isHeroTurn()) executeHeroesTurn();
         else executeMonstersTurn();
     }
