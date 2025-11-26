@@ -141,7 +141,7 @@ public class Hero extends Figure implements LoadableFromText {
         b.append(returnInColor(BLUE_BOLD,
                 "MP: " + mp + "/" + mpMax));
         b.append(returnInColor(YELLOW_BOLD,
-                "XP: " + xp));
+                "XP: " + xp + "/" + getXpUntilLevelUp()));
         b.append(returnInColor(RED_BOLD,
                 "Gold: " + gold));
 
@@ -257,6 +257,10 @@ public class Hero extends Figure implements LoadableFromText {
         return i.getPrice() <= gold;
     }
 
+    public int getXpUntilLevelUp(){
+        return (level+1) * 10;
+    }
+
 //    SETTERS
     public void addXP(int p){
         /*
@@ -264,7 +268,7 @@ public class Hero extends Figure implements LoadableFromText {
          */
 
         xp = xp + p;
-        int xpMax = (level+1) * 100;
+        int xpMax = getXpUntilLevelUp();
         if (xp > xpMax){
             level += 1;
             xp = xp - xpMax;
@@ -338,6 +342,14 @@ public class Hero extends Figure implements LoadableFromText {
         Returns whether the hero's mana is enough to cast the spell
          */
         return s.getMpCost() <= mp;
+    }
+
+    public List<Spell> spellsHeroCanAffordToCast(List<Spell> spells){
+        List<Spell> res = new ArrayList<>();
+        for (Spell s: spells){
+            if (canCastSpell(s)) res.add(s);
+        }
+        return res;
     }
 
     public boolean equipItem(ItemType t){

@@ -13,10 +13,7 @@ import UI.ConsoleColors;
 import UI.GeneralPrints;
 import UI.UserInputs;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static Battle.BattleCommand.fromName;
 
@@ -82,21 +79,22 @@ public class Battle {
         Iterates through all alive heroes in the party and gives them a choice of actions
          */
 
-        // dont execute if the battle is over
-        if(monstersLeftIndices.size() == 0) return;
-
         GeneralPrints.printHorizontalLine();
 
         ConsoleColors.printInColor(ConsoleColors.YELLOW_BOLD, String.format("TURN #%d: HEROES\n", turnNumber));
         List<Hero> heroList = heroes.getMembers();
         for(int index: heroesLeftIndices){
+            // dont execute if the battle is over
+            if(monstersLeftIndices.size() == 0) break;
+
             Hero curr = heroList.get(index);
-            ConsoleColors.printInColor(ConsoleColors.BLUE_BOLD, String.format("🦸 It is %s's turn to fight!", curr.getName()));
+            ConsoleColors.printInColor(ConsoleColors.BLUE_BOLD, String.format("\n🦸 It is %s's turn to fight!", curr.getName()));
             presentHeroActionsMenu(curr);
 
             // update figures alive
             heroesLeftIndices = heroes.getFigureIndexesWithHealthRemaining();
             monstersLeftIndices = monsters.getFigureIndexesWithHealthRemaining();
+
         }
 
     }
@@ -151,7 +149,7 @@ public class Battle {
         List<Monster> monsterList = monsters.getMembers();
         for(int index: monstersLeftIndices){
             Monster curr = monsterList.get(index);
-            ConsoleColors.printInColor(ConsoleColors.BLUE_BOLD, String.format("🧌 It is %s's turn to fight!", curr.getName()));
+            ConsoleColors.printInColor(ConsoleColors.BLUE_BOLD, String.format("\n🧌 It is %s's turn to fight!", curr.getName()));
 
         }
     }
@@ -185,7 +183,9 @@ public class Battle {
         String[] toolOptions = new String[2];
         int i =0;
         if(h.getWeaponsEquipped().size() != 0) toolOptions[i++] = ItemType.WEAPON.toString();
-        if(h.getNonEquippedItemsOfSubCategory(ItemType.SPELL).size() != 0) toolOptions[i] = ItemType.SPELL.toString(); // add spell if they have any
+
+        ArrayList<Spell> spellsAvailable = new ArrayList((h.getNonEquippedItemsOfSubCategory(ItemType.SPELL)).values());
+        if(h.spellsHeroCanAffordToCast(spellsAvailable).size() != 0) toolOptions[i] = ItemType.SPELL.toString(); // add spell if they have any
 
         DamageDealing tool = null;
         ItemType t = null;

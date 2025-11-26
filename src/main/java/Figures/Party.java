@@ -58,8 +58,8 @@ public class Party<T extends Figure>{
         if (member != null) member.displayFigureStatistics(g.getState());
     }
 
-    public HashMap<String, T> getMembersNamesMap(){
-        HashMap<String, T> res = new HashMap<>();
+    public LinkedHashMap<String, T> getMembersNamesMap(){
+        LinkedHashMap<String, T> res = new LinkedHashMap<>();
         for(T member: members){
             res.put(member.name, member);
         }

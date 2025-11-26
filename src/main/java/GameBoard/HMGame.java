@@ -47,7 +47,7 @@ public class HMGame extends Game<HMBoard> {
     @Override
     protected void initializeGame() {
         board = pickBoard(dimension);
-        parties = new HashMap<>();
+        parties = new LinkedHashMap<>();
         parties.put("Heroes", selectYourHeroes(MAX_PARTY_SIZE));
     }
 
@@ -272,8 +272,8 @@ public class HMGame extends Game<HMBoard> {
         parties.put("Monsters", monsters);
         boolean won = b.executeBattle();
         if (!won) endGame();
-        parties.remove("monsters");
         b.handleHeroWinAndRewards();
+        parties.remove("Monsters");
         state = HMGameState.EXPLORING;
     }
 

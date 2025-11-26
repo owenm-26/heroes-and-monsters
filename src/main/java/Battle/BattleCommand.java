@@ -4,10 +4,11 @@ import Items.Potion.PotionType;
 
 public enum BattleCommand {
 
-    CHANGE_WEAPON("Change Weapons"),
-    CHANGE_ARMOR("Change Armor"),
+    ATTACK("Attack"),
     TAKE_POTION("Take Potion"),
-    ATTACK("Attack");
+    CHANGE_WEAPON("Change Weapons"),
+    CHANGE_ARMOR("Change Armor");
+
 
     private String name;
 
