@@ -42,9 +42,6 @@ public class Spell extends Item implements LoadableFromText, DamageDealing {
         return String.format("You have used up your last charge of your %s spell. Removing from inventory", name);
     }
 
-//    public int getDamage() {
-//        return damage;
-//    }
 
     public int getMpCost() {
         return mpCost;
@@ -67,7 +64,7 @@ public class Spell extends Item implements LoadableFromText, DamageDealing {
     }
 
     public int getDamageDealt(int dexterity){
-        return damage + ((dexterity / 10000) * damage);
+        return  (int) (( (float) dexterity / 5000) * damage);
     }
 
     private void setSpellTypeFromFileName(String fileName){

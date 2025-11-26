@@ -8,6 +8,7 @@ import GameBoard.HMGame;
 import Items.DamageDealing;
 import Items.Item;
 import Items.ItemType;
+import Items.Spell.Spell;
 import UI.ConsoleColors;
 import UI.GeneralPrints;
 import UI.UserInputs;
@@ -80,6 +81,10 @@ public class Battle {
         /*
         Iterates through all alive heroes in the party and gives them a choice of actions
          */
+
+        // dont execute if the battle is over
+        if(monstersLeftIndices.size() == 0) return;
+
         GeneralPrints.printHorizontalLine();
 
         ConsoleColors.printInColor(ConsoleColors.YELLOW_BOLD, String.format("TURN #%d: HEROES\n", turnNumber));
@@ -183,10 +188,11 @@ public class Battle {
         if(h.getNonEquippedItemsOfSubCategory(ItemType.SPELL).size() != 0) toolOptions[i] = ItemType.SPELL.toString(); // add spell if they have any
 
         DamageDealing tool = null;
+        ItemType t = null;
         if (toolOptions[0] != null){
             int optionChosenIndex = UserInputs.showMenuAndGetUserAnswer(toolOptions);
             if (optionChosenIndex < 0) return;
-            ItemType t = ItemType.fromName(toolOptions[optionChosenIndex]);
+            t = ItemType.fromName(toolOptions[optionChosenIndex]);
 
             // Select from that type
             tool = (DamageDealing)h.selectItem(t);
@@ -203,6 +209,7 @@ public class Battle {
         // damage dealt
         int damage = tool != null ? calculateNetDamageDoneOnMonster(h, foe, tool) : h.getPunchDamage();
         dealDamage(h, foe, tool, damage);
+        if (t==ItemType.SPELL) h.useMana(((Spell)tool).getMpCost());
     }
 
     private static Map<String, Figure> getEligibleTargets(List<Integer> indices, List<? extends Figure> members){
@@ -223,7 +230,33 @@ public class Battle {
             ConsoleColors.printInColor(ConsoleColors.RED_BACKGROUND, String.format("Uh oh, %s dodged your attack!", m.getName()));
             return 0;
         }
-        int toolDamage = tool.getDamageDealt(h.getStrength());
+
         return Math.max((tool.getDamageDealt(h.getStrength()) - m.getDamageBlocked()), 0);
+    }
+
+    public void handleHeroWinAndRewards(){
+        /*
+        Handles all printing and gold / xp awarding & dead hero reviving
+         */
+        GeneralPrints.printDoubleThickHorizontalLine();
+        ConsoleColors.printInColor(ConsoleColors.YELLOW_BOLD, String.format("🎉 Heroes have won the battle! Each alive hero reaps the following rewards and the fainted heroes are revived at half health and mana."));
+
+        int goldEarned = 0;
+        int xpEarned = 0;
+
+        for (Monster m: monsters.getMembers()){
+            goldEarned += m.getLevel() * 100;
+            xpEarned += m.getLevel() * 2;
+        }
+
+        ConsoleColors.printInColor(ConsoleColors.YELLOW_BOLD, String.format("  -💰+%d gold\n  -📚 +%d XP", goldEarned, xpEarned));
+
+        for(int i=0; i < heroes.size(); i++){
+            Hero h = heroes.getMembers().get(i);
+
+            // Dead heroes get no rewards but are revived with half stats
+            if (!heroesLeftIndices.contains(i)) h.reviveAfterBattle();
+            else h.rewardHero(goldEarned, xpEarned);
+        }
     }
 }

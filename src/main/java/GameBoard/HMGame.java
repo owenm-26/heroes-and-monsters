@@ -273,6 +273,7 @@ public class HMGame extends Game<HMBoard> {
         boolean won = b.executeBattle();
         if (!won) endGame();
         parties.remove("monsters");
+        b.handleHeroWinAndRewards();
         state = HMGameState.EXPLORING;
     }
 

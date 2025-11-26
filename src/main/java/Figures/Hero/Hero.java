@@ -8,6 +8,7 @@ import GameBoard.HMGameState;
 import Items.*;
 import Items.Potion.Potion;
 import Items.Potion.PotionType;
+import Items.Spell.Spell;
 import UI.ConsoleColors;
 import UI.GeneralPrints;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
@@ -110,8 +111,15 @@ public class Hero extends Figure implements LoadableFromText {
         return strength/25;
     }
 
+    public void reviveAfterBattle(){
+        hp = hpMax / 2;
+        mp = mpMax /2;
+    }
 
-
+    public void rewardHero(int goldGained, int xpGained){
+        gold += goldGained;
+        addXP(xpGained);
+    }
 
     @Override
     public String toString() {
@@ -289,16 +297,47 @@ public class Hero extends Figure implements LoadableFromText {
         ConsoleColors.printInColor(ConsoleColors.BLACK_BACKGROUND, String.format("%s has been unequipped.", i.getName()));
     }
 
+    public void useMana(int mp){
+        this.mp = Math.max(0, this.mp - mp);
+    }
+
     public Item selectItem(ItemType t){
         /*
         Returns item selected by user
          */
         Map<String, ? extends Item> map = getNonEquippedItemsOfSubCategory(t);
-
-        String[] itemOptions = map.keySet().toArray(new String[0]);
+        String[] itemOptions = new String[map.size()];
+        Set<String> illegalChoices = new HashSet<>();
+        if (t==ItemType.SPELL){
+            int i = 0;
+            for(String key: map.keySet()){
+                String item = key;
+                if(!canCastSpell((Spell) map.get(key))){
+                    item = RED + key + RESET;
+                    illegalChoices.add(key);
+                }
+                itemOptions[i++] = item;
+            }
+        }
+        else{
+            itemOptions = map.keySet().toArray(new String[0]);
+        }
         int itemToEquipIndex = showMenuAndGetUserAnswer(itemOptions);
         if (itemToEquipIndex < 0) return null;
-        return map.get(itemOptions[itemToEquipIndex]);
+
+        Item choice = map.get(itemOptions[itemToEquipIndex]);
+        if (illegalChoices.contains(itemOptions[itemToEquipIndex])){
+            ConsoleColors.printInColor(BLUE, String.format("⚠️%s does not have the required mana to cast this spell (%d < %d)", name, mp, ((Spell)choice).getMpCost()));
+            return selectItem(t);
+        }
+        return choice;
+    }
+
+    private boolean canCastSpell(Spell s){
+        /*
+        Returns whether the hero's mana is enough to cast the spell
+         */
+        return s.getMpCost() <= mp;
     }
 
     public boolean equipItem(ItemType t){
