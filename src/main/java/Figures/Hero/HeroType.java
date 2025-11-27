@@ -1,5 +1,7 @@
 package Figures.Hero;
 
+import Figures.TraitType;
+
 public enum HeroType {
     WARRIOR("Warrior", 10, 5, 0),
     SORCERER("Sorcerer", 0, 5, 10),
@@ -31,5 +33,15 @@ public enum HeroType {
 
     public String getName() {
         return name;
+    }
+
+    public TraitType getFavoredTrait(){
+        TraitType[] types = new TraitType[]{TraitType.STRENGTH, TraitType.AGILITY, TraitType.DEXTERITY};
+        int[] values = new int[]{strengthBonus, agilityBonus, dexterityBonus};
+        int favIndex = 0;
+        for (int i=0; i < values.length; i++){
+            if (values[i] > values[favIndex]) favIndex = i;
+        }
+        return types[favIndex];
     }
 }

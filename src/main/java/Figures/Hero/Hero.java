@@ -3,6 +3,7 @@ package Figures.Hero;
 import Data.LoadableFromText;
 import Data.TextDataLoader;
 import Figures.Figure;
+import Figures.TraitType;
 import GameBoard.HMEffect;
 import GameBoard.HMGameState;
 import Items.*;
@@ -289,14 +290,40 @@ public class Hero extends Figure implements LoadableFromText {
         /*
         Handles the level up logic in the case where xp + p > xp_map
          */
-
         xp = xp + p;
         int xpMax = getXpUntilLevelUp();
-        if (xp > xpMax){
-            level += 1;
-            xp = xp - xpMax;
-            ConsoleColors.printInColor(ConsoleColors.YELLOW_BOLD, String.format("%s has leveled up to level %d", name, level));
+        if (xp > xpMax) levelUpAttributes();
+    }
+
+    public void levelUpAttributes(){
+        /*
+        Handles all health, mp, and attribute increase logic based on hero type
+         */
+        int xpMax = getXpUntilLevelUp();
+        level += 1;
+        xp = xp - xpMax;
+        calculateHpMax(); // increase max Health
+        setMana((int)(mpMax*1.1)); // increase max MP
+
+        // increase all of their attributes
+        switch (heroType.getFavoredTrait()){
+            case STRENGTH:
+                strength *= 1.1;
+                agility *= 1.05;
+                dexterity *= 1.05;
+                break;
+            case DEXTERITY:
+                strength *= 1.05;
+                agility *= 1.05;
+                dexterity *= 1.1;
+                break;
+            case AGILITY:
+                strength *= 1.05;
+                agility *= 1.1;
+                dexterity *= 1.05;
+                break;
         }
+        ConsoleColors.printInColor(ConsoleColors.YELLOW_BOLD, String.format("%s has leveled up to level %d", name, level));
     }
 
     public void gainMp(int p){
