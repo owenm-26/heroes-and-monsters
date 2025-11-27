@@ -1,0 +1,17 @@
+classDiagram
+    class Monster
+    class Dragon
+    class Exoskeleton
+    class Spirit
+    class MonsterStats
+    class MonsterAttackStrategy
+    class MostHealthTarget
+
+    Monster --> Piece
+    Dragon --> Monster
+    Exoskeleton --> Monster
+    Spirit --> Monster
+    Monster --> MonsterStats
+
+    MostHealthTarget --> MonsterAttackStrategy
+    Monster --> MonsterAttackStrategy

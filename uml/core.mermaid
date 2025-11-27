@@ -1,0 +1,20 @@
+classDiagram
+    class Game
+    class Board
+    class Piece
+    class Square
+    class Player
+    class Effect
+
+    Player --> Piece
+    HMGame --> Game
+    HMBoard --> Board
+    HMSquare --> Square
+    HMEffect --> Effect
+
+    Game --> Board
+    Board --> Square
+    Board --> Piece
+    Player --> Inventory
+    Player --> Stats
+    Player --> Effect

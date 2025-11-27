@@ -1,90 +1,48 @@
 classDiagram
-    class Game
-    class Board
-    class Piece
-    class Square
-    class Player
-    class Effect
 
-    Player --> Piece
-    HMGame --> Game
-    HMBoard --> Board
-    HMSquare --> Square
-    HMEffect --> Effect
+%% Core Entities
+    Piece <|-- Player
+    Piece <|-- Hero
+    Piece <|-- Monster
 
-    Game --> Board
-    Board --> Square
-    Board --> Piece
-    Player --> Inventory
-    Player --> Stats
-    Player --> Effect
+    Hero <|-- Warrior
+    Hero <|-- Paladin
+    Hero <|-- Sorcerer
 
-classDiagram
-    class Hero
-    class Warrior
-    class Paladin
-    class Sorcerer
-    class HeroStats
+    Monster <|-- Dragon
+    Monster <|-- Spirit
+    Monster <|-- Exoskeleton
 
-    Hero --> Piece
-    Warrior --> Hero
-    Paladin --> Hero
-    Sorcerer --> Hero
+    Item <|-- Weapon
+    Item <|-- Armor
+    Item <|-- Potion
+    Item <|-- Spell
 
-    Hero --> HeroStats
+%% Interfaces
+    Equipable <|.. Item
+    DamageDealing <|.. Spell
+    DamageDealing <|.. Weapon
+    LoadableFromText <|.. TextDataLoader
+
+%% Game Logic
+    Game <|-- HMGame
+    Board <|-- HMBoard
+    Square <|-- HMSquare
+    Effect <|-- HMEffect
+    MonsterAttackStrategy <|-- MostHealthTarget
+
+%% Dependencies
     Hero --> Inventory
-    Hero --> Effect
-    Hero --> Spell
+    Hero --> HeroStats
     Hero --> Weapon
     Hero --> Armor
+    Hero --> Spell
 
-classDiagram
-    class Monster
-    class Dragon
-    class Exoskeleton
-    class Spirit
-    class MonsterStats
-    class MonsterAttackStrategy
-    class MostHealthTarget
-
-    Monster --> Piece
-    Dragon --> Monster
-    Exoskeleton --> Monster
-    Spirit --> Monster
     Monster --> MonsterStats
-
-    MostHealthTarget --> MonsterAttackStrategy
     Monster --> MonsterAttackStrategy
 
-classDiagram
-    interface Equipable
-    interface DamageDealing
-    class Item
-    class Weapon
-    class Armor
-    class Potion
-    class Spell
-    class Inventory
-
-    Item ..|> Equipable
-    Spell ..|> DamageDealing
-    Weapon ..|> DamageDealing
-
-    Weapon --> Item
-    Armor --> Item
-    Potion --> Item
-    Spell --> Item
-
-    Inventory --> Item
     Player --> Inventory
-    Hero --> Inventory
-    Monster --> Inventory
-
-classDiagram
-    class Battle
-    class BattleCommand
-    class BattleResult
-    class BattleTurn
+    Player --> Effect
 
     Battle --> Hero
     Battle --> Monster
@@ -93,116 +51,23 @@ classDiagram
     Battle --> Inventory
     Battle --> BattleCommand
 
-classDiagram
-    class UserInputs
-    class ConsoleColors
-    class GeneralPrints
-    class CommandType
-
     UserInputs --> Player
     UserInputs --> Hero
     UserInputs --> Monster
     UserInputs --> Inventory
     UserInputs --> Spell
-    UserInputs --> Weapon
 
-    GeneralPrints --> Player
     GeneralPrints --> Hero
     GeneralPrints --> Monster
+    GeneralPrints --> Player
 
-classDiagram
-    class HMGame
-    class HMGameState
-    class HMBoard
-    class HMSquare
-    class Tile
+    Inventory --> Item
 
-    HMGame --> HMGameState
-    HMGame --> HMBoard
-    HMBoard --> HMSquare
-    HMBoard --> Tile
-    Tile --> Piece
-    Tile --> Effect
-
-classDiagram
-    interface LoadableFromText
-    class TextDataLoader
-
-    TextDataLoader ..|> LoadableFromText
     TextDataLoader --> Item
     TextDataLoader --> Hero
     TextDataLoader --> Monster
+    TextDataLoader --> Spell
+    TextDataLoader --> Potion
 
-classDiagram
-
-%% Core Entities
-Piece <|-- Player
-Piece <|-- Hero
-Piece <|-- Monster
-
-Hero <|-- Warrior
-Hero <|-- Paladin
-Hero <|-- Sorcerer
-
-Monster <|-- Dragon
-Monster <|-- Spirit
-Monster <|-- Exoskeleton
-
-Item <|-- Weapon
-Item <|-- Armor
-Item <|-- Potion
-Item <|-- Spell
-
-%% Interfaces
-Equipable <|.. Item
-DamageDealing <|.. Spell
-DamageDealing <|.. Weapon
-LoadableFromText <|.. TextDataLoader
-
-%% Game Logic
-Game <|-- HMGame
-Board <|-- HMBoard
-Square <|-- HMSquare
-Effect <|-- HMEffect
-MonsterAttackStrategy <|-- MostHealthTarget
-
-%% Dependencies
-Hero --> Inventory
-Hero --> HeroStats
-Hero --> Weapon
-Hero --> Armor
-Hero --> Spell
-
-Monster --> MonsterStats
-Monster --> MonsterAttackStrategy
-
-Player --> Inventory
-Player --> Effect
-
-Battle --> Hero
-Battle --> Monster
-Battle --> Spell
-Battle --> Weapon
-Battle --> Inventory
-Battle --> BattleCommand
-
-UserInputs --> Player
-UserInputs --> Hero
-UserInputs --> Monster
-UserInputs --> Inventory
-UserInputs --> Spell
-
-GeneralPrints --> Hero
-GeneralPrints --> Monster
-GeneralPrints --> Player
-
-Inventory --> Item
-
-TextDataLoader --> Item
-TextDataLoader --> Hero
-TextDataLoader --> Monster
-TextDataLoader --> Spell
-TextDataLoader --> Potion
-
-Tile --> Piece
-Tile --> Effect
+    Tile --> Piece
+    Tile --> Effect

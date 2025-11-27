@@ -1,0 +1,23 @@
+classDiagram
+    interface Equipable
+    interface DamageDealing
+    class Item
+    class Weapon
+    class Armor
+    class Potion
+    class Spell
+    class Inventory
+
+    Item ..|> Equipable
+    Spell ..|> DamageDealing
+    Weapon ..|> DamageDealing
+
+    Weapon --> Item
+    Armor --> Item
+    Potion --> Item
+    Spell --> Item
+
+    Inventory --> Item
+    Player --> Inventory
+    Hero --> Inventory
+    Monster --> Inventory

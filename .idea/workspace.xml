@@ -4,7 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5c6bed8a-a4a5-4400-8bad-54511b842f03" name="Changes" comment="" />
+    <list default="true" id="5c6bed8a-a4a5-4400-8bad-54511b842f03" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uml/battle.mmd" beforeDir="false" afterPath="$PROJECT_DIR$/uml/battle.mmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uml/board.mmd" beforeDir="false" afterPath="$PROJECT_DIR$/uml/board.mmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uml/core.mermaid" beforeDir="false" afterPath="$PROJECT_DIR$/uml/core.mermaid" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uml/dataLoader.mmd" beforeDir="false" afterPath="$PROJECT_DIR$/uml/dataLoader.mmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uml/highLevel.mmd" beforeDir="false" afterPath="$PROJECT_DIR$/uml/highLevel.mmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uml/inventory.mmd" beforeDir="false" afterPath="$PROJECT_DIR$/uml/inventory.mmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uml/monster.mmd" beforeDir="false" afterPath="$PROJECT_DIR$/uml/monster.mmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uml/ui.mmd" beforeDir="false" afterPath="$PROJECT_DIR$/uml/ui.mmd" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,8 +26,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -52,13 +64,14 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/uml" />
       <recent name="$PROJECT_DIR$/src/main/java" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.PlayGame">
     <configuration name="PlayGame" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="PlayGame" />
       <module name="HeroesAndMonsters" />
@@ -66,6 +79,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Testing" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="Testing" />
+      <module name="HeroesAndMonsters" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.PlayGame" />
+      <item itemvalue="Application.Testing" />
+    </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">

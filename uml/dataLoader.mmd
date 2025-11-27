@@ -1,0 +1,8 @@
+classDiagram
+    interface LoadableFromText
+    class TextDataLoader
+
+    TextDataLoader ..|> LoadableFromText
+    TextDataLoader --> Item
+    TextDataLoader --> Hero
+    TextDataLoader --> Monster

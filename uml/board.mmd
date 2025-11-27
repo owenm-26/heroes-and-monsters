@@ -1,0 +1,13 @@
+classDiagram
+    class HMGame
+    class HMGameState
+    class HMBoard
+    class HMSquare
+    class Tile
+
+    HMGame --> HMGameState
+    HMGame --> HMBoard
+    HMBoard --> HMSquare
+    HMBoard --> Tile
+    Tile --> Piece
+    Tile --> Effect
