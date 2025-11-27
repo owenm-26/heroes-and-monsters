@@ -1,6 +1,10 @@
 # Heroes and Monsters
 A RPG, turn based battle game that has heroes that explore a grid map and interact with markets to buy new tools to prepare them to fight monsters.
 
+
+## Running Application
+This is a Maven project, so run `mvn clean compile exec:java` to call the main function in `PlayGame.java` which will run the application
+
 ## Design
 See the design files in `/uml` that illustrates how the classes are related
 

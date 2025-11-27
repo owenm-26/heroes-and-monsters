@@ -5,17 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5c6bed8a-a4a5-4400-8bad-54511b842f03" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uml/battle.mmd" beforeDir="false" afterPath="$PROJECT_DIR$/uml/battle.mmd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uml/board.mmd" beforeDir="false" afterPath="$PROJECT_DIR$/uml/board.mmd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uml/core.mermaid" beforeDir="false" afterPath="$PROJECT_DIR$/uml/core.mermaid" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uml/dataLoader.mmd" beforeDir="false" afterPath="$PROJECT_DIR$/uml/dataLoader.mmd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uml/highLevel.mmd" beforeDir="false" afterPath="$PROJECT_DIR$/uml/highLevel.mmd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uml/inventory.mmd" beforeDir="false" afterPath="$PROJECT_DIR$/uml/inventory.mmd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uml/monster.mmd" beforeDir="false" afterPath="$PROJECT_DIR$/uml/monster.mmd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uml/ui.mmd" beforeDir="false" afterPath="$PROJECT_DIR$/uml/ui.mmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java.zip" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
