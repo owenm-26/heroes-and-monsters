@@ -1,0 +1,18 @@
+classDiagram
+class Hero
+class Warrior
+class Paladin
+class Sorcerer
+class HeroStats
+
+    Hero --> Piece
+    Warrior --> Hero
+    Paladin --> Hero
+    Sorcerer --> Hero
+
+    Hero --> HeroStats
+    Hero --> Inventory
+    Hero --> Effect
+    Hero --> Spell
+    Hero --> Weapon
+    Hero --> Armor
