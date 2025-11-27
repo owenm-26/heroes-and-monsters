@@ -13,7 +13,7 @@ public class MostHealthTarget extends MonsterAttackStrategy{
     @Override
     public int getVictimPartyIndex(List<? extends Figure> victims, List<Integer> availableTargetIndexes) {
         int mostHealth = victims.get(0).getHp();
-        int i = 0;
+        int i = availableTargetIndexes.get(0);
 
         for(int j: availableTargetIndexes){
             if (victims.get(j).getHp() > mostHealth){

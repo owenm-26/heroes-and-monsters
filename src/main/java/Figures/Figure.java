@@ -83,19 +83,25 @@ public abstract class Figure extends Player {
             int roundsLeft = e.getRoundsLeft();
             if (roundsLeft == 0){
                 effectsEnded.add(e);
-                activeEffects.remove(e);
+                updateEffect(e, false);
             }
 
         }
-        StringBuilder b = new StringBuilder();
-        b.append("Effects that ended: [");
-        for (HMEffect e: effectsEnded){
-            b.append(e.getName() + ",");
+
+        if(effectsEnded.size()> 0){
+            StringBuilder b = new StringBuilder();
+            b.append("Effects that ended: [");
+            for (HMEffect e: effectsEnded){
+                b.append(e.getName() + ",");
+            }
+            if (effectsEnded.size() != 0) b.deleteCharAt(b.length()-1); // remove the extra comma
+            b.append("]");
+            ConsoleColors.printInColor(ConsoleColors.YELLOW, b.toString());
         }
-        if (effectsEnded.size() != 0) b.deleteCharAt(b.length()-1); // remove the extra comma
-        b.append("]");
-        ConsoleColors.printInColor(ConsoleColors.YELLOW, b.toString());
+
     }
+
+    public abstract void updateEffect(HMEffect e, boolean adding);
 
    public abstract void displayFigureStatistics(HMGameState state);
 

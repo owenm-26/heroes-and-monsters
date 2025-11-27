@@ -27,4 +27,8 @@ public class HMEffect extends Effect {
     public void decrementRoundsLeft(){
         roundsLeft--;
     }
+
+    public TraitType getType() {
+        return type;
+    }
 }

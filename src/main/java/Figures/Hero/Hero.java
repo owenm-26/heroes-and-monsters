@@ -53,6 +53,29 @@ public class Hero extends Figure implements LoadableFromText {
         return Math.random() > (agility * 0.002);
     }
 
+    @Override
+    public void updateEffect(HMEffect e, boolean adding) {
+        int addition = adding ? (1 * e.getValue()) : (-1 * e.getValue());
+
+        switch (e.getType()){
+            case DEXTERITY:
+                dexterity += addition;
+                break;
+            case STRENGTH:
+                strength += addition;
+                break;
+            case AGILITY:
+                agility += addition;
+                break;
+        }
+        if (!adding){
+            activeEffects.remove(e);
+        }
+        else{
+            activeEffects.add(e);
+        }
+    }
+
     public void displayFigureStatistics(HMGameState state){
         final String COLOR = ConsoleColors.CYAN_BOLD;
 
@@ -466,7 +489,7 @@ public class Hero extends Figure implements LoadableFromText {
         else{
             String name = String.format("%s-%s", potionName, type.getName());
             HMEffect e = new HMEffect(name, val, POTION_DURATION_LENGTH, type.getType());
-            activeEffects.add(e);
+            updateEffect(e, true);
         }
         String message = String.format("- Gaining %s effect of %d", type.getName(), val);
         ConsoleColors.printInColor(ConsoleColors.PURPLE, message);

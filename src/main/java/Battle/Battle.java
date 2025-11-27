@@ -55,7 +55,6 @@ public class Battle {
         ConsoleColors.printInColor(ConsoleColors.BLUE_BACKGROUND, "A new battle has begun!");
         while(monstersLeftIndices.size() > 0 && heroesLeftIndices.size() > 0){
             executeTurn();
-
             turnNumber++;
         }
 
@@ -97,6 +96,8 @@ public class Battle {
             heroesLeftIndices = heroes.getFigureIndexesWithHealthRemaining();
             monstersLeftIndices = monsters.getFigureIndexesWithHealthRemaining();
 
+            //decrement effects
+            curr.decrementTimeOnAllEffects();
         }
 
     }
@@ -150,6 +151,11 @@ public class Battle {
         ConsoleColors.printInColor(ConsoleColors.YELLOW_BOLD, String.format("TURN #%d: MONSTERS\n", turnNumber));
         List<Monster> monsterList = monsters.getMembers();
         for(int index: monstersLeftIndices){
+
+            // update figures alive
+            heroesLeftIndices = heroes.getFigureIndexesWithHealthRemaining();
+            monstersLeftIndices = monsters.getFigureIndexesWithHealthRemaining();
+
             // dont execute if the battle is over
             if(heroesLeftIndices.size() == 0) break;
 
@@ -164,9 +170,8 @@ public class Battle {
             int damageDealt = calculateNetDamageDoneOnHero(curr, victim);
             dealDamage(curr, victim, null, damageDealt);
 
-            // update figures alive
-            heroesLeftIndices = heroes.getFigureIndexesWithHealthRemaining();
-            monstersLeftIndices = monsters.getFigureIndexesWithHealthRemaining();
+            //decrement effects
+            curr.decrementTimeOnAllEffects();
         }
     }
 

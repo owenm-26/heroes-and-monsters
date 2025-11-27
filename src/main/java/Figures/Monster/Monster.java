@@ -6,16 +6,14 @@ import Figures.Figure;
 import Figures.Hero.Hero;
 import Figures.Hero.HeroType;
 import Figures.Party;
+import GameBoard.HMEffect;
 import GameBoard.HMGameState;
 import Items.Armor;
 import Items.Weapon;
 import UI.ConsoleColors;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static Data.TextDataLoader.getAllSourceFileNames;
 
@@ -25,11 +23,34 @@ public class Monster extends Figure implements LoadableFromText {
     private MonsterType monsterType;
 
     public Monster(){
+        activeEffects = new HashSet<>();
     }
 
     @Override
     public boolean dodgedSuccessfully() {
         return Math.random() > (baseDodge * 0.01);
+    }
+
+    @Override
+    public void updateEffect(HMEffect e, boolean adding) {
+        int addition = adding ? (1 * e.getValue()) : (-1 * e.getValue());
+
+        switch (e.getType()){
+            case STRENGTH:
+                baseDamage += addition;
+                break;
+            case AGILITY:
+                baseDodge += addition;
+                break;
+            default:
+                break;
+        }
+        if (!adding){
+            activeEffects.remove(e);
+        }
+        else{
+            activeEffects.add(e);
+        }
     }
 
     public void displayFigureStatistics(HMGameState state){
