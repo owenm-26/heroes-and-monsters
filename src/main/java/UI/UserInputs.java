@@ -81,7 +81,7 @@ public class UserInputs {
             }
             System.out.print("Enter choice ('q' to quit game, '0' to go back");
             String input;
-            if (g.getState() == HMGameState.EXPLORING) System.out.print(", 'b' to open backpack");
+            if (g!=null && g.getState() == HMGameState.EXPLORING) System.out.print(", 'b' to open backpack");
             if (toggleMenuAbility) {
                 if (g == null) throw new IllegalArgumentException("Toggle Menu set but game is null");
 
