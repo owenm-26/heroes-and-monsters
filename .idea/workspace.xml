@@ -6,7 +6,64 @@
   <component name="ChangeListManager">
     <list default="true" id="5c6bed8a-a4a5-4400-8bad-54511b842f03" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/UI/UserInputs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/UI/UserInputs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Battle/Battle.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Battle/BattleCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Common/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Common/Gameboard/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Common/Effect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Common/Gameboard/Effect.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Common/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Common/Gameboard/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Common/Piece.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Common/Gameboard/Piece.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Common/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Common/Gameboard/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Common/Square.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Common/Gameboard/Square.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Data/Armor/Armory.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Data/Heroes/Paladins.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Data/Heroes/Sorcerers.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Data/Heroes/Warriors.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Data/LoadableFromText.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Data/Monsters/Dragons.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Data/Monsters/Exoskeletons.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Data/Monsters/Spirits.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Data/Potions/Potions.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Data/Spells/FireSpells.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Data/Spells/IceSpells.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Data/Spells/LightningSpells.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Data/TextDataLoader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Data/Weapons/Weaponry.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Figures/Figure.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Figures/Hero/Hero.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Figures/Hero/HeroType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Figures/Monster/Monster.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Figures/Monster/MonsterType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Figures/Monster/Strategies/LeastHealthTarget.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Figures/Monster/Strategies/LowestLevelTarget.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Figures/Monster/Strategies/MonsterAttackStrategy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Figures/Monster/Strategies/MostHealthTarget.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Figures/Monster/Strategies/RandomTarget.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Figures/Party.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Figures/TraitType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GameBoard/HMBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/HeroesAndMonsters/GameBoard/HMBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GameBoard/HMEffect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/HeroesAndMonsters/GameBoard/HMEffect.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GameBoard/HMGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/HeroesAndMonsters/GameBoard/HMGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GameBoard/HMGameState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/HeroesAndMonsters/GameBoard/HMGameState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GameBoard/HMSquare/HMSquare.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/HeroesAndMonsters/GameBoard/HMSquare/HMSquare.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GameBoard/HMSquare/HMSquareType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/HeroesAndMonsters/GameBoard/HMSquare/HMSquareType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GameBoard/HMSquare/MarketActions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/HeroesAndMonsters/GameBoard/HMSquare/MarketActions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Items/Armor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Items/DamageDealing.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Items/Equipable.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Items/Inventory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Items/Item.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Items/ItemType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Items/Potion/Potion.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Items/Potion/PotionType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Items/Spell/Spell.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Items/Spell/SpellType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Items/Weapon.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/PlayGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/PlayGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/UI/CommandType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Utility/UI/CommandType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/UI/ConsoleColors.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Utility/UI/ConsoleColors.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/UI/GeneralPrints.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Utility/UI/GeneralPrints.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/UI/UserInputs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Utility/UI/UserInputs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Validators/Integers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Utility/Validators/Integers.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
