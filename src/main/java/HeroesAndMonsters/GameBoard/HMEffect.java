@@ -4,7 +4,6 @@ import Common.Figures.TraitType;
 import Common.Gameboard.Effect;
 
 public class HMEffect extends Effect {
-
     private int roundsLeft;
     private int value;
     private TraitType type;
