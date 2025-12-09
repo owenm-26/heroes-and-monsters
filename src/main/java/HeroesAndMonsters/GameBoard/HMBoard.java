@@ -18,13 +18,9 @@ import static Utility.Validators.Integers.integerInInclusiveRange;
 
 public class HMBoard extends Board<HMSquare> {
 
-    private HMSquare[][] grid;
     private int[] heroPartyCoordinates= new int[2];
-    final static Random random = new Random();
     final static HashMap<HMSquareType, Float> squareMakeup = new HashMap<>();
     final static HMSquareType[] squareChoiceArray = new HMSquareType[10];
-
-    final static Map<String, Integer[]> dirs = new HashMap<>();
 
     static{
         // Make square array to randomly choose from
@@ -41,12 +37,6 @@ public class HMBoard extends Board<HMSquare> {
                 i++;
             }
         }
-
-        // populate directions
-        dirs.put(CommandType.UP.getCode(), new Integer[]{-1, 0});
-        dirs.put(CommandType.DOWN.getCode(), new Integer[]{1, 0});
-        dirs.put(CommandType.LEFT.getCode(), new Integer[]{0, -1});
-        dirs.put(CommandType.RIGHT.getCode(), new Integer[]{0, 1});
     }
 
 
