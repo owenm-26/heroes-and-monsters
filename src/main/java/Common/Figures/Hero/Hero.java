@@ -3,6 +3,7 @@ package Common.Figures.Hero;
 import Common.Data.LoadableFromText;
 import Common.Data.TextDataLoader;
 import Common.Figures.Figure;
+import Common.Figures.Party;
 import Common.Items.*;
 import Common.Items.Potion.Potion;
 import Common.Items.Potion.PotionType;
@@ -11,6 +12,7 @@ import Common.HMLVEffect;
 import HeroesAndMonsters.GameBoard.HMGameState;
 import Utility.UI.ConsoleColors;
 import Utility.UI.GeneralPrints;
+import Utility.Validators.Integers;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 
 import java.util.*;
@@ -574,6 +576,51 @@ public class Hero extends Figure implements LoadableFromText {
             i.setPrice(i.getPrice() * 2);
         }
 
+    }
+
+    public static Party<Hero> selectYourHeroes(int maxPartySize){
+        /*
+        Hero selection screen
+         */
+        Integers.validatePositiveIntegers(maxPartySize);
+        List<Hero> options = getAllHeroOptions();
+        Party<Hero> party = new Party<>(maxPartySize);
+
+        while(options.size() > 0 && party.canAddAnotherMember()){
+            ConsoleColors.printInColor(ConsoleColors.WHITE_BOLD, "Pick which hero(es) you want to add to your party!");
+            Hero choice = getUserHeroChoice(options);
+            party.addMember(choice);
+            options.remove(choice);
+        }
+        return party;
+    }
+
+    public static Hero getUserHeroChoice(List<Hero> optionsLeft){
+        /*
+        Randomly picks 3 heroes from optionsLeft and prints them along with the menu to select them or not
+         */
+        // Pick random choices to show user
+        if (optionsLeft.size() < 1) throw new IllegalArgumentException("Hero optionsLeft List is empty");
+        int number_of_choices = 3;
+        String[] choices = new String[number_of_choices];
+        Set<Integer> usedIndices = new HashSet<>();
+        int i =0;
+
+        HashMap<Integer, Hero> backMap = new HashMap<>();
+        while (i < number_of_choices){
+            Random random = new Random();
+            int randomIndex = random.nextInt(optionsLeft.size());
+            if (usedIndices.contains(randomIndex)) continue; //prevent printing the same character twice
+            Hero h = optionsLeft.get(randomIndex);
+            backMap.put(i, h);
+            usedIndices.add(randomIndex);
+            choices[i] = h.getName();
+            System.out.println(h);
+            i++;
+        }
+
+        int heroChoiceIndex = showMenuAndGetUserAnswer(choices);
+        return backMap.get(heroChoiceIndex);
     }
 
 //    GETTERS

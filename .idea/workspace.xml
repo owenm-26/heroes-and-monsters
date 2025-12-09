@@ -5,8 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5c6bed8a-a4a5-4400-8bad-54511b842f03" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/Common/Gameboard/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Common/Gameboard/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/HeroesAndMonsters/GameBoard/HMBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/HeroesAndMonsters/GameBoard/HMBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Common/Figures/Hero/Hero.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Common/Figures/Hero/Hero.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Common/Gameboard/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Common/Gameboard/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/HeroesAndMonsters/GameBoard/HMGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/HeroesAndMonsters/GameBoard/HMGame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

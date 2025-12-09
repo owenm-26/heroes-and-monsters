@@ -4,7 +4,9 @@ import Common.Figures.Figure;
 import Common.Figures.Party;
 import Common.Figures.Hero.Hero;
 import Common.Figures.Monster.Monster;
+import Common.Gameboard.Board;
 import Common.Gameboard.Game;
+import Common.Gameboard.Square;
 import Common.Items.Inventory;
 import Common.Items.Item;
 import Common.Items.ItemType;
@@ -15,10 +17,12 @@ import Utility.UI.CommandType;
 import Utility.UI.ConsoleColors;
 import Utility.UI.UserInputs;
 import Utility.Validators.Integers;
+import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 
 import java.util.*;
 
 import static Common.Figures.Hero.Hero.getAllHeroOptions;
+import static Common.Figures.Hero.Hero.selectYourHeroes;
 import static Common.Figures.Party.pickTeamAndDisplayStatistics;
 import static Utility.UI.GeneralPrints.printHorizontalLine;
 import static Utility.UI.UserInputs.*;
@@ -26,7 +30,6 @@ import static Utility.UI.UserInputs.*;
 public class HMGame extends Game<HMBoard> {
 
     private final static int MAX_PARTY_SIZE=3;
-    private HMBoard board;
     private final int dimension;
 
     private HMGameState state;
@@ -45,7 +48,7 @@ public class HMGame extends Game<HMBoard> {
 
     @Override
     protected void initializeGame() {
-        board = pickBoard(dimension);
+        board = (HMBoard)pickBoard(HMBoard.class, dimension);
         parties = new LinkedHashMap<>();
         parties.put("Heroes", selectYourHeroes(MAX_PARTY_SIZE));
     }
@@ -141,68 +144,6 @@ public class HMGame extends Game<HMBoard> {
         System.out.println();
     }
 
-    private HMBoard pickBoard(int n){
-        /*
-        Allows the user to cycle through randomly generated boards before selecting one
-         */
-        HMBoard b;
-        while(true){
-            b = new HMBoard(n);
-            b.displayBoard();
-            ConsoleColors.printInColor(ConsoleColors.WHITE_BOLD, "Do you want to play on this map? (y,n)");
-            String input = UserInputs.parseAndQuitIfAsked();
-
-            if (UserInputs.isCommand(input, CommandType.YES)) break;
-
-        }
-        return b;
-    }
-
-    private Party<Hero> selectYourHeroes(int maxPartySize){
-        /*
-        Hero selection screen
-         */
-        Integers.validatePositiveIntegers(maxPartySize);
-        List<Hero> options = getAllHeroOptions();
-        Party<Hero> party = new Party<>(maxPartySize);
-
-        while(options.size() > 0 && party.canAddAnotherMember()){
-            ConsoleColors.printInColor(ConsoleColors.WHITE_BOLD, "Pick which hero(es) you want to add to your party!");
-            Hero choice = getUserHeroChoice(options);
-            party.addMember(choice);
-            options.remove(choice);
-        }
-        return party;
-    }
-
-    private Hero getUserHeroChoice(List<Hero> optionsLeft){
-        /*
-        Randomly picks 3 heroes from optionsLeft and prints them along with the menu to select them or not
-         */
-        // Pick random choices to show user
-        if (optionsLeft.size() < 1) throw new IllegalArgumentException("Hero optionsLeft List is empty");
-        int number_of_choices = 3;
-        String[] choices = new String[number_of_choices];
-        Set<Integer> usedIndices = new HashSet<>();
-        int i =0;
-
-        HashMap<Integer, Hero> backMap = new HashMap<>();
-        while (i < number_of_choices){
-            Random random = new Random();
-            int randomIndex = random.nextInt(optionsLeft.size());
-            if (usedIndices.contains(randomIndex)) continue; //prevent printing the same character twice
-            Hero h = optionsLeft.get(randomIndex);
-            backMap.put(i, h);
-            usedIndices.add(randomIndex);
-            choices[i] = h.getName();
-            System.out.println(h);
-            i++;
-        }
-
-        int heroChoiceIndex = showMenuAndGetUserAnswer(choices);
-        return backMap.get(heroChoiceIndex);
-    }
-
     private void playGame(){
         /*
         Handles all actions after picking map & characters through sub methods
@@ -229,11 +170,6 @@ public class HMGame extends Game<HMBoard> {
                     throw new IllegalStateException("Impossible Game State. Something went wrong in playGame()");
             }
         }
-    }
-
-    private void endGame(){
-        ConsoleColors.printInColor(ConsoleColors.BLACK_BACKGROUND, "☠️ Game Over. You lose.");
-        System.exit(0);
     }
 
     private void exploring(){
