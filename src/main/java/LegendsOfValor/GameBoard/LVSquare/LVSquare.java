@@ -2,7 +2,6 @@ package LegendsOfValor.GameBoard.LVSquare;
 
 import Common.Gameboard.Square;
 import Common.Items.Inventory;
-import HeroesAndMonsters.GameBoard.HMSquare.HMSquareType;
 
 public class LVSquare extends Square<LVSquareType> {
 
@@ -18,5 +17,11 @@ public class LVSquare extends Square<LVSquareType> {
     @Override
     public void printSymbol() {
 
+    }
+
+    // GETTERS
+    public Inventory getInventory() {
+        if(type != LVSquareType.NEXUS) throw new IllegalArgumentException(String.format("Only Nexuses have inventories. You called getInventory() on a %s space", type.name()));
+        return inventory;
     }
 }
