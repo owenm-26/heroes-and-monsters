@@ -1,4 +1,4 @@
-package HeroesAndMonsters.GameBoard.HMSquare;
+package Common;
 
 public enum MarketActions {
 

@@ -1,14 +1,14 @@
-package HeroesAndMonsters.GameBoard;
+package Common;
 
 import Common.Figures.TraitType;
 import Common.Gameboard.Effect;
 
-public class HMEffect extends Effect {
+public class HMLVEffect extends Effect {
     private int roundsLeft;
     private int value;
     private TraitType type;
 
-    public HMEffect(String name, int value, int rounds, TraitType type){
+    public HMLVEffect(String name, int value, int rounds, TraitType type){
         this.name = name;
         this.value = value;
         this.type = type;

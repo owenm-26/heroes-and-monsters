@@ -7,7 +7,7 @@ import Common.Items.*;
 import Common.Items.Potion.Potion;
 import Common.Items.Potion.PotionType;
 import Common.Items.Spell.Spell;
-import HeroesAndMonsters.GameBoard.HMEffect;
+import Common.HMLVEffect;
 import HeroesAndMonsters.GameBoard.HMGameState;
 import Utility.UI.ConsoleColors;
 import Utility.UI.GeneralPrints;
@@ -54,7 +54,7 @@ public class Hero extends Figure implements LoadableFromText {
     }
 
     @Override
-    public void updateEffect(HMEffect e, boolean adding) {
+    public void updateEffect(HMLVEffect e, boolean adding) {
         int addition = adding ? (1 * e.getValue()) : (-1 * e.getValue());
 
         switch (e.getType()){
@@ -514,7 +514,7 @@ public class Hero extends Figure implements LoadableFromText {
         }
         else{
             String name = String.format("%s-%s", potionName, type.getName());
-            HMEffect e = new HMEffect(name, val, POTION_DURATION_LENGTH, type.getType());
+            HMLVEffect e = new HMLVEffect(name, val, POTION_DURATION_LENGTH, type.getType());
             updateEffect(e, true);
         }
         String message = String.format("- Gaining %s effect of %d", type.getName(), val);

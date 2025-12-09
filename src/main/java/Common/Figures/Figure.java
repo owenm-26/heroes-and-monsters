@@ -1,7 +1,7 @@
 package Common.Figures;
 
 import Common.Gameboard.Player;
-import HeroesAndMonsters.GameBoard.HMEffect;
+import Common.HMLVEffect;
 import HeroesAndMonsters.GameBoard.HMGameState;
 import Utility.UI.ConsoleColors;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
@@ -17,7 +17,7 @@ public abstract class Figure extends Player {
     protected int hp;
     protected int hpMax;
     protected int baseDefense;
-    protected Set<HMEffect> activeEffects;
+    protected Set<HMLVEffect> activeEffects;
 
 //    SETTERS
 
@@ -72,13 +72,13 @@ public abstract class Figure extends Player {
         return level;
     }
 
-    public Set<HMEffect> getActiveEffects() {
+    public Set<HMLVEffect> getActiveEffects() {
         return activeEffects;
     }
 
     public void decrementTimeOnAllEffects(){
-        List<HMEffect> effectsEnded = new ArrayList<>();
-        for(HMEffect e: activeEffects){
+        List<HMLVEffect> effectsEnded = new ArrayList<>();
+        for(HMLVEffect e: activeEffects){
             e.decrementRoundsLeft();
             int roundsLeft = e.getRoundsLeft();
             if (roundsLeft == 0){
@@ -91,7 +91,7 @@ public abstract class Figure extends Player {
         if(effectsEnded.size()> 0){
             StringBuilder b = new StringBuilder();
             b.append("Effects that ended: [");
-            for (HMEffect e: effectsEnded){
+            for (HMLVEffect e: effectsEnded){
                 b.append(e.getName() + ",");
             }
             if (effectsEnded.size() != 0) b.deleteCharAt(b.length()-1); // remove the extra comma
@@ -101,7 +101,7 @@ public abstract class Figure extends Player {
 
     }
 
-    public abstract void updateEffect(HMEffect e, boolean adding);
+    public abstract void updateEffect(HMLVEffect e, boolean adding);
 
    public abstract void displayFigureStatistics(HMGameState state);
 

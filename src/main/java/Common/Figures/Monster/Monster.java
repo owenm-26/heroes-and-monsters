@@ -1,6 +1,6 @@
 package Common.Figures.Monster;
 
-import HeroesAndMonsters.GameBoard.HMEffect;
+import Common.HMLVEffect;
 import HeroesAndMonsters.GameBoard.HMGameState;
 import Utility.UI.ConsoleColors;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
@@ -13,7 +13,6 @@ import Common.Data.LoadableFromText;
 import Common.Data.TextDataLoader;
 import Common.Figures.Figure;
 import Common.Figures.Party;
-import Common.Figures.TraitType;
 import Common.Figures.Hero.Hero;
 
 public class Monster extends Figure implements LoadableFromText {
@@ -31,7 +30,7 @@ public class Monster extends Figure implements LoadableFromText {
     }
 
     @Override
-    public void updateEffect(HMEffect e, boolean adding) {
+    public void updateEffect(HMLVEffect e, boolean adding) {
         int addition = adding ? (1 * e.getValue()) : (-1 * e.getValue());
 
         switch (e.getType()){

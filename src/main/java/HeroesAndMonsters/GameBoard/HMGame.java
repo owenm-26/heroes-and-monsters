@@ -10,7 +10,7 @@ import Common.Items.Item;
 import Common.Items.ItemType;
 import HeroesAndMonsters.Battle.Battle;
 import HeroesAndMonsters.Battle.BattleCommand;
-import HeroesAndMonsters.GameBoard.HMSquare.MarketActions;
+import Common.MarketActions;
 import Utility.UI.CommandType;
 import Utility.UI.ConsoleColors;
 import Utility.UI.UserInputs;
