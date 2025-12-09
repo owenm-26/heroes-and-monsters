@@ -6,14 +6,14 @@ import Utility.UI.ConsoleColors;
 public enum LVSquareType {
 
     PLAIN(" ", ConsoleColors.WHITE_BACKGROUND, null),
-    INACCESSIBLE("X", ConsoleColors.RED, null),
+    INACCESSIBLE("X", ConsoleColors.BLACK_BACKGROUND, null),
     NEXUS("M", ConsoleColors.CYAN, null),
 
     OBSTACLE("O", ConsoleColors.BLUE, null),
 
     BUSH("B", ConsoleColors.GREEN, TraitType.DEXTERITY),
 
-    CAVE("C", ConsoleColors.BLACK_BACKGROUND, TraitType.AGILITY),
+    CAVE("C", ConsoleColors.RED, TraitType.AGILITY),
 
     KOULOU("K", ConsoleColors.YELLOW, TraitType.STRENGTH)
     ;
@@ -24,6 +24,7 @@ public enum LVSquareType {
     LVSquareType(String symbol, String color, TraitType bonusGiven) {
         this.symbol = symbol;
         this.color = color;
+        this.bonusGiven = bonusGiven;
     }
 
     public String getSymbol(){
