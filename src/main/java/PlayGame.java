@@ -1,12 +1,9 @@
-import Common.Game;
-import GameBoard.HMBoard;
-import GameBoard.HMGame;
-import UI.CommandType;
-import UI.ConsoleColors;
-import UI.GeneralPrints;
-import UI.UserInputs;
-
-import java.util.Scanner;
+import Common.Gameboard.Game;
+import HeroesAndMonsters.GameBoard.HMGame;
+import LegendsOfValor.GameBoard.LVGame;
+import Utility.UI.CommandType;
+import Utility.UI.ConsoleColors;
+import Utility.UI.UserInputs;
 
 public class PlayGame {
 
@@ -17,24 +14,32 @@ public class PlayGame {
     }
 
     private static void displayMenu(){
-        System.out.println("\n--- Welcome to Heroes & Monsters ---");
+        System.out.println("\n--- Welcome ---");
         System.out.println("You can quit anytime by typing '" + CommandType.QUIT.getCode() + "'.\n");
 
         while (true) {
-            String[] options = {"Play Heroes & Monsters", "Instructions", "Credits"};
+            String[] options = {"Play Heroes & Monsters", "Play Legends of Valor", "Heroes & Monsters Instructions", "Legends of Valor Instructions", "Credits"};
             int choice = UserInputs.showMenuAndGetUserAnswer(options);
 
-            Game g = new HMGame();
+            Game hm = new HMGame();
+            Game lv = new LVGame();
             boolean breakFlag = false;
             switch (choice) {
                 case 0:
                     breakFlag=true;
-                    g.runGame();
+                    hm.runGame();
                     break;
                 case 1:
-                    g.printRules();
+                    breakFlag=true;
+                    lv.runGame();
                     break;
-                case 2 :
+                case 2:
+                    hm.printRules();
+                    break;
+                case 3:
+                    lv.printRules();
+                    break;
+                case 4 :
                     printCredits();
                     break;
                 default:
@@ -45,7 +50,7 @@ public class PlayGame {
     }
 
     private static void printCredits(){
-        ConsoleColors.printInColor(ConsoleColors.CYAN, "This was built by Owen Mariani in Novemeber of 2025. Check his GitHub @owenm-26");
+        ConsoleColors.printInColor(ConsoleColors.CYAN, "Heroes and Monsters was built by Owen Mariani in November of 2025. Check his GitHub @owenm-26\nHe built Legends of Valor with Jigar & Ali in December of 2025.");
         System.out.println();
     }
 
