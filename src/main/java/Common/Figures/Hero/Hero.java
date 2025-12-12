@@ -13,7 +13,7 @@ import HeroesAndMonsters.GameBoard.HMGameState;
 import Utility.UI.ConsoleColors;
 import Utility.UI.GeneralPrints;
 import Utility.Validators.Integers;
-import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
+
 
 import java.util.*;
 
@@ -242,7 +242,7 @@ public class Hero extends Figure implements LoadableFromText {
                 heroType = HeroType.WARRIOR;
                 break;
             default:
-                throw new ValueException("Something went wrong in setHeroTypeFromFileName()");
+                throw new IllegalArgumentException("Something went wrong in setHeroTypeFromFileName()");
         }
     }
 

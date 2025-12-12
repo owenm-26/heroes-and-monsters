@@ -1,6 +1,6 @@
 package Common.Items;
 
-import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
+
 
 import static Common.Data.TextDataLoader.getAllSourceFileNames;
 
@@ -33,7 +33,7 @@ public class Weapon extends Item implements LoadableFromText, DamageDealing {
 
     public boolean isTwoHanded(){
         if (handsRequired > 2){
-            throw new ValueException("Hands Required is greater than 2. Are you sure this should be possible?");
+            throw new IllegalArgumentException("Hands Required is greater than 2. Are you sure this should be possible?");
         }
         return handsRequired == 2;
     }

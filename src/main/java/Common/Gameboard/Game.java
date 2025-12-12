@@ -3,7 +3,7 @@ package Common.Gameboard;
 import Utility.UI.CommandType;
 import Utility.UI.ConsoleColors;
 import Utility.UI.UserInputs;
-import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
+
 
 public abstract class Game<T extends Board> {
     protected T board;
@@ -27,7 +27,7 @@ public abstract class Game<T extends Board> {
             try{
                 b = boardClass.getDeclaredConstructor().newInstance();
             }catch (Exception e){
-                throw new ValueException("boardClass given does not have a constructor callable");
+                throw new IllegalArgumentException("boardClass given does not have a constructor callable");
             }
 
             b.displayBoard();

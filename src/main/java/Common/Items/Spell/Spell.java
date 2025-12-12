@@ -1,6 +1,6 @@
 package Common.Items.Spell;
 
-import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
+
 
 import static Common.Data.TextDataLoader.getAllSourceFileNames;
 
@@ -79,7 +79,7 @@ public class Spell extends Item implements LoadableFromText, DamageDealing {
                 spellType = SpellType.LIGHTNING;
                 break;
             default:
-                throw new ValueException("Something went wrong in setSpellTypeFromFileName()");
+                throw new IllegalArgumentException("Something went wrong in setSpellTypeFromFileName()");
         }
     }
     public void loadFromMap(Map<String, String> map){

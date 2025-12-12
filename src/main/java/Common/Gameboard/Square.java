@@ -1,5 +1,6 @@
 package Common.Gameboard;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Square<T> {
@@ -8,6 +9,8 @@ public abstract class Square<T> {
 
     public Square(T type){
         this.type = type;
+        // FIX: initialize pieces list
+        this.pieces = new ArrayList<>();
     }
 
     public abstract void printSymbol();
@@ -20,4 +23,3 @@ public abstract class Square<T> {
         return pieces;
     }
 }
-
