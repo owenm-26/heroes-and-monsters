@@ -8,15 +8,15 @@ public enum LVSquareType {
 
     PLAIN(" ", ConsoleColors.WHITE_BACKGROUND, null),
     INACCESSIBLE("X", ConsoleColors.BLACK_BACKGROUND, null),
-    NEXUS("M", ConsoleColors.CYAN, null),
+    NEXUS(" ", ConsoleColors.YELLOW_BACKGROUND, null),
 
-    OBSTACLE("O", ConsoleColors.BLUE, null),
+    OBSTACLE("O", ConsoleColors.RED_BACKGROUND, null),
 
-    BUSH("B", ConsoleColors.GREEN, TraitType.DEXTERITY),
+    BUSH(" ", ConsoleColors.GREEN_BACKGROUND, TraitType.DEXTERITY),
 
-    CAVE("C", ConsoleColors.RED, TraitType.AGILITY),
+    CAVE(" ", ConsoleColors.CYAN_BACKGROUND, TraitType.AGILITY),
 
-    KOULOU("K", ConsoleColors.YELLOW, TraitType.STRENGTH)
+    KOULOU(" ", ConsoleColors.PURPLE_BACKGROUND, TraitType.STRENGTH)
     ;
     private String symbol;
     private String color;
@@ -37,5 +37,18 @@ public enum LVSquareType {
     }
 
     public TraitType getBonusGiven(){return bonusGiven;}
+
+    public static void displayLegend(){
+        StringBuilder s = new StringBuilder();
+        s.append("-- BOARD LEGEND --\n");
+        for (LVSquareType t: LVSquareType.values()) {
+            String body = String.format(" %s =  %s",t.symbol, t.name());
+            String bonus = t.bonusGiven != null ? String.format("[++%s]", t.bonusGiven) : "";
+            String line = String.format("%s %s", body, bonus);
+            s.append(ConsoleColors.returnInColor(t.color, line, true));
+        }
+
+        System.out.println(s);
+    }
 }
 

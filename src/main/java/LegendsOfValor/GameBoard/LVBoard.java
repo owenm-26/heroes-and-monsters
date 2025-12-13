@@ -162,60 +162,28 @@ public class LVBoard extends Board<LVSquare> {
                 } else if (monsterHere) {
                     content = "M";
                 } else {
-                    switch (t) {
-                        case NEXUS:
-                            content = "N";
-                            break;
-                        case INACCESSIBLE:
-                            content = "X";
-                            break;
-                        case BUSH:
-                            content = "B";
-                            break;
-                        case CAVE:
-                            content = "C";
-                            break;
-                        case KOULOU:
-                            content = "K";
-                            break;
-                        case PLAIN:
-                        default:
-                            content = " ";
-                            break;
-                    }
-                }
 
-                String cell = color + content + ConsoleColors.RESET;
-                System.out.print("|  " + cell + "  ");
+                    content = t.getSymbol();
+                }
+                String paddedContent = String.format("%-2s", content);
+                String cell = color + paddedContent + ConsoleColors.RESET;
+                System.out.print("| " + cell + " ");
             }
 
             System.out.println("|");
         }
 
         System.out.println(border);
-        printLegend();
+        LVSquareType.displayLegend();
     }
 
     private String buildBorderLine() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < SIZE; i++) {
-            sb.append("+-----");
+            sb.append("+----");
         }
         sb.append("+");
         return sb.toString();
-    }
-
-    private void printLegend() {
-        //TODO: Change all spaces to have background colors and no letters
-        System.out.println("\nLegend:");
-        System.out.println("H1/H2/H3 = Heroes");
-        System.out.println("M        = Monster");
-        System.out.println("(empty)  = Plain");
-        System.out.println("N        = Nexus");
-        System.out.println("X        = Inaccessible (wall)");
-        System.out.println("B        = Bush     (Dexterity bonus)");
-        System.out.println("C        = Cave     (Agility bonus)");
-        System.out.println("K        = Koulou   (Strength bonus)");
     }
 
     // ============================================================
