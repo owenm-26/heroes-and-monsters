@@ -6,19 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="5c6bed8a-a4a5-4400-8bad-54511b842f03" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Common/Figures/Figure.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Common/Figures/Figure.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Common/Figures/Hero/Hero.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Common/Figures/Hero/Hero.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Common/Figures/Monster/Monster.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Common/Figures/Monster/Monster.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Common/Gameboard/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Common/Gameboard/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Common/Gameboard/Square.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Common/Gameboard/Square.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Common/Items/Spell/Spell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Common/Items/Spell/Spell.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Common/Items/Weapon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Common/Items/Weapon.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/HeroesAndMonsters/GameBoard/HMBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/HeroesAndMonsters/GameBoard/HMBoard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/HeroesAndMonsters/GameBoard/HMGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/HeroesAndMonsters/GameBoard/HMGame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/LegendsOfValor/GameBoard/LVBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LegendsOfValor/GameBoard/LVBoard.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/LegendsOfValor/GameBoard/LVGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LegendsOfValor/GameBoard/LVGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/LegendsOfValor/GameBoard/LVSquare/LVSquare.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LegendsOfValor/GameBoard/LVSquare/LVSquare.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/LegendsOfValor/GameBoard/LVSquare/LVSquareType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LegendsOfValor/GameBoard/LVSquare/LVSquareType.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,29 +37,29 @@
   &quot;associatedIndex&quot;: 7
 }</component>
   <component name="ProjectId" id="35Dx06UXlAmoOJxMNHNI2o4xJyt" />
-  <component name="ProjectLevelVcsManager">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.PlayGame.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.PlayGame.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/uml" />

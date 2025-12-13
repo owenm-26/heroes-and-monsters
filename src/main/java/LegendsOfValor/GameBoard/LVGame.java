@@ -91,7 +91,7 @@ public class LVGame extends Game<LVBoard> {
                 heroTurn(h, lane);
 
                 // After hero move, we could check win conditions (optional)
-                // e.g., hero reaches enemy Nexus; omitted for now
+                // e.g., hero reaches enemy Nexus; TODO:omitted for now
 
                 // ----- MONSTER TURN -----
                 if (m != null) {
@@ -266,6 +266,7 @@ public class LVGame extends Game<LVBoard> {
 
         boolean moved = board.moveMonsterForward(m);
 
+        //TODO: if they can't move they should try to attack
         if (!moved) {
             ConsoleColors.printInColor(ConsoleColors.YELLOW,
                     "Monster stays in place (blocked or at edge).");

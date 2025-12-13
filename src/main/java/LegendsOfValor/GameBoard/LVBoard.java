@@ -206,15 +206,16 @@ public class LVBoard extends Board<LVSquare> {
     }
 
     private void printLegend() {
+        //TODO: Change all spaces to have background colors and no letters
         System.out.println("\nLegend:");
         System.out.println("H1/H2/H3 = Heroes");
         System.out.println("M        = Monster");
+        System.out.println("(empty)  = Plain");
         System.out.println("N        = Nexus");
         System.out.println("X        = Inaccessible (wall)");
         System.out.println("B        = Bush     (Dexterity bonus)");
         System.out.println("C        = Cave     (Agility bonus)");
         System.out.println("K        = Koulou   (Strength bonus)");
-        System.out.println("(empty)  = Plain");
     }
 
     // ============================================================
@@ -222,6 +223,7 @@ public class LVBoard extends Board<LVSquare> {
     // ============================================================
 
     // Unlabeled version kept for compatibility (not used by LVGame now)
+    //TODO: allow the player to choose which lanes each hero goes in
     public void placeHero(Hero h, int row, int col) {
         grid[row][col].getPieces().add(h);
     }
@@ -344,6 +346,7 @@ public class LVBoard extends Board<LVSquare> {
         if (squareHasHero(newR, newC)) return false;
 
         // Legends of Valor: cannot move into monster square via "move" action
+        //TODO: A hero and a monster can be on the same square
         if (squareHasMonster(newR, newC)) return false;
 
         // "Cannot move behind a monster without killing it"
@@ -527,6 +530,7 @@ public class LVBoard extends Board<LVSquare> {
         if (isBlockedTerrain(destType)) return false;
 
         // cannot move into hero
+        //TODO: Monster and hero can share the same space
         if (squareHasHero(newR, newC)) return false;
 
         // "cannot move behind hero" – i.e., cannot move to a row that is further

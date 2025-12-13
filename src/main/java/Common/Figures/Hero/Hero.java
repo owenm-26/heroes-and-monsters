@@ -619,7 +619,12 @@ public class Hero extends Figure implements LoadableFromText {
             i++;
         }
 
-        int heroChoiceIndex = showMenuAndGetUserAnswer(choices);
+        int heroChoiceIndex = -1;
+        heroChoiceIndex = showMenuAndGetUserAnswer(choices);
+        while(heroChoiceIndex < 0){
+            ConsoleColors.printInColor(RED, "Illegal Option chosen, sorry. Please try again.");
+            heroChoiceIndex = showMenuAndGetUserAnswer(choices);
+        }
         return backMap.get(heroChoiceIndex);
     }
 
