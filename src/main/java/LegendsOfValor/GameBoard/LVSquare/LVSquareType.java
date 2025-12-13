@@ -4,8 +4,6 @@ import Common.Figures.TraitType;
 import Utility.UI.ConsoleColors;
 
 public enum LVSquareType {
-    //TODO: Change all spaces to have background colors and no letters
-
     PLAIN(" ", ConsoleColors.WHITE_BACKGROUND, null),
     INACCESSIBLE("X", ConsoleColors.BLACK_BACKGROUND, null),
     NEXUS(" ", ConsoleColors.YELLOW_BACKGROUND, null),

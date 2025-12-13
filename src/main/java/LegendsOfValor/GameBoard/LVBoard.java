@@ -152,20 +152,22 @@ public class LVBoard extends Board<LVSquare> {
                     if (p instanceof Hero) {
                         Hero h = (Hero) p;
                         heroLabel = heroLabels.getOrDefault(h, "H");
-                    } else if (p instanceof Monster) {
+                    } if (p instanceof Monster) {
                         monsterHere = true;
                     }
                 }
 
-                if (heroLabel != null) {
+                if(heroLabel!=null && monsterHere){
+                    content = String.format("%s/M", heroLabel);
+                }
+                else if (heroLabel != null) {
                     content = heroLabel;
                 } else if (monsterHere) {
                     content = "M";
                 } else {
-
                     content = t.getSymbol();
                 }
-                String paddedContent = String.format("%-2s", content);
+                String paddedContent = String.format("%-4s", content);
                 String cell = color + paddedContent + ConsoleColors.RESET;
                 System.out.print("| " + cell + " ");
             }
@@ -180,7 +182,7 @@ public class LVBoard extends Board<LVSquare> {
     private String buildBorderLine() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < SIZE; i++) {
-            sb.append("+----");
+            sb.append("+------");
         }
         sb.append("+");
         return sb.toString();
@@ -312,10 +314,6 @@ public class LVBoard extends Board<LVSquare> {
 
         // Cannot move into another hero
         if (squareHasHero(newR, newC)) return false;
-
-        // Legends of Valor: cannot move into monster square via "move" action
-        //TODO: A hero and a monster can be on the same square
-        if (squareHasMonster(newR, newC)) return false;
 
         // "Cannot move behind a monster without killing it"
         // Interpret as: hero cannot move to a row that is in front of (toward enemy Nexus)
@@ -496,10 +494,6 @@ public class LVBoard extends Board<LVSquare> {
 
         LVSquareType destType = grid[newR][newC].getType();
         if (isBlockedTerrain(destType)) return false;
-
-        // cannot move into hero
-        //TODO: Monster and hero can share the same space
-        if (squareHasHero(newR, newC)) return false;
 
         // "cannot move behind hero" – i.e., cannot move to a row that is further
         // toward heroes' Nexus past the closest hero in this lane.
