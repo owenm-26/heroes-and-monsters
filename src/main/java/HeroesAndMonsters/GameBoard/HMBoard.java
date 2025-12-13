@@ -8,7 +8,7 @@ import HeroesAndMonsters.GameBoard.HMSquare.HMSquare;
 import HeroesAndMonsters.GameBoard.HMSquare.HMSquareType;
 import Utility.UI.CommandType;
 import Utility.UI.UserInputs;
-import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
+
 
 import java.util.*;
 
@@ -72,7 +72,7 @@ public class HMBoard extends Board<HMSquare> {
 
     protected void validateDimension(int n){
         if (n  < 3 || n > 15){
-            throw new ValueException(String.format("Provided Dimension (%d) is out of the valid range 3-15", n));
+            throw new IllegalArgumentException(String.format("Provided Dimension (%d) is out of the valid range 3-15", n));
         }
     }
 
@@ -144,7 +144,7 @@ public class HMBoard extends Board<HMSquare> {
         /*
         Returns the inventory of the space that the players are on
          */
-        if (!partyIsInMarket()) throw new ValueException("This square is not a market");
+        if (!partyIsInMarket()) throw new IllegalArgumentException("This square is not a market");
         return grid[heroPartyCoordinates[0]][heroPartyCoordinates[1]].getInventory();
     }
 

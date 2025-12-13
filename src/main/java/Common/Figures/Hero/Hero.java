@@ -13,7 +13,7 @@ import HeroesAndMonsters.GameBoard.HMGameState;
 import Utility.UI.ConsoleColors;
 import Utility.UI.GeneralPrints;
 import Utility.Validators.Integers;
-import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
+
 
 import java.util.*;
 
@@ -242,7 +242,7 @@ public class Hero extends Figure implements LoadableFromText {
                 heroType = HeroType.WARRIOR;
                 break;
             default:
-                throw new ValueException("Something went wrong in setHeroTypeFromFileName()");
+                throw new IllegalArgumentException("Something went wrong in setHeroTypeFromFileName()");
         }
     }
 
@@ -619,7 +619,12 @@ public class Hero extends Figure implements LoadableFromText {
             i++;
         }
 
-        int heroChoiceIndex = showMenuAndGetUserAnswer(choices);
+        int heroChoiceIndex = -1;
+        heroChoiceIndex = showMenuAndGetUserAnswer(choices);
+        while(heroChoiceIndex < 0){
+            ConsoleColors.printInColor(RED, "Illegal Option chosen, sorry. Please try again.");
+            heroChoiceIndex = showMenuAndGetUserAnswer(choices);
+        }
         return backMap.get(heroChoiceIndex);
     }
 

@@ -4,7 +4,7 @@ import Common.Gameboard.Player;
 import Common.HMLVEffect;
 import HeroesAndMonsters.GameBoard.HMGameState;
 import Utility.UI.ConsoleColors;
-import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ public abstract class Figure extends Player {
 
     public void gainHp(int val){
         if (val < 0){
-            throw new ValueException("Cannot gain negative health");
+            throw new IllegalArgumentException("Cannot gain negative health");
         }
         int new_hp = val + hp;
         hp = Math.min(new_hp, hpMax);
@@ -34,7 +34,7 @@ public abstract class Figure extends Player {
         Reduces the HP of the figure and returns True if the figure dies (has 0 HP)
          */
         if (val < 0){
-            throw new ValueException("Cannot lose negative health");
+            throw new IllegalArgumentException("Cannot lose negative health");
         }
         int new_hp = hp - val;
         hp = Math.max(new_hp, 0);

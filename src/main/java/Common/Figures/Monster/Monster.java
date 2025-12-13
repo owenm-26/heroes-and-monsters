@@ -3,7 +3,7 @@ package Common.Figures.Monster;
 import Common.HMLVEffect;
 import HeroesAndMonsters.GameBoard.HMGameState;
 import Utility.UI.ConsoleColors;
-import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
+
 
 import static Common.Data.TextDataLoader.getAllSourceFileNames;
 
@@ -93,7 +93,7 @@ public class Monster extends Figure implements LoadableFromText {
                 monsterType = MonsterType.SPIRIT;
                 break;
             default:
-                throw new ValueException("Something went wrong in setMonsterTypeFromFileNae()");
+                throw new IllegalArgumentException("Something went wrong in setMonsterTypeFromFileNae()");
         }
     }
 
