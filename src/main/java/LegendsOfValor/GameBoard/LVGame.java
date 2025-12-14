@@ -5,6 +5,9 @@ import Common.Figures.Hero.Hero;
 import Common.Figures.Monster.Monster;
 import Common.Figures.Party;
 import Common.Gameboard.Game;
+import Common.Items.ItemType;
+import HeroesAndMonsters.Battle.BattleCommand;
+import HeroesAndMonsters.GameBoard.HMGameState;
 import LegendsOfValor.GameBoard.LVSquare.LVSquare;
 import LegendsOfValor.GameBoard.Menus.LVMovementMenuOptions;
 import Utility.UI.CommandType;
@@ -13,6 +16,8 @@ import LegendsOfValor.GameBoard.Menus.LVMainMenuOptions;
 import Utility.UI.UserInputs;
 
 import java.util.*;
+
+import static Utility.UI.UserInputs.showMenuAndGetUserAnswer;
 
 public class LVGame extends Game<LVBoard> {
 
@@ -164,11 +169,10 @@ public class LVGame extends Game<LVBoard> {
             String choice = options.get(index);
             switch (LVMainMenuOptions.fromName((choice))){
                 case MOVE:
-                    //TODO: Implement Movement helper
                     turnUsed = move(h);
                     break;
                 case BACKPACK:
-                    //TODO: Implement Backpack helper
+                    turnUsed = backpack(h);
                     break;
                 case STATS:
                     //TODO: Implement Stats helper
@@ -231,6 +235,35 @@ public class LVGame extends Game<LVBoard> {
 
         return actionTaken;
 
+    }
+
+    private boolean backpack(Hero h){
+        /*
+        Only ever takes a turn if the user uses a potion
+         */
+
+        //Display current Equipped and stats
+        h.displayFigureStatistics(HMGameState.BATTLING);
+        //Ask them what they want to do (equip, unequip, take potion)
+        String[] options = BattleCommand.getBackpackActions();
+        int indexChosen = showMenuAndGetUserAnswer(options);
+        if (indexChosen < 0) return false;
+
+        boolean turnTaken = false;
+
+        switch (BattleCommand.fromName(options[indexChosen])){
+            case CHANGE_WEAPON:
+                h.equipItem(ItemType.WEAPON);
+                break;
+            case CHANGE_ARMOR:
+                h.equipItem(ItemType.ARMOR);
+                break;
+            case TAKE_POTION:
+                turnTaken = h.equipItem(ItemType.POTION);
+                break;
+        }
+
+        return turnTaken;
     }
 
     private boolean attemptMove(Hero h, String input) {
