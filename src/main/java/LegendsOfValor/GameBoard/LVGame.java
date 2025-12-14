@@ -1,5 +1,6 @@
 package LegendsOfValor.GameBoard;
 
+import Common.Figures.Figure;
 import Common.Figures.Hero.Hero;
 import Common.Figures.Monster.Monster;
 import Common.Figures.Party;
@@ -8,12 +9,13 @@ import Utility.UI.CommandType;
 import Utility.UI.ConsoleColors;
 import Utility.UI.UserInputs;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class LVGame extends Game<LVBoard> {
 
     private Party<Hero> heroes;
+
+    private Map<Figure, Integer> figureOriginalLanes;
     private List<Monster> monsters;
 
     @Override
@@ -36,12 +38,14 @@ public class LVGame extends Game<LVBoard> {
     }
 
     private void placeHeroes() {
+        figureOriginalLanes = new HashMap<>();
         int row = LVBoard.SIZE - 1;      // bottom Nexus row = 7
         int[] cols = {0, 3, 6};          // lane 0,1,2
 
         int i = 0;
         for (Hero h : heroes.getMembers()) {
             String label = "H" + (i + 1);    // H1, H2, H3
+            figureOriginalLanes.put(h, (i+1));
             board.placeHero(h, row, cols[i], label);
             i++;
         }
@@ -62,6 +66,7 @@ public class LVGame extends Game<LVBoard> {
 
         for (int i = 0; i < 3; i++) {
             board.placeMonster(monsters.get(i), row, cols[i]);
+            figureOriginalLanes.put(monsters.get(i), (i+1));
         }
     }
 
@@ -75,29 +80,10 @@ public class LVGame extends Game<LVBoard> {
                 "\nLegends of Valor setup complete! Movement enabled.\n");
 
         boolean gameRunning = true;
-
+        board.displayBoard();
         while (gameRunning) {
-
-            // Lane-based turn order: Lane 1, then Lane 2, then Lane 3
-            for (int lane = 0; lane < 3; lane++) {
-
-                Hero h = heroes.getMembers().get(lane);
-                Monster m = monsters.get(lane);
-
-                // Show board at the start of each lane's hero turn
-                board.displayBoard();
-
-                // ----- HERO TURN -----
-                heroTurn(h, lane);
-
-                // After hero move, we could check win conditions (optional)
-                // e.g., hero reaches enemy Nexus; TODO:omitted for now
-
-                // ----- MONSTER TURN -----
-                if (m != null) {
-                    monsterTurn(m, lane);
-                }
-            }
+            heroesTeamTurn();
+            monstersTeamTurn();
         }
     }
 
@@ -111,15 +97,32 @@ public class LVGame extends Game<LVBoard> {
     // ======================= HERO TURN ==========================
     // ============================================================
 
-    private void heroTurn(Hero h, int laneIndex) {
+    private void heroesTeamTurn(){
+        for (Hero h: heroes.getMembers()) {
+            heroTurn(h);
+            board.displayBoard();
+            //TODO: check win
+        }
+    }
+
+    private void monstersTeamTurn(){
+        for (Monster m: monsters){
+            monsterTurn(m);
+        }
+        board.displayBoard();
+        //TODO: check lose
+    }
+
+    private void heroTurn(Hero h) {
+        int laneIndex = figureOriginalLanes.get(h);
         ConsoleColors.printInColor(ConsoleColors.BLUE_BOLD,
-                "\n---- Lane " + (laneIndex + 1) + " Hero Turn ----");
+                "\n---- Lane " + (laneIndex) + " Hero Turn ----");
 
         int[] pos = board.getHeroPosition(h);
         if (pos != null) {
             ConsoleColors.printInColor(ConsoleColors.CYAN,
                     "Hero: " + h.getName() +
-                            " (H" + (laneIndex + 1) + ")" +
+                            " (H" + (laneIndex) + ")" +
                             " at (" + pos[0] + ", " + pos[1] + ")");
         }
 
@@ -253,9 +256,10 @@ public class LVGame extends Game<LVBoard> {
     // ====================== MONSTER TURN ========================
     // ============================================================
 
-    private void monsterTurn(Monster m, int laneIndex) {
+    private void monsterTurn(Monster m) {
+        int laneIndex = figureOriginalLanes.get(m);
         ConsoleColors.printInColor(ConsoleColors.BLUE,
-                "\n---- Lane " + (laneIndex + 1) + " Monster Turn ----");
+                "\n---- Lane " + (laneIndex) + " Monster Turn ----");
 
         int[] pos = board.getMonsterPosition(m);
         if (pos != null) {
