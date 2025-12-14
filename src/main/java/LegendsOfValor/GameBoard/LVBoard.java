@@ -9,11 +9,7 @@ import LegendsOfValor.GameBoard.LVSquare.LVSquare;
 import LegendsOfValor.GameBoard.LVSquare.LVSquareType;
 import Utility.UI.ConsoleColors;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class LVBoard extends Board<LVSquare> {
 
@@ -252,6 +248,13 @@ public class LVBoard extends Board<LVSquare> {
         return false;
     }
 
+    private Monster getMonstersOnSquare(LVSquare s){
+        for (Piece p : s.getPieces()) {
+            if (p instanceof Monster) return (Monster)p;
+        }
+        return null;
+    }
+
     // Lane: 0 = columns 0–1, 1 = columns 3–4, 2 = columns 6–7
     private int getLane(int col) {
         if (col <= 1) return 0;
@@ -268,14 +271,45 @@ public class LVBoard extends Board<LVSquare> {
     }
 
     public ArrayList<Monster> getAllMonstersInAttackRange(int hRow, int hCol){
-        //TODO
+        ArrayList<LVSquare> squares = new ArrayList<>(getAllSquaresInRange(hRow, hCol).keySet());
         ArrayList<Monster> inRange = new ArrayList<>();
+
+        for (LVSquare square: squares){
+            Monster m = getMonstersOnSquare(square);
+            if(m != null) inRange.add(m);
+        }
         return inRange;
     }
-    public ArrayList<LVSquare> getAllObstaclesInRange(int hRow, int hCol){
-        //TODO
-        ArrayList<LVSquare> inRange = new ArrayList<>();
+    public LinkedHashMap<LVSquare, Integer[]> getAllObstaclesInRange(int hRow, int hCol){
+        LinkedHashMap<LVSquare, Integer[]> squares = getAllSquaresInRange(hRow, hCol);
+        LinkedHashMap<LVSquare, Integer[]> inRange = new LinkedHashMap<>();
+        for (LVSquare square: squares.keySet()){
+            if(square.getType() == LVSquareType.OBSTACLE) inRange.put(square, squares.get(square));
+        }
         return inRange;
+    }
+
+    private LinkedHashMap<LVSquare, Integer[]> getAllSquaresInRange(int hRow, int hCol){
+        int[][] radius = {
+                {1,0},
+                {1,1},
+                {0,1},
+                {-1,0},
+                {-1,-1},
+                {0,-1},
+                {1,-1},
+                {-1,1},
+                {0,0}
+        };
+        LinkedHashMap<LVSquare, Integer[]> eligibleSquares = new LinkedHashMap<>();
+        for(int i =0; i<radius.length; i++){
+            int x = hRow + radius[i][0];
+            int y = hCol + radius[i][1];
+            if(isInsideBoard(x,y) && grid[x][y].getType() != LVSquareType.INACCESSIBLE) {
+                eligibleSquares.put(grid[x][y], new Integer[]{x,y});
+            }
+        }
+        return eligibleSquares;
     }
 
     public Inventory getSquareInventory(int row, int col){

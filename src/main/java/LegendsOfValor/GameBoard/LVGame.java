@@ -155,7 +155,7 @@ public class LVGame extends Game<LVBoard> {
         }
         // gather all monsters around and all obstacles around
         ArrayList<Monster> monstersInRange = board.getAllMonstersInAttackRange(position[0], position[1]);
-        ArrayList<LVSquare> obstaclesInRange = board.getAllObstaclesInRange(position[0], position[1]);
+        LinkedHashMap<LVSquare, Integer[]> obstaclesInRange = board.getAllObstaclesInRange(position[0], position[1]);
 
         if (monstersInRange.size() > 0) options.add(LVMainMenuOptions.ATTACK.getCode());
         if (obstaclesInRange.size() > 0) options.add(LVMainMenuOptions.REMOVE_OBSTACLE.getCode());
