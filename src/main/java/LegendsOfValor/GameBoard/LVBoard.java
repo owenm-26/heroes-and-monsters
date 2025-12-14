@@ -509,9 +509,9 @@ public class LVBoard extends Board<LVSquare> {
         LVSquareType destType = grid[newR][newC].getType();
         if (isBlockedTerrain(destType)) {
             // move laterally to try to get around it
-            int lateralC = !isBlockedTerrain(grid[oldR][(oldC + 1)].getType()) && isInsideBoard(oldR, (oldC+1)) ?
+            int lateralC = isInsideBoard(oldR, (oldC+1)) && !isBlockedTerrain(grid[oldR][(oldC + 1)].getType())  ?
                     oldC+1
-                    : !isBlockedTerrain(grid[oldR][(oldC-1)].getType()) && isInsideBoard(oldR, (oldC-1)) ?
+                    : isInsideBoard(oldR, (oldC-1)) && !isBlockedTerrain(grid[oldR][(oldC-1)].getType()) ?
                     oldC-1
                     : -1;
             if(lateralC == -1) return false;

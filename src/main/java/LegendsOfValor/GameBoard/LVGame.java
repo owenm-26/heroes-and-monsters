@@ -24,7 +24,7 @@ public class LVGame extends Game<LVBoard> {
     private Party<Hero> heroes;
 
     private Map<Figure, Integer> figureOriginalLanes;
-    private List<Monster> monsters;
+    private Party<Monster> monsters;
 
     @Override
     protected void initializeGame() {
@@ -60,21 +60,22 @@ public class LVGame extends Game<LVBoard> {
     }
 
     private void spawnMonsters() {
-        monsters = new ArrayList<>();
+        monsters = new Party<>(100);
         List<Monster> pool = Monster.getAllMonsterOptions();
 
         // Pick 3 random monsters
         for (int i = 0; i < 3; i++) {
             Monster m = pool.get((int) (Math.random() * pool.size()));
-            monsters.add(m);
+            monsters.addMember(m);
         }
 
         int row = 0;                // top Nexus
         int[] cols = {1, 4, 7};     // columns for lane 0,1,2 monsters
 
+        List<Monster> monsterList = monsters.getMembers();
         for (int i = 0; i < 3; i++) {
-            board.placeMonster(monsters.get(i), row, cols[i]);
-            figureOriginalLanes.put(monsters.get(i), (i+1));
+            board.placeMonster(monsterList.get(i), row, cols[i]);
+            figureOriginalLanes.put(monsterList.get(i), (i+1));
         }
     }
 
@@ -114,7 +115,7 @@ public class LVGame extends Game<LVBoard> {
     }
 
     private void monstersTeamTurn(){
-        for (Monster m: monsters){
+        for (Monster m: monsters.getMembers()){
             monsterTurn(m);
         }
         board.displayBoard();
