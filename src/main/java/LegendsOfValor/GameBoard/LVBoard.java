@@ -192,11 +192,7 @@ public class LVBoard extends Board<LVSquare> {
     // ================== PIECE PLACEMENT =========================
     // ============================================================
 
-    // Unlabeled version kept for compatibility (not used by LVGame now)
     //TODO: allow the player to choose which lanes each hero goes in
-    public void placeHero(Hero h, int row, int col) {
-        grid[row][col].getPieces().add(h);
-    }
 
     // Labeled placement used by LVGame (H1, H2, H3)
     public void placeHero(Hero h, int row, int col, String label) {
@@ -322,7 +318,7 @@ public class LVBoard extends Board<LVSquare> {
 
         // Only relevant when moving UP (toward enemy Nexus: row index decreases)
         if (newR < oldR) {
-            int nearestMonsterRow = findNearestMonsterInLaneAbove(lane, oldR);
+            int nearestMonsterRow = findNearestMonsterInLane(lane, oldR);
             if (nearestMonsterRow != -1 && newR < nearestMonsterRow) {
                 // Trying to move past the monster
                 return false;
@@ -332,20 +328,18 @@ public class LVBoard extends Board<LVSquare> {
         return true;
     }
 
-    private int findNearestMonsterInLaneAbove(int lane, int heroRow) {
-        int minRow = -1;
+    private int findNearestMonsterInLane(int lane, int heroRow) {
+        int closestRow = -1;
         int[] cols = laneColumns(lane);
-        for (int r = 0; r < heroRow; r++) {
+        for (int r = 0; r <= heroRow; r++) {
             for (int c : cols) {
                 if (squareHasMonster(r, c)) {
-                    if (minRow == -1 || r > minRow) {
-                        // Closest monster ABOVE hero is the one with largest row < heroRow
-                        minRow = r;
-                    }
+                    // Closest monster ABOVE hero is the one with largest row < heroRow
+                    closestRow = Math.max(closestRow, r);
                 }
             }
         }
-        return minRow;
+        return closestRow;
     }
 
     private int[] laneColumns(int lane) {
