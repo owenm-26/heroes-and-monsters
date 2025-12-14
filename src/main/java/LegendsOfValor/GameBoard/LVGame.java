@@ -17,6 +17,7 @@ import Utility.UI.UserInputs;
 
 import java.util.*;
 
+import static Common.Figures.Party.pickTeamAndDisplayStatistics;
 import static Utility.UI.UserInputs.showMenuAndGetUserAnswer;
 
 public class LVGame extends Game<LVBoard> {
@@ -176,7 +177,10 @@ public class LVGame extends Game<LVBoard> {
                     turnUsed = backpack(h);
                     break;
                 case STATS:
-                    //TODO: Implement Stats helper
+                    Map<String, Party<? extends Figure>> teams = new HashMap<>();
+                    teams.put("Heroes", heroes);
+                    teams.put("Monsters", monsters);
+                    pickTeamAndDisplayStatistics(teams);
                     break;
                 case MARKET:
                     //TODO: Implement Market helper

@@ -1,6 +1,7 @@
 package Common.Figures;
 
 import HeroesAndMonsters.GameBoard.HMGame;
+import HeroesAndMonsters.GameBoard.HMGameState;
 import Utility.UI.ConsoleColors;
 import Utility.UI.UserInputs;
 
@@ -53,8 +54,22 @@ public class Party<T extends Figure>{
         else{
             p = teams.get(options[0]);
         }
-        Figure member = p.pickTeamMember(g, "Which statistics would you like to open?", true);
-        if (member != null) member.displayFigureStatistics(g.getState());
+        Figure member;
+        if (g!=null){
+            member = p.pickTeamMember(g, "Which statistics would you like to open?", true);
+        }
+        else{
+            member = p.pickTeamMember( null,"Which statistics would you like to open?");
+        }
+
+        if (member != null) {
+            HMGameState state = g!=null ? g.getState() : HMGameState.BATTLING;
+            member.displayFigureStatistics(state);
+        };
+    }
+
+    public static void pickTeamAndDisplayStatistics(Map<String, Party<? extends Figure>> teams){
+        pickTeamAndDisplayStatistics(teams, null);
     }
 
     public LinkedHashMap<String, T> getMembersNamesMap(){
