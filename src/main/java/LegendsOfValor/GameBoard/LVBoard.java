@@ -493,7 +493,7 @@ public class LVBoard extends Board<LVSquare> {
         // toward heroes' Nexus past the closest hero in this lane.
         int lane = getLane(oldC);
         int nearestHeroRow = findNearestHeroInLaneBelow(lane, oldR);
-        if (nearestHeroRow != -1 && newR > nearestHeroRow) {
+        if (nearestHeroRow != Integer.MAX_VALUE && newR > nearestHeroRow) {
             return false;
         }
 
@@ -502,17 +502,15 @@ public class LVBoard extends Board<LVSquare> {
     }
 
     private int findNearestHeroInLaneBelow(int lane, int monsterRow) {
-        int maxRow = -1;
+        int minRow = Integer.MAX_VALUE;
         int[] cols = laneColumns(lane);
-        for (int r = monsterRow + 1; r < SIZE; r++) {
+        for (int r = monsterRow; r < SIZE; r++) {
             for (int c : cols) {
                 if (squareHasHero(r, c)) {
-                    if (maxRow == -1 || r < maxRow) {
-                        maxRow = r;
-                    }
+                    minRow = Math.min(minRow, r);
                 }
             }
         }
-        return maxRow;
+        return minRow;
     }
 }
