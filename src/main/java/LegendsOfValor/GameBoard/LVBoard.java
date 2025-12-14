@@ -19,10 +19,11 @@ public class LVBoard extends Board<LVSquare> {
     public static final int SIZE = 8;
 
     // Terrain distribution: 40% plain, 20% each special B/C/K
-    private static final double PROB_PLAIN  = 0.40;
-    private static final double PROB_BUSH   = 0.20;
-    private static final double PROB_CAVE   = 0.20;
-    private static final double PROB_KOULOU = 0.20;
+    private static final double PROB_PLAIN  = 0.45;
+    private static final double PROB_OBSTACLE = 0.10;
+    private static final double PROB_BUSH   = 0.15;
+    private static final double PROB_CAVE   = 0.15;
+    private static final double PROB_KOULOU = 0.15;
 
     // Track hero labels (H1, H2, H3) and spawn points for recall
     private final Map<Hero, String> heroLabels = new HashMap<>();
@@ -89,7 +90,8 @@ public class LVBoard extends Board<LVSquare> {
         p -= PROB_BUSH;
         if (p < PROB_CAVE) return LVSquareType.CAVE;
         p -= PROB_CAVE;
-        return LVSquareType.KOULOU;
+        if (p < PROB_KOULOU) return LVSquareType.KOULOU;
+        return LVSquareType.OBSTACLE;
     }
 
     private void enforceTerrainVariety(List<int[]> cells) {
