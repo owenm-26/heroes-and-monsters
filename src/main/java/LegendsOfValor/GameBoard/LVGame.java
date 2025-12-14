@@ -208,7 +208,8 @@ public class LVGame extends Game<LVBoard> {
         for (Hero other : heroes.getMembers()) {
             if (other != h) {
                 options.add(other);
-                names.add(other.getName());
+                String name = String.format("%s [H%s]", other.getName(), figureOriginalLanes.get(other));
+                names.add(name);
             }
         }
 
@@ -232,7 +233,7 @@ public class LVGame extends Game<LVBoard> {
 
         if (!success) {
             ConsoleColors.printInColor(ConsoleColors.RED,
-                    "Teleport failed. No legal adjacent space.");
+                    "Teleport failed. No legal adjacent space. Cannot teleport to Hero in same lane.");
         } else {
             ConsoleColors.printInColor(ConsoleColors.GREEN,
                     "Teleported next to " + target.getName() + ".");
