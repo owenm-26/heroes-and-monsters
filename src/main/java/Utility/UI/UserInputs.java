@@ -1,5 +1,6 @@
 package Utility.UI;
 
+import Common.Gameboard.Game;
 import HeroesAndMonsters.GameBoard.HMGame;
 import HeroesAndMonsters.GameBoard.HMGameState;
 

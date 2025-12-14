@@ -5,8 +5,10 @@ import Common.Figures.Hero.Hero;
 import Common.Figures.Monster.Monster;
 import Common.Figures.Party;
 import Common.Gameboard.Game;
+import LegendsOfValor.GameBoard.LVSquare.LVSquare;
 import Utility.UI.CommandType;
 import Utility.UI.ConsoleColors;
+import Utility.UI.LVMenuOptions;
 import Utility.UI.UserInputs;
 
 import java.util.*;
@@ -129,7 +131,7 @@ public class LVGame extends Game<LVBoard> {
         boolean actionTaken = false;
 
         while (!actionTaken) {
-            printHeroActionMenu();
+            presentOptionsAndUndertakeUserChoice(pos);
 
             String input = UserInputs.parseAndQuitIfAsked();
 
@@ -163,17 +165,58 @@ public class LVGame extends Game<LVBoard> {
         }
     }
 
-    private void printHeroActionMenu() {
-        System.out.println("\nChoose action:");
-        System.out.println("[w] move up");
-        System.out.println("[a] move left");
-        System.out.println("[s] move down");
-        System.out.println("[d] move right");
-        System.out.println("[t] teleport");
-        System.out.println("[r] recall");
-        System.out.println("[p] pass");
-        System.out.println("[q] quit");
-        System.out.print("Enter command: ");
+    private void presentOptionsAndUndertakeUserChoice(int[] position) {
+
+        ArrayList<String> options = new ArrayList<>(Arrays.asList(LVMenuOptions.MOVE.getCode(), LVMenuOptions.BACKPACK.getCode(), LVMenuOptions.STATS.getCode()));
+
+        // check if on Nexus
+        if (board.getSquareInventory(position[0], position[1]) != null){
+            options.add(LVMenuOptions.MARKET.getCode());
+        }
+        // gather all monsters around and all obstacles around
+        ArrayList<Monster> monstersInRange = board.getAllMonstersInAttackRange(position[0], position[1]);
+        ArrayList<LVSquare> obstaclesInRange = board.getAllObstaclesInRange(position[0], position[1]);
+
+        if (monstersInRange.size() > 0) options.add(LVMenuOptions.ATTACK.getCode());
+        if (obstaclesInRange.size() > 0) options.add(LVMenuOptions.REMOVE_OBSTACLE.getCode());
+
+        boolean turnUsed = false;
+
+        while (!turnUsed){
+            int index = -1;
+            while(index < 0){
+                index = UserInputs.showMenuAndGetUserAnswer(options.toArray(new String[0]));
+                if (index < 0) ConsoleColors.printInColor(ConsoleColors.RED ,"Cannot go back in this menu");
+            }
+
+            //Handle Choice
+            String choice = options.get(index);
+            switch (LVMenuOptions.fromName((choice))){
+                case MOVE:
+                    //TODO: Implement Movement helper
+                    turnUsed = true;
+                    break;
+                case BACKPACK:
+                    //TODO: Implement Backpack helper
+                    break;
+                case STATS:
+                    //TODO: Implement Stats helper
+                    break;
+                case MARKET:
+                    //TODO: Implement Market helper
+                    break;
+                case REMOVE_OBSTACLE:
+                    //TODO: Implement Remove Obstacle helper
+                    turnUsed = true;
+                    break;
+                case ATTACK:
+                    //TODO: Implement Attack helper
+                    turnUsed = true;
+                    break;
+            }
+        }
+
+
     }
 
     private boolean attemptMove(Hero h, String input) {

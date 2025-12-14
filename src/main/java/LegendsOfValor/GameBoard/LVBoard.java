@@ -4,6 +4,7 @@ import Common.Figures.Hero.Hero;
 import Common.Figures.Monster.Monster;
 import Common.Gameboard.Board;
 import Common.Gameboard.Piece;
+import Common.Items.Inventory;
 import LegendsOfValor.GameBoard.LVSquare.LVSquare;
 import LegendsOfValor.GameBoard.LVSquare.LVSquareType;
 import Utility.UI.ConsoleColors;
@@ -264,6 +265,25 @@ public class LVBoard extends Board<LVSquare> {
 
     private boolean isBlockedTerrain(LVSquareType t) {
         return t == LVSquareType.INACCESSIBLE || t == LVSquareType.OBSTACLE;
+    }
+
+    public ArrayList<Monster> getAllMonstersInAttackRange(int hRow, int hCol){
+        //TODO
+        ArrayList<Monster> inRange = new ArrayList<>();
+        return inRange;
+    }
+    public ArrayList<LVSquare> getAllObstaclesInRange(int hRow, int hCol){
+        //TODO
+        ArrayList<LVSquare> inRange = new ArrayList<>();
+        return inRange;
+    }
+
+    public Inventory getSquareInventory(int row, int col){
+        /*
+        Returns the inventory of the square at a given position. Will be null if not a NEXUS
+         */
+
+        return grid[row][col].getInventory();
     }
 
     private void movePiece(Piece p, int oldR, int oldC, int newR, int newC) {
