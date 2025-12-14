@@ -2,7 +2,6 @@ package Common;
 
 public enum MarketActions {
 
-    EXIT("EXIT"),
     BUY("BUY"),
     SELL("SELL");
 

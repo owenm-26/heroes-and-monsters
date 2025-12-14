@@ -1,8 +1,17 @@
 package Common.Gameboard;
 
+import Common.Figures.Hero.Hero;
+import Common.Items.Inventory;
+import Common.Items.Item;
+import HeroesAndMonsters.GameBoard.HMGameState;
 import Utility.UI.CommandType;
 import Utility.UI.ConsoleColors;
 import Utility.UI.UserInputs;
+
+import java.util.List;
+import java.util.Map;
+
+import static Utility.UI.UserInputs.showMenuAndGetUserAnswer;
 
 
 public abstract class Game<T extends Board> {
@@ -38,5 +47,44 @@ public abstract class Game<T extends Board> {
 
         }
         return b;
+    }
+
+    protected static boolean selling(Hero h, Inventory marketInventory){
+        Inventory i = h.getInventory();
+        ConsoleColors.printInColor(ConsoleColors.BLUE_BOLD, "What type of item are you looking to sell?");
+        List<? extends Item> subSection = i.selectInventorySubsection();
+        if (subSection == null) return false;
+        Map<String, ? extends Item> subSectionOptions = i.getSubInventoryOptions(subSection);
+        String[] options = subSectionOptions.keySet().toArray(new String[0]);
+
+        ConsoleColors.printInColor(ConsoleColors.BLUE_BOLD, "What are you trying to get rid of?");
+        int chosenIndex = showMenuAndGetUserAnswer(options);
+
+        if (chosenIndex < 0) return false;
+        else{
+            Item selectedItem = subSectionOptions.get(options[chosenIndex]);
+            h.sellItem(selectedItem, marketInventory);
+        }
+        return true;
+    }
+
+    protected boolean buying(Hero h, Inventory marketInventory){
+        ConsoleColors.printInColor(ConsoleColors.YELLOW, String.format("💰%s has %d gold left", h.getName(), h.getGold()));
+        ConsoleColors.printInColor(ConsoleColors.BLUE_BOLD, "What type of item are you looking to buy?");
+        List<? extends Item> subSection = marketInventory.selectInventorySubsection();
+        if (subSection == null) return false;
+        int heroLevel = h.getLevel();
+        Map<String, ? extends Item> subSectionOptions = marketInventory.getSubInventoryOptions(subSection, heroLevel);
+        String[] options = subSectionOptions.keySet().toArray(new String[0]);
+
+        ConsoleColors.printInColor(ConsoleColors.BLUE_BOLD, "Pick what you like!");
+        int chosenIndex = showMenuAndGetUserAnswer(options);
+
+        if (chosenIndex < 0) return false;
+        else{
+            Item selectedItem = subSectionOptions.get(options[chosenIndex]);
+            h.buyItem(selectedItem, marketInventory);
+        }
+        return true;
     }
 }

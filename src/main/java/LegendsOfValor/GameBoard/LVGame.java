@@ -5,7 +5,9 @@ import Common.Figures.Hero.Hero;
 import Common.Figures.Monster.Monster;
 import Common.Figures.Party;
 import Common.Gameboard.Game;
+import Common.Items.Inventory;
 import Common.Items.ItemType;
+import Common.MarketActions;
 import HeroesAndMonsters.Battle.BattleCommand;
 import HeroesAndMonsters.GameBoard.HMGameState;
 import LegendsOfValor.GameBoard.LVSquare.LVSquare;
@@ -183,7 +185,7 @@ public class LVGame extends Game<LVBoard> {
                     pickTeamAndDisplayStatistics(teams);
                     break;
                 case MARKET:
-                    //TODO: Implement Market helper
+                    market(h, board.getSquareInventory(position[0], position[1]));
                     break;
                 case REMOVE_OBSTACLE:
                     //TODO: Implement Remove Obstacle helper
@@ -269,6 +271,30 @@ public class LVGame extends Game<LVBoard> {
         }
 
         return turnTaken;
+    }
+
+    private boolean market(Hero h, Inventory marketInventory){
+        ConsoleColors.printInColor(ConsoleColors.BLUE_BOLD, "What do you want to do in market?");
+        String[] options = MarketActions.marketActionsToList();
+        int indexChosen = showMenuAndGetUserAnswer(options);
+
+        if (indexChosen < 0) return false;
+        MarketActions chosenAction = MarketActions.fromName(options[indexChosen]);
+
+        switch (chosenAction) {
+
+            case BUY:
+                buying(h, marketInventory);
+                break;
+
+            case SELL:
+                selling(h, marketInventory);
+                break;
+
+            default:
+                System.out.println("Unknown action chosen.");
+        }
+        return false;
     }
 
     private boolean attemptMove(Hero h, String input) {
