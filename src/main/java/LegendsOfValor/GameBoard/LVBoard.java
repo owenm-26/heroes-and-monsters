@@ -121,6 +121,17 @@ public class LVBoard extends Board<LVSquare> {
         grid[spot[0]][spot[1]] = new LVSquare(target);
     }
 
+    public void removeObstacle(int row, int col){
+        /*
+        Turns obstacle space into plain space
+         */
+
+        if(grid[row][col].getType() != LVSquareType.OBSTACLE) throw new IllegalArgumentException("Square given does not have an obstacle on it");
+
+        grid[row][col] = new LVSquare(LVSquareType.PLAIN);
+        ConsoleColors.printInColor(ConsoleColors.YELLOW, "Obstacle removed!");
+    }
+
     // ============================================================
     // ==================== DISPLAY BOARD =========================
     // ============================================================

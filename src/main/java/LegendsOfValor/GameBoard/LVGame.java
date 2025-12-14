@@ -189,8 +189,7 @@ public class LVGame extends Game<LVBoard> {
                     market(h, board.getSquareInventory(position[0], position[1]));
                     break;
                 case REMOVE_OBSTACLE:
-                    //TODO: Implement Remove Obstacle helper
-                    turnUsed = true;
+                    turnUsed = removeObstacle(obstaclesInRange);
                     break;
                 case ATTACK:
                     //TODO: Implement Attack helper
@@ -296,6 +295,24 @@ public class LVGame extends Game<LVBoard> {
                 System.out.println("Unknown action chosen.");
         }
         return false;
+    }
+
+    private boolean removeObstacle(LinkedHashMap<LVSquare, Integer[]> obstaclesInRange){
+
+        String[] options = new String[obstaclesInRange.size()];
+        int i = 0;
+
+        ArrayList<Integer[]> indices = new ArrayList(obstaclesInRange.values());
+        for(LVSquare sq: obstaclesInRange.keySet()){
+            String s = String.format("(%d, %d)", obstaclesInRange.get(sq)[0], obstaclesInRange.get(sq)[1]);
+            options[i++] = s;
+        }
+
+        int indexChosen = UserInputs.showMenuAndGetUserAnswer(options);
+
+        if(indexChosen < 0) return false;
+        board.removeObstacle(indices.get(indexChosen)[0], indices.get(indexChosen)[1]);
+        return true;
     }
 
     private boolean attemptMove(Hero h, String input) {
