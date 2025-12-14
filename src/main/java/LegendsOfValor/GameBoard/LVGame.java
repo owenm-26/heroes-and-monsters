@@ -159,6 +159,7 @@ public class LVGame extends Game<LVBoard> {
 
         if (monstersInRange.size() > 0) options.add(LVMainMenuOptions.ATTACK.getCode());
         if (obstaclesInRange.size() > 0) options.add(LVMainMenuOptions.REMOVE_OBSTACLE.getCode());
+        options.add(LVMainMenuOptions.PASS.getCode());
 
         boolean turnUsed = false;
 
