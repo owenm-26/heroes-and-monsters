@@ -1,5 +1,7 @@
 package Utility.UI;
 
+import Common.Items.ItemType;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -39,5 +41,13 @@ public enum CommandType {
             System.out.format("+  %s - %s\n", command.name(), command.code);
         }
         System.out.println();
+    }
+
+    public static CommandType fromName(String input){
+        for (CommandType a : values()) {
+            if (a.code.equalsIgnoreCase(input))
+                return a;
+        }
+        throw new IllegalArgumentException("Invalid CommandType: " + input);
     }
 }

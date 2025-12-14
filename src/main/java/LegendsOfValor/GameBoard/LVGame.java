@@ -134,14 +134,8 @@ public class LVGame extends Game<LVBoard> {
             String input = UserInputs.parseAndQuitIfAsked();
 
             // MOVE: up/down/left/right (using CommandType mapping)
-            if (UserInputs.isCommand(input, CommandType.UP)) {
-                actionTaken = attemptMove(h, CommandType.UP);
-            } else if (UserInputs.isCommand(input, CommandType.DOWN)) {
-                actionTaken = attemptMove(h, CommandType.DOWN);
-            } else if (UserInputs.isCommand(input, CommandType.LEFT)) {
-                actionTaken = attemptMove(h, CommandType.LEFT);
-            } else if (UserInputs.isCommand(input, CommandType.RIGHT)) {
-                actionTaken = attemptMove(h, CommandType.RIGHT);
+            if (UserInputs.isMovement(input)){
+                actionTaken = attemptMove(h, input);
             }
             // TELEPORT
             else if (input.equalsIgnoreCase("t")) {
@@ -156,12 +150,6 @@ public class LVGame extends Game<LVBoard> {
                 ConsoleColors.printInColor(ConsoleColors.YELLOW,
                         "Hero passes the turn.");
                 actionTaken = true;
-            }
-            // QUIT
-            else if (input.equalsIgnoreCase("q")) {
-                ConsoleColors.printInColor(ConsoleColors.RED_BOLD,
-                        "Quitting Legends of Valor...");
-                System.exit(0);
             }
             else {
                 ConsoleColors.printInColor(ConsoleColors.RED,
@@ -188,8 +176,9 @@ public class LVGame extends Game<LVBoard> {
         System.out.print("Enter command: ");
     }
 
-    private boolean attemptMove(Hero h, CommandType direction) {
-        boolean success = board.moveHero(h, direction.getCode());
+    private boolean attemptMove(Hero h, String input) {
+        CommandType direction = CommandType.fromName(input);
+        boolean success = board.moveHero(h, input);
         if (!success) {
             ConsoleColors.printInColor(ConsoleColors.RED,
                     "Illegal move. You cannot move there.");
