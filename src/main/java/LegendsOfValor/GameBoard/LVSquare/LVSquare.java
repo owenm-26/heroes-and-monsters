@@ -28,10 +28,10 @@ public class LVSquare extends Square<LVSquareType> {
     }
 
     public Inventory getInventory() {
-        if(type != LVSquareType.NEXUS)
-            throw new IllegalArgumentException(
-                    String.format("Only Nexuses have inventories. You called getInventory() on a %s space", type.name())
-            );
+//        if(type != LVSquareType.NEXUS)
+//            throw new IllegalArgumentException(
+//                    String.format("Only Nexuses have inventories. You called getInventory() on a %s space", type.name())
+//            );
         return inventory;
     }
 }

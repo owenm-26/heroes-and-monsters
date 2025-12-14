@@ -5,10 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5c6bed8a-a4a5-4400-8bad-54511b842f03" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/Utility/UI/LVMenuOptions.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/LegendsOfValor/GameBoard/Menus/LVMovementMenuOptions.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/LegendsOfValor/GameBoard/LVBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LegendsOfValor/GameBoard/LVBoard.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/LegendsOfValor/GameBoard/LVGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LegendsOfValor/GameBoard/LVGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/LegendsOfValor/GameBoard/LVSquare/LVSquare.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LegendsOfValor/GameBoard/LVSquare/LVSquare.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Utility/UI/LVMenuOptions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LegendsOfValor/GameBoard/Menus/LVMainMenuOptions.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Utility/UI/UserInputs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Utility/UI/UserInputs.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -20,8 +22,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>

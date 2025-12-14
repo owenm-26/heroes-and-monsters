@@ -1,6 +1,6 @@
-package Utility.UI;
+package LegendsOfValor.GameBoard.Menus;
 
-public enum LVMenuOptions {
+public enum LVMainMenuOptions {
     MOVE("Move"),
     BACKPACK("Open Backpack"),
     STATS("See Statistics"),
@@ -9,9 +9,10 @@ public enum LVMenuOptions {
 
     ATTACK("Attack"),
 
-    REMOVE_OBSTACLE("Remove Obstacle");
+    REMOVE_OBSTACLE("Remove Obstacle"),
+    PASS("Pass");
     private String code;
-    LVMenuOptions(String code){
+    LVMainMenuOptions(String code){
         this.code = code;
     }
 
@@ -19,8 +20,8 @@ public enum LVMenuOptions {
         return code;
     }
 
-    public static LVMenuOptions fromName(String input){
-        for (LVMenuOptions a : values()) {
+    public static LVMainMenuOptions fromName(String input){
+        for (LVMainMenuOptions a : values()) {
             if (a.code.equalsIgnoreCase(input))
                 return a;
         }

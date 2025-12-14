@@ -10,7 +10,7 @@ import static Utility.UI.CommandType.getControlInstructions;
 import static Utility.UI.CommandType.validCommandStrings;
 
 public class UserInputs {
-    final private static List<String> MOVEMENT_COMMANDS = Arrays.asList(new String[]{CommandType.UP.getCode(), CommandType.DOWN.getCode(), CommandType.LEFT.getCode(), CommandType.RIGHT.getCode()});
+    final public static List<String> MOVEMENT_COMMANDS = Arrays.asList(new String[]{CommandType.UP.getCode(), CommandType.DOWN.getCode(), CommandType.LEFT.getCode(), CommandType.RIGHT.getCode()});
     public static final Scanner scanner = new Scanner(System.in);
 
     public static boolean isAnyCommand(String input) {

@@ -6,9 +6,10 @@ import Common.Figures.Monster.Monster;
 import Common.Figures.Party;
 import Common.Gameboard.Game;
 import LegendsOfValor.GameBoard.LVSquare.LVSquare;
+import LegendsOfValor.GameBoard.Menus.LVMovementMenuOptions;
 import Utility.UI.CommandType;
 import Utility.UI.ConsoleColors;
-import Utility.UI.LVMenuOptions;
+import LegendsOfValor.GameBoard.Menus.LVMainMenuOptions;
 import Utility.UI.UserInputs;
 
 import java.util.*;
@@ -131,54 +132,24 @@ public class LVGame extends Game<LVBoard> {
         boolean actionTaken = false;
 
         while (!actionTaken) {
-            presentOptionsAndUndertakeUserChoice(pos);
-
-            String input = UserInputs.parseAndQuitIfAsked();
-
-            // MOVE: up/down/left/right (using CommandType mapping)
-            if (UserInputs.isMovement(input)){
-                actionTaken = attemptMove(h, input);
-            }
-            // TELEPORT
-            else if (input.equalsIgnoreCase("t")) {
-                actionTaken = attemptTeleport(h);
-            }
-            // RECALL
-            else if (input.equalsIgnoreCase("r")) {
-                actionTaken = attemptRecall(h);
-            }
-            // PASS
-            else if (input.equalsIgnoreCase("p")) {
-                ConsoleColors.printInColor(ConsoleColors.YELLOW,
-                        "Hero passes the turn.");
-                actionTaken = true;
-            }
-            else {
-                ConsoleColors.printInColor(ConsoleColors.RED,
-                        "Invalid command. Please try again.");
-            }
-
-            // Re-display board after a successful action
-            if (actionTaken) {
-                board.displayBoard();
-            }
+            actionTaken = presentOptionsAndUndertakeUserChoice(h, pos);
         }
     }
 
-    private void presentOptionsAndUndertakeUserChoice(int[] position) {
+    private boolean presentOptionsAndUndertakeUserChoice(Hero h, int[] position) {
 
-        ArrayList<String> options = new ArrayList<>(Arrays.asList(LVMenuOptions.MOVE.getCode(), LVMenuOptions.BACKPACK.getCode(), LVMenuOptions.STATS.getCode()));
+        ArrayList<String> options = new ArrayList<>(Arrays.asList(LVMainMenuOptions.MOVE.getCode(), LVMainMenuOptions.BACKPACK.getCode(), LVMainMenuOptions.STATS.getCode()));
 
         // check if on Nexus
         if (board.getSquareInventory(position[0], position[1]) != null){
-            options.add(LVMenuOptions.MARKET.getCode());
+            options.add(LVMainMenuOptions.MARKET.getCode());
         }
         // gather all monsters around and all obstacles around
         ArrayList<Monster> monstersInRange = board.getAllMonstersInAttackRange(position[0], position[1]);
         ArrayList<LVSquare> obstaclesInRange = board.getAllObstaclesInRange(position[0], position[1]);
 
-        if (monstersInRange.size() > 0) options.add(LVMenuOptions.ATTACK.getCode());
-        if (obstaclesInRange.size() > 0) options.add(LVMenuOptions.REMOVE_OBSTACLE.getCode());
+        if (monstersInRange.size() > 0) options.add(LVMainMenuOptions.ATTACK.getCode());
+        if (obstaclesInRange.size() > 0) options.add(LVMainMenuOptions.REMOVE_OBSTACLE.getCode());
 
         boolean turnUsed = false;
 
@@ -191,10 +162,10 @@ public class LVGame extends Game<LVBoard> {
 
             //Handle Choice
             String choice = options.get(index);
-            switch (LVMenuOptions.fromName((choice))){
+            switch (LVMainMenuOptions.fromName((choice))){
                 case MOVE:
                     //TODO: Implement Movement helper
-                    turnUsed = true;
+                    turnUsed = move(h);
                     break;
                 case BACKPACK:
                     //TODO: Implement Backpack helper
@@ -213,9 +184,52 @@ public class LVGame extends Game<LVBoard> {
                     //TODO: Implement Attack helper
                     turnUsed = true;
                     break;
+                case PASS:
+                    ConsoleColors.printInColor(ConsoleColors.YELLOW,
+                            "Hero passes the turn.");
+                    turnUsed = true;
+                    break;
             }
         }
 
+        return turnUsed;
+    }
+
+    private boolean move(Hero h){
+        ArrayList<String> options = new ArrayList<>();
+
+        for(LVMovementMenuOptions o: LVMovementMenuOptions.values()){
+            options.add(o.getCode());
+        }
+
+        int index = UserInputs.showMenuAndGetUserAnswer(options.toArray(new String[0]));
+        if (index < 0) return false;
+        boolean actionTaken = false;
+
+        switch (LVMovementMenuOptions.fromName(options.get(index))){
+            case MOVE:
+                String[] movements = UserInputs.MOVEMENT_COMMANDS.toArray(new String[0]);
+                String useMovementInput = "";
+                while(true){
+                    ConsoleColors.printInColor(ConsoleColors.WHITE_BOLD, String.format("Which direction would you like to move? (%s)", Arrays.toString(movements)));
+                    useMovementInput = UserInputs.parseAndQuitIfAsked();
+                    if(!UserInputs.isMovement(useMovementInput)){
+                        ConsoleColors.printInColor(ConsoleColors.RED, "Invalid command entered.");
+                        continue;
+                    }
+                    break;
+                }
+                actionTaken = attemptMove(h, useMovementInput);
+                break;
+            case TELEPORT:
+                actionTaken = attemptTeleport(h);
+                break;
+            case RECALL:
+                actionTaken = attemptRecall(h);
+                break;
+        }
+
+        return actionTaken;
 
     }
 
