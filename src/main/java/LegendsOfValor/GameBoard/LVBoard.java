@@ -263,9 +263,7 @@ public class LVBoard extends Board<LVSquare> {
     }
 
     private boolean isBlockedTerrain(LVSquareType t) {
-        return t == LVSquareType.INACCESSIBLE;
-        // If you later add OBSTACLE as blocking, OR it here:
-        // return t == LVSquareType.INACCESSIBLE || t == LVSquareType.OBSTACLE;
+        return t == LVSquareType.INACCESSIBLE || t == LVSquareType.OBSTACLE;
     }
 
     private void movePiece(Piece p, int oldR, int oldC, int newR, int newC) {
@@ -489,7 +487,12 @@ public class LVBoard extends Board<LVSquare> {
         if (!isInsideBoard(newR, newC)) return false;
 
         LVSquareType destType = grid[newR][newC].getType();
-        if (isBlockedTerrain(destType)) return false;
+        if (isBlockedTerrain(destType)) {
+            // move laterally to try to get around it
+            int lateralC = isBlockedTerrain(grid[oldR][(oldC + 1)].getType()) ? oldC-1 : oldC+1;
+            movePiece(m, oldR, oldC, oldR, lateralC);
+            return false;
+        }
 
         // "cannot move behind hero" – i.e., cannot move to a row that is further
         // toward heroes' Nexus past the closest hero in this lane.
