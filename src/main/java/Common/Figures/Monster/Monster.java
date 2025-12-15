@@ -147,35 +147,53 @@ public class Monster extends Figure implements LoadableFromText {
         return map;
     }
 
-    private static Monster pickMonster(HashMap<Integer, List<Monster>> monsterMap, Hero h){
+    private static Monster pickMonster(HashMap<Integer, List<Monster>> monsterMap, Hero h, Set<Monster> seen){
         /*
         Logic that chooses the monster based on certain criteria that can be tweaked as needed.
          */
-        int heroLevel; List<Monster> candidates; Monster m;
+        int heroLevel; List<Monster> candidates; List<Monster> backups; Monster chosen;
         heroLevel = h.getLevel();
-        candidates = monsterMap.get(heroLevel);
-        Monster chosen = candidates.get((int)(candidates.size()*Math.random()));
 
-        //remove from options
-        candidates.remove(chosen);
+        candidates = monsterMap.get(heroLevel);
+        candidates.removeAll(Arrays.asList(seen.toArray()));
+
+        backups = monsterMap.get(heroLevel +1);backups.addAll(monsterMap.get(heroLevel+2));
+        backups.removeAll(Arrays.asList(seen.toArray()));
+
+        if (candidates.size() > 0){
+            chosen = candidates.get((int)(candidates.size()*Math.random()));
+            candidates.remove(chosen);
+        }
+        else{
+            chosen = backups.get((int)(backups.size()*Math.random()));
+            backups.remove(chosen);
+        }
         monsterMap.put(heroLevel, candidates);
         return chosen;
     }
 
-    public static Party<Monster> assembleMonsterBattleParty(Party<Hero> heroes){
+    private static Monster pickMonster(HashMap<Integer, List<Monster>> monsterMap, Hero h){
+        return pickMonster(monsterMap, h, new HashSet<>());
+    }
+
+    public static Party<Monster> assembleMonsterBattleParty(Party<Hero> heroes, Set<Monster> seen){
         /*
         Returns a party of monsters that matches the levels of the heroes battling
          */
         HashMap<Integer, List<Monster>> monsterMap = getAllMonsterOptionsHashmap();
-        Party<Monster> p = new Party<>(heroes.getMembers().size());
+        Party<Monster> p = new Party<>(heroes.getMembers().size()*10);
 
 
         for(Hero h: heroes.getMembers()){
-            Monster m = pickMonster(monsterMap, h);
+            Monster m = pickMonster(monsterMap, h, seen);
             p.addMember(m, false);
         }
         return p;
     }
+    public static Party<Monster> assembleMonsterBattleParty(Party<Hero> heroes){
+        return assembleMonsterBattleParty(heroes, new HashSet<>());
+    }
+
     public MonsterType getMonsterType() {
         return monsterType;
     }

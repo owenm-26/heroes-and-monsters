@@ -226,8 +226,18 @@ public class LVBoard extends Board<LVSquare> {
         heroSpawnLocations.putIfAbsent(h, new int[]{row, col});
     }
 
-    public void placeMonster(Monster m, int row, int col) {
-        grid[row][col].getPieces().add(m);
+    public boolean placeMonster(Monster m, int row, int col) {
+        if(squareHasMonster(row, col)){
+            int c = isInsideBoard(row, col+1) && !isWallColumn(col+1) ? col+1 : col-1;
+            if(squareHasHero(row, c)){
+                return false;
+            }
+            grid[row][c].getPieces().add(m);
+        }
+        else{
+            grid[row][col].getPieces().add(m);
+        }
+        return true;
     }
 
     public boolean removePieceFromSquare(Figure p){

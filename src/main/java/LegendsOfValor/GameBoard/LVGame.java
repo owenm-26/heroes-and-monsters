@@ -34,7 +34,10 @@ public class LVGame extends Game<LVBoard> {
     private Map<Figure, Integer> figureOriginalLanes;
     private Party<Monster> monsters;
 
+    private Set<Monster> monstersSeen;
     private Party<Hero> toRespawn;
+
+    private int round;
 
     @Override
     protected void initializeGame() {
@@ -48,12 +51,14 @@ public class LVGame extends Game<LVBoard> {
         ConsoleColors.printInColor(ConsoleColors.GREEN_BOLD, "Select your 3 heroes:");
         heroes = Hero.selectYourHeroes(3);
         toRespawn = new Party<>(heroes.size());
+        monstersSeen = new HashSet<>();
+        round = 1;
 
         // 3. Place heroes (H1/H2/H3) at bottom Nexus
         placeHeroes();
 
         // 4. Spawn monsters at top Nexus (one per lane)
-        spawnMonsters();
+        spawnOriginalMonsters();
     }
 
     @Override
@@ -75,8 +80,9 @@ public class LVGame extends Game<LVBoard> {
         }
     }
 
-    private void spawnMonsters() {
+    private void spawnOriginalMonsters() {
         monsters = assembleMonsterBattleParty(heroes);
+        monstersSeen.addAll(monsters.getMembers());
 
         int row = 0;                // top Nexus
         int[] cols = {1, 4, 7};     // columns for lane 0,1,2 monsters
@@ -87,6 +93,32 @@ public class LVGame extends Game<LVBoard> {
             figureOriginalLanes.put(monsterList.get(i), (i+1));
         }
     }
+
+    private void spawnNewMonsterWave(){
+        Party<Monster> newWave = assembleMonsterBattleParty(heroes, monstersSeen);
+        int[] cols = {1, 4, 7};     // columns for lane 0,1,2 monsters
+
+        boolean printedAlready = false; boolean success;
+        for(int i=0; i< newWave.size(); i++){
+            Monster m =newWave.getMembers().get(i);
+            success = board.placeMonster(m, 0, cols[i]);
+            if (!printedAlready){
+                ConsoleColors.printInColor(ConsoleColors.RED_BOLD, "New monsters have spawned in their Nexus!");
+                printedAlready = true;
+            }
+            if (success){
+                figureOriginalLanes.put(m, (i+1));
+                ConsoleColors.printInColor(ConsoleColors.RED, String.format("%s has spawned", m.getName()));
+            }
+        }
+
+        Party.combineTwoParties(monsters, newWave);
+
+
+
+    }
+
+
 
     @Override
     public void runGame() {
@@ -100,8 +132,11 @@ public class LVGame extends Game<LVBoard> {
         boolean gameRunning = true;
         board.displayBoard();
         while (gameRunning) {
+            ConsoleColors.printInColor(ConsoleColors.BLACK_BACKGROUND, String.format("--- Round %d ---", round));
+            if(round % 10 == 0) spawnNewMonsterWave();
             heroesTeamTurn();
             monstersTeamTurn();
+            round++;
         }
     }
 
@@ -120,15 +155,16 @@ public class LVGame extends Game<LVBoard> {
 
         // respawn all dead heroes
         Iterator<Hero> it = toRespawn.getMembers().iterator();
-        boolean havePrinted = false;
+        boolean first = true;
         while (it.hasNext()) {
+            if (first) {
+                ConsoleColors.printInColor(ConsoleColors.PURPLE_BACKGROUND, "\nReviving Heroes:");
+                first = false;
+            }
             Hero h = it.next();
             boolean success = board.respawnHero(h);
             if (success) {
-                if (!havePrinted) {
-                    ConsoleColors.printInColor(ConsoleColors.PURPLE_BACKGROUND, "Reviving Heroes:");
-                    havePrinted = true;
-                }
+
                 heroes.addMember(h, false);
                 it.remove();
             }
@@ -141,7 +177,15 @@ public class LVGame extends Game<LVBoard> {
         }
 
         board.displayBoard();
-        for (Hero h: heroes.getMembers()) {
+
+        //go through turns in lane order
+        List<Hero> heroesInLaneOrder = figureOriginalLanes.entrySet().stream()
+                .filter(e -> e.getKey() instanceof Hero)
+                .sorted(Map.Entry.comparingByValue()) // sort by lane
+                .map(e -> (Hero) e.getKey())
+                .collect(Collectors.toList());
+
+        for (Hero h: heroesInLaneOrder) {
             heroTurn(h);
             board.displayBoard();
             if (board.figureIsInGoalSquare(h)) {
@@ -159,7 +203,16 @@ public class LVGame extends Game<LVBoard> {
     private void monstersTeamTurn(){
         boolean won = false;
 
-        for (Monster m: monsters.getMembers()){
+        //go through turns in lane order
+        List<Monster> monstersInLaneOrder = figureOriginalLanes.entrySet().stream()
+                .filter(e -> e.getKey() instanceof Monster)
+                .sorted(Map.Entry.comparingByValue()) // sort by lane
+                .map(e -> (Monster) e.getKey())
+                .collect(Collectors.toList());
+        for (Monster m: monstersInLaneOrder){
+            int laneIndex = figureOriginalLanes.get(m);
+            ConsoleColors.printInColor(ConsoleColors.BLUE,
+                    "\n---- Lane " + (laneIndex) + " Monster(s) Turn ----");
             monsterTurn(m);
             if (board.figureIsInGoalSquare(m)) {
                 won = true;
@@ -376,6 +429,7 @@ public class LVGame extends Game<LVBoard> {
                 Monster m = it.next();
                 if (!m.isAlive()) {
                     it.remove();
+                    figureOriginalLanes.remove(m);
                     board.removePieceFromSquare(m);
                 }
             }
@@ -500,9 +554,6 @@ public class LVGame extends Game<LVBoard> {
     // ============================================================
 
     private void monsterTurn(Monster m) {
-        int laneIndex = figureOriginalLanes.get(m);
-        ConsoleColors.printInColor(ConsoleColors.BLUE,
-                "\n---- Lane " + (laneIndex) + " Monster Turn ----");
 
         int[] pos = board.getMonsterPosition(m);
         if (pos != null) {

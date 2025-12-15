@@ -90,10 +90,14 @@ public class Party<T extends Figure>{
 
     //    SETTERS
 
-    public void addMembers(List<T> members){
+    public void addMembers(List<T> members, boolean print){
         for (T member: members){
-            addMember(member);
+            addMember(member, print);
         }
+    }
+
+    public void addMembers(List<T> members){
+        addMembers(members, true);
     }
 
     public void addMember(T member, boolean print){
@@ -125,6 +129,10 @@ public class Party<T extends Figure>{
             if(m.isAlive()) aliveIndexes.add(i);
         }
         return aliveIndexes;
+    }
+
+    public static void combineTwoParties(Party p1, Party p2){
+        p1.addMembers(p2.getMembers(), false);
     }
 
 
