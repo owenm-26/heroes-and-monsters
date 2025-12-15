@@ -23,6 +23,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static Common.Figures.Monster.Monster.assembleMonsterBattleParty;
 import static Common.Figures.Party.pickTeamAndDisplayStatistics;
 import static Utility.UI.UserInputs.showMenuAndGetUserAnswer;
 
@@ -75,14 +76,7 @@ public class LVGame extends Game<LVBoard> {
     }
 
     private void spawnMonsters() {
-        monsters = new Party<>(100);
-        List<Monster> pool = Monster.getAllMonsterOptions();
-
-        // Pick 3 random monsters
-        for (int i = 0; i < 3; i++) {
-            Monster m = pool.get((int) (Math.random() * pool.size()));
-            monsters.addMember(m, false);
-        }
+        monsters = assembleMonsterBattleParty(heroes);
 
         int row = 0;                // top Nexus
         int[] cols = {1, 4, 7};     // columns for lane 0,1,2 monsters
@@ -126,11 +120,15 @@ public class LVGame extends Game<LVBoard> {
 
         // respawn all dead heroes
         Iterator<Hero> it = toRespawn.getMembers().iterator();
-
+        boolean havePrinted = false;
         while (it.hasNext()) {
             Hero h = it.next();
             boolean success = board.respawnHero(h);
             if (success) {
+                if (!havePrinted) {
+                    ConsoleColors.printInColor(ConsoleColors.PURPLE_BACKGROUND, "Reviving Heroes:");
+                    havePrinted = true;
+                }
                 heroes.addMember(h, false);
                 it.remove();
             }
