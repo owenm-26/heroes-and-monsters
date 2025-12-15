@@ -33,6 +33,8 @@ public class LVGame extends Game<LVBoard> {
     private Map<Figure, Integer> figureOriginalLanes;
     private Party<Monster> monsters;
 
+    private Party<Hero> toRespawn;
+
     @Override
     protected void initializeGame() {
         ConsoleColors.printInColor(ConsoleColors.CYAN_BOLD,
@@ -44,6 +46,7 @@ public class LVGame extends Game<LVBoard> {
         // 2. Hero selection
         ConsoleColors.printInColor(ConsoleColors.GREEN_BOLD, "Select your 3 heroes:");
         heroes = Hero.selectYourHeroes(3);
+        toRespawn = new Party<>(heroes.size());
 
         // 3. Place heroes (H1/H2/H3) at bottom Nexus
         placeHeroes();
@@ -120,6 +123,25 @@ public class LVGame extends Game<LVBoard> {
 
     private void heroesTeamTurn(){
         boolean won = false;
+
+        // respawn all dead heroes
+        Iterator<Hero> it = toRespawn.getMembers().iterator();
+
+        while (it.hasNext()) {
+            Hero h = it.next();
+            boolean success = board.respawnHero(h);
+            if (success) {
+                it.remove();
+            }
+        }
+
+        // give all heroes back 10% health and mana
+        for (Hero h: heroes.getMembers()){
+            h.gainMp((int) (h.getMpMax()*0.1));
+            h.gainHp((int) (h.getHpMax()*0.1));
+        }
+
+        board.displayBoard();
         for (Hero h: heroes.getMembers()) {
             heroTurn(h);
             board.displayBoard();
@@ -145,9 +167,9 @@ public class LVGame extends Game<LVBoard> {
                 break;
             }
         }
-        board.displayBoard();
 
         if (won){
+            board.displayBoard();
             ConsoleColors.printInColor(ConsoleColors.RED_BACKGROUND, "☠️A monster reached your Nexus. You Lose");
             endGame();
         }
@@ -377,6 +399,7 @@ public class LVGame extends Game<LVBoard> {
                 if (!h.isAlive()) {
                     it.remove();
                     board.removePieceFromSquare(h);
+                    toRespawn.addMember(h);
                 }
             }
         }

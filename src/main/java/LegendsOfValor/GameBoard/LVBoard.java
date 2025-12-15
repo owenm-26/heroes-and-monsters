@@ -27,6 +27,20 @@ public class LVBoard extends Board<LVSquare> {
     private final Map<Hero, String> heroLabels = new HashMap<>();
     private final Map<Hero, int[]> heroSpawnLocations = new HashMap<>();
 
+    public boolean respawnHero(Hero h) {
+        int[] proposedLocation = heroSpawnLocations.get(h);
+        String label = heroLabels.get(h);
+        if (squareHasHero(proposedLocation[0], proposedLocation[1])){
+            ConsoleColors.printInColor(ConsoleColors.RED, String.format("%s could not respawn: Hero in his spawn square (%d, %d)", h.getName(), proposedLocation[0], proposedLocation[1]));
+            return false;
+        }
+        placeHero(h, proposedLocation[0], proposedLocation[1], label);
+        h.gainHp(h.getHpMax());
+        h.gainMp(h.getMpMax());
+        ConsoleColors.printInColor(ConsoleColors.PURPLE, String.format("%s has respawned in his Nexus!\n", h.getName() ));
+        return true;
+    }
+
     public LVBoard() {
         super(SIZE);
         //noinspection unchecked
