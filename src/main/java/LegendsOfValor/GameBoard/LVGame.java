@@ -20,6 +20,8 @@ import LegendsOfValor.GameBoard.Menus.LVMainMenuOptions;
 import Utility.UI.UserInputs;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static Common.Figures.Party.pickTeamAndDisplayStatistics;
 import static Utility.UI.UserInputs.showMenuAndGetUserAnswer;
@@ -157,7 +159,7 @@ public class LVGame extends Game<LVBoard> {
             options.add(LVMainMenuOptions.MARKET.getCode());
         }
         // gather all monsters around and all obstacles around
-        ArrayList<Monster> monstersInRange = board.getAllMonstersInAttackRange(position[0], position[1]);
+        ArrayList<Monster> monstersInRange = board.getAllFiguresInAttackRange(position[0], position[1], Monster.class);
         LinkedHashMap<LVSquare, Integer[]> obstaclesInRange = board.getAllObstaclesInRange(position[0], position[1]);
 
         if (monstersInRange.size() > 0) options.add(LVMainMenuOptions.ATTACK.getCode());
@@ -320,13 +322,33 @@ public class LVGame extends Game<LVBoard> {
             DamageDealing tool = Battle.heroChooseAttackMedium((Hero)f);
 
             Battle.dealDamageWithTool(tool, (Hero)f, target);
+
+            //remove all dead monsters
+            for(Monster m: monsters.getMembers()){
+                if(!m.isAlive()) monsters.removeMember(m);
+            }
         }
         else if (f instanceof  Monster){
+            List<Integer> availableIndexes = IntStream.range(0, victims.size())
+                    .boxed()
+                    .collect(Collectors.toList());
+            int victimIndex = ((Monster)f).getMonsterType().getStrategy().getVictimPartyIndex(victims, availableIndexes);
+            Hero victim = (Hero)victims.get(victimIndex);
 
+            int damageDealt = Battle.calculateNetDamageDoneOnHero((Monster)f, victim);
+            Battle.dealDamage(f, victim, null, damageDealt);
+
+            // remove all dead heroes
+            //remove all dead monsters
+            for(Hero h: heroes.getMembers()){
+                if(!h.isAlive()) heroes.removeMember(h);
+            }
         }
         else{
             throw new IllegalArgumentException("Illegal Figure subclass parameter");
         }
+
+
 
         return true;
     }
@@ -433,13 +455,22 @@ public class LVGame extends Game<LVBoard> {
 
         boolean moved = board.moveMonsterForward(m);
 
-        //TODO: if they can't move they should try to attack
-        if (!moved) {
-            ConsoleColors.printInColor(ConsoleColors.YELLOW,
-                    "Monster stays in place (blocked or at edge).");
-        } else {
+
+        if (moved) {
             ConsoleColors.printInColor(ConsoleColors.GREEN,
                     "Monster advances toward heroes' Nexus.");
+        }
+        // monster couldn't move, try attack
+        else{
+            ArrayList<Hero> heroesInRange = board.getAllFiguresInAttackRange(pos[0], pos[1], Hero.class);
+
+            if(heroesInRange.size() > 0){
+                attack(m, heroesInRange);
+
+            }else{
+                ConsoleColors.printInColor(ConsoleColors.YELLOW,
+                        "Monster stays in place (blocked or at edge).");
+            }
         }
 
         m.decrementTimeOnAllEffects();

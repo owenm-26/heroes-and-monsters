@@ -1,5 +1,6 @@
 package LegendsOfValor.GameBoard;
 
+import Common.Figures.Figure;
 import Common.Figures.Hero.Hero;
 import Common.Figures.Monster.Monster;
 import Common.Gameboard.Board;
@@ -259,9 +260,11 @@ public class LVBoard extends Board<LVSquare> {
         return false;
     }
 
-    private Monster getMonstersOnSquare(LVSquare s){
+    private <T extends Figure> T getFigureOnSquare(LVSquare s, Class<T> figureType) {
         for (Piece p : s.getPieces()) {
-            if (p instanceof Monster) return (Monster)p;
+            if (figureType.isInstance(p)) {
+                return figureType.cast(p);
+            }
         }
         return null;
     }
@@ -281,13 +284,17 @@ public class LVBoard extends Board<LVSquare> {
         return t == LVSquareType.INACCESSIBLE || t == LVSquareType.OBSTACLE;
     }
 
-    public ArrayList<Monster> getAllMonstersInAttackRange(int hRow, int hCol){
+    public <T extends Figure> ArrayList<T> getAllFiguresInAttackRange(
+            int hRow,
+            int hCol,
+            Class<T> figureType
+    ) {
         ArrayList<LVSquare> squares = new ArrayList<>(getAllSquaresInRange(hRow, hCol).keySet());
-        ArrayList<Monster> inRange = new ArrayList<>();
+        ArrayList<T> inRange = new ArrayList<>();
 
         for (LVSquare square: squares){
-            Monster m = getMonstersOnSquare(square);
-            if(m != null) inRange.add(m);
+            T f = figureType.cast(getFigureOnSquare(square, figureType));
+            if(f != null) inRange.add(f);
         }
         return inRange;
     }

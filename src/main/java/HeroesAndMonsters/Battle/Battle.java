@@ -179,7 +179,7 @@ public class Battle {
         ConsoleColors.printInColor(ConsoleColors.RED_BACKGROUND, String.format("%s %s hit %s with %s for %d damage!", symbol, attacker.getName(), receiver.getName(), toolName, damageDealt));
     }
 
-    private static void dealDamage(Figure attacker, Figure receiver, DamageDealing tool, int damageDealt){
+    public static void dealDamage(Figure attacker, Figure receiver, DamageDealing tool, int damageDealt){
         if(tool != null){
             boolean outOfUses = tool.useItem();
             if (outOfUses && attacker instanceof Hero){
@@ -267,7 +267,7 @@ public class Battle {
         return Math.max((tool.getDamageDealt(h.getStrength()) - m.getDamageBlocked()), 0);
     }
 
-    private int calculateNetDamageDoneOnHero(Monster m, Hero h){
+    public static int calculateNetDamageDoneOnHero(Monster m, Hero h){
         if (h.dodgedSuccessfully()){
             ConsoleColors.printInColor(ConsoleColors.RED_BACKGROUND, String.format("Nice, %s dodged %s's attack!", h.getName(), m.getName()));
             return 0;
