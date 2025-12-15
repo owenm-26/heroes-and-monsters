@@ -216,9 +216,27 @@ public class LVBoard extends Board<LVSquare> {
         grid[row][col].getPieces().add(m);
     }
 
+    public boolean removePieceFromSquare(Figure p){
+        int[] pos = getFigurePosition(p);
+        return grid[pos[0]][pos[1]].removePiece(p);
+    }
+
     // ============================================================
     // ============ LOCATE HEROES / MONSTERS ON BOARD ============
     // ============================================================
+
+    public int[] getFigurePosition(Figure f){
+        for (int r = 0; r < SIZE; r++) {
+            for (int c = 0; c < SIZE; c++) {
+                for (Piece p : grid[r][c].getPieces()) {
+                    if (p == f) {
+                        return new int[]{r, c};
+                    }
+                }
+            }
+        }
+        return null;
+    }
 
     public int[] getHeroPosition(Hero h) {
         for (int r = 0; r < SIZE; r++) {
@@ -274,6 +292,20 @@ public class LVBoard extends Board<LVSquare> {
         if (col <= 1) return 0;
         if (col >= 3 && col <= 4) return 1;
         return 2;
+    }
+
+    public boolean figureIsInGoalSquare(Figure f){
+        if(f instanceof Monster){
+            int[] pos = getMonsterPosition((Monster)f);
+            return pos[0] == grid.length-1;
+        }
+        else if (f instanceof Hero){
+            int[] pos = getHeroPosition((Hero)f);
+            return pos[0] == 0;
+        }
+        else{
+            throw new IllegalArgumentException("Illegal Figure type passed");
+        }
     }
 
     private boolean isInsideBoard(int r, int c) {

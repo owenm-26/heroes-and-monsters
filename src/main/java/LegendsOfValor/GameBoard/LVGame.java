@@ -52,6 +52,11 @@ public class LVGame extends Game<LVBoard> {
         spawnMonsters();
     }
 
+    @Override
+    protected void endGame() {
+        System.exit(0);
+    }
+
     private void placeHeroes() {
         figureOriginalLanes = new HashMap<>();
         int row = LVBoard.SIZE - 1;      // bottom Nexus row = 7
@@ -114,19 +119,39 @@ public class LVGame extends Game<LVBoard> {
     // ============================================================
 
     private void heroesTeamTurn(){
+        boolean won = false;
         for (Hero h: heroes.getMembers()) {
             heroTurn(h);
             board.displayBoard();
-            //TODO: check win
+            if (board.figureIsInGoalSquare(h)) {
+                won = true;
+                break;
+            }
         }
+        if (won){
+            ConsoleColors.printInColor(ConsoleColors.YELLOW_BACKGROUND, "🏆 You reached the monsters' Nexus, you win!");
+            endGame();
+        }
+
     }
 
     private void monstersTeamTurn(){
+        boolean won = false;
+
         for (Monster m: monsters.getMembers()){
             monsterTurn(m);
+            if (board.figureIsInGoalSquare(m)) {
+                won = true;
+                break;
+            }
         }
         board.displayBoard();
-        //TODO: check lose
+
+        if (won){
+            ConsoleColors.printInColor(ConsoleColors.RED_BACKGROUND, "☠️A monster reached your Nexus. You Lose");
+            endGame();
+        }
+
     }
 
     private void heroTurn(Hero h) {
@@ -323,9 +348,15 @@ public class LVGame extends Game<LVBoard> {
 
             Battle.dealDamageWithTool(tool, (Hero)f, target);
 
-            //remove all dead monsters
-            for(Monster m: monsters.getMembers()){
-                if(!m.isAlive()) monsters.removeMember(m);
+            // remove all dead heroes
+            Iterator<Monster> it = monsters.getMembers().iterator();
+
+            while (it.hasNext()) {
+                Monster m = it.next();
+                if (!m.isAlive()) {
+                    it.remove();
+                    board.removePieceFromSquare(m);
+                }
             }
         }
         else if (f instanceof  Monster){
@@ -339,9 +370,14 @@ public class LVGame extends Game<LVBoard> {
             Battle.dealDamage(f, victim, null, damageDealt);
 
             // remove all dead heroes
-            //remove all dead monsters
-            for(Hero h: heroes.getMembers()){
-                if(!h.isAlive()) heroes.removeMember(h);
+            Iterator<Hero> it = heroes.getMembers().iterator();
+
+            while (it.hasNext()) {
+                Hero h = it.next();
+                if (!h.isAlive()) {
+                    it.remove();
+                    board.removePieceFromSquare(h);
+                }
             }
         }
         else{

@@ -115,7 +115,7 @@ public class Party<T extends Figure>{
         if (!members.contains(member)) throw new IllegalArgumentException(String.format("%s not in party to be removed from", member.getName()));
 
         members.remove(member);
-        ConsoleColors.printInColor("👋 %s has left your party!", member.getName());
+//        ConsoleColors.printInColor(String.format("👋 %s has left your party!", member.getName()));
     }
 
     public List<Integer> getFigureIndexesWithHealthRemaining(){

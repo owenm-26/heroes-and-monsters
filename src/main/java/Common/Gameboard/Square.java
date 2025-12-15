@@ -22,4 +22,14 @@ public abstract class Square<T> {
     public List<Piece> getPieces() {
         return pieces;
     }
+
+    public boolean removePiece(Piece p){
+        try{
+            pieces.remove(p);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+
+    }
 }
