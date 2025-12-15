@@ -81,7 +81,7 @@ public class LVGame extends Game<LVBoard> {
         // Pick 3 random monsters
         for (int i = 0; i < 3; i++) {
             Monster m = pool.get((int) (Math.random() * pool.size()));
-            monsters.addMember(m);
+            monsters.addMember(m, false);
         }
 
         int row = 0;                // top Nexus
@@ -131,6 +131,7 @@ public class LVGame extends Game<LVBoard> {
             Hero h = it.next();
             boolean success = board.respawnHero(h);
             if (success) {
+                heroes.addMember(h, false);
                 it.remove();
             }
         }
@@ -399,7 +400,7 @@ public class LVGame extends Game<LVBoard> {
                 if (!h.isAlive()) {
                     it.remove();
                     board.removePieceFromSquare(h);
-                    toRespawn.addMember(h);
+                    toRespawn.addMember(h, false);
                 }
             }
         }
