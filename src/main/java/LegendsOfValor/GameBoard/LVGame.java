@@ -5,9 +5,11 @@ import Common.Figures.Hero.Hero;
 import Common.Figures.Monster.Monster;
 import Common.Figures.Party;
 import Common.Gameboard.Game;
+import Common.Items.DamageDealing;
 import Common.Items.Inventory;
 import Common.Items.ItemType;
 import Common.MarketActions;
+import HeroesAndMonsters.Battle.Battle;
 import HeroesAndMonsters.Battle.BattleCommand;
 import HeroesAndMonsters.GameBoard.HMGameState;
 import LegendsOfValor.GameBoard.LVSquare.LVSquare;
@@ -143,6 +145,7 @@ public class LVGame extends Game<LVBoard> {
         while (!actionTaken) {
             actionTaken = presentOptionsAndUndertakeUserChoice(h, pos);
         }
+        h.decrementTimeOnAllEffects();
     }
 
     private boolean presentOptionsAndUndertakeUserChoice(Hero h, int[] position) {
@@ -192,8 +195,7 @@ public class LVGame extends Game<LVBoard> {
                     turnUsed = removeObstacle(obstaclesInRange);
                     break;
                 case ATTACK:
-                    //TODO: Implement Attack helper
-                    turnUsed = true;
+                    turnUsed = attack(h, monstersInRange);
                     break;
                 case PASS:
                     ConsoleColors.printInColor(ConsoleColors.YELLOW,
@@ -295,6 +297,38 @@ public class LVGame extends Game<LVBoard> {
                 System.out.println("Unknown action chosen.");
         }
         return false;
+    }
+
+    private boolean attack(Figure f, ArrayList<? extends Figure> victims){
+        /*
+        Single method to handle attacks of Heroes and Monsters
+         */
+        if(f instanceof Hero){
+            String[] attackOptions = new String[victims.size()];
+            int i =0;
+            for (Figure v: victims){
+                attackOptions[i++] = v.getName();
+            }
+
+            int indexChosen = UserInputs.showMenuAndGetUserAnswer(attackOptions);
+
+            if (indexChosen < 0) return false;
+
+            Monster target = (Monster)victims.get(indexChosen);
+
+            // Choose weapon or spell
+            DamageDealing tool = Battle.heroChooseAttackMedium((Hero)f);
+
+            Battle.dealDamageWithTool(tool, (Hero)f, target);
+        }
+        else if (f instanceof  Monster){
+
+        }
+        else{
+            throw new IllegalArgumentException("Illegal Figure subclass parameter");
+        }
+
+        return true;
     }
 
     private boolean removeObstacle(LinkedHashMap<LVSquare, Integer[]> obstaclesInRange){
@@ -407,5 +441,7 @@ public class LVGame extends Game<LVBoard> {
             ConsoleColors.printInColor(ConsoleColors.GREEN,
                     "Monster advances toward heroes' Nexus.");
         }
+
+        m.decrementTimeOnAllEffects();
     }
 }

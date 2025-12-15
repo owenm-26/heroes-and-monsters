@@ -173,16 +173,16 @@ public class Battle {
         }
     }
 
-    private void printAttackResult(Figure attacker, Figure receiver, DamageDealing tool, int damageDealt){
+    private static void printAttackResult(Figure attacker, Figure receiver, DamageDealing tool, int damageDealt){
         String symbol = tool==null ? "👊" : tool.getItemType() == ItemType.WEAPON ? "🥊" : "🪄";
         String toolName = tool==null ? "Fists" : tool.getName();
         ConsoleColors.printInColor(ConsoleColors.RED_BACKGROUND, String.format("%s %s hit %s with %s for %d damage!", symbol, attacker.getName(), receiver.getName(), toolName, damageDealt));
     }
 
-    private void dealDamage(Figure attacker, Figure receiver, DamageDealing tool, int damageDealt){
+    private static void dealDamage(Figure attacker, Figure receiver, DamageDealing tool, int damageDealt){
         if(tool != null){
             boolean outOfUses = tool.useItem();
-            if (outOfUses && isHeroTurn()){
+            if (outOfUses && attacker instanceof Hero){
                 Hero h = (Hero)attacker;
                 h.getInventory().removeItem((Item)tool);
             }
@@ -192,11 +192,7 @@ public class Battle {
         printAttackResult(attacker, receiver, tool, damageDealt);
     }
 
-    private void heroAttack(Hero h){
-        /*
-        Allows Hero to choose from their attacking items and then allows them to pick which foe and then attacks
-         */
-
+    public static DamageDealing heroChooseAttackMedium(Hero h){
         // What type of tool?
         //Check if there are any valid ones, if so ask which they choose
         String[] toolOptions = new String[2];
@@ -209,14 +205,32 @@ public class Battle {
         DamageDealing tool = null;
         ItemType t = null;
         if (toolOptions[0] != null){
-            int optionChosenIndex = UserInputs.showMenuAndGetUserAnswer(toolOptions);
-            if (optionChosenIndex < 0) return;
+            int optionChosenIndex = -1;
+            while(optionChosenIndex < 0){
+                optionChosenIndex = UserInputs.showMenuAndGetUserAnswer(toolOptions);
+                if (optionChosenIndex < 0) ConsoleColors.printInColor(ConsoleColors.RED, "Cannot go back in this screen. Please select one.");
+            }
             t = ItemType.fromName(toolOptions[optionChosenIndex]);
 
             // Select from that type
             tool = (DamageDealing)h.selectItem(t);
         }
 
+        return tool;
+    }
+
+    public static void dealDamageWithTool(DamageDealing tool, Hero h, Monster m){
+        int damage = tool != null ? calculateNetDamageDoneOnMonster(h, m, tool) : h.getPunchDamage();
+        dealDamage(h, m, tool, damage);
+        if (tool!= null && tool.getItemType()==ItemType.SPELL) h.useMana(((Spell)tool).getMpCost());
+    }
+
+    private void heroAttack(Hero h){
+        /*
+        Allows Hero to choose from their attacking items and then allows them to pick which foe and then attacks
+         */
+
+        DamageDealing tool = heroChooseAttackMedium(h);
 
         //Select opponent
         Map<String, Figure> eligibleTargets = getEligibleTargets(monstersLeftIndices, monsters.getMembers());
@@ -228,7 +242,7 @@ public class Battle {
         // damage dealt
         int damage = tool != null ? calculateNetDamageDoneOnMonster(h, foe, tool) : h.getPunchDamage();
         dealDamage(h, foe, tool, damage);
-        if (t==ItemType.SPELL) h.useMana(((Spell)tool).getMpCost());
+        if (tool!= null && tool.getItemType()==ItemType.SPELL) h.useMana(((Spell)tool).getMpCost());
     }
 
     private static Map<String, Figure> getEligibleTargets(List<Integer> indices, List<? extends Figure> members){
@@ -244,7 +258,7 @@ public class Battle {
         return monsters;
     }
 
-    private int calculateNetDamageDoneOnMonster(Hero h, Monster m, DamageDealing tool){
+    private static int calculateNetDamageDoneOnMonster(Hero h, Monster m, DamageDealing tool){
         if (m.dodgedSuccessfully()) {
             ConsoleColors.printInColor(ConsoleColors.RED_BACKGROUND, String.format("Uh oh, %s dodged your attack!", m.getName()));
             return 0;
