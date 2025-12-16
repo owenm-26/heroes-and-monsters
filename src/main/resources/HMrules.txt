@@ -1,0 +1,121 @@
+MONSTERS AND HEROES – GAME RULES
+
+GOAL OF THE GAME
+
+Explore the world, fight monsters, earn gold, gain experience, and level up your heroes.
+If all heroes faint, the game ends.
+
+WORLD LAYOUT
+
+The world is a grid made of three types of tiles:
+
+• Common tiles – normal areas where battles may occur
+• Market tiles – shops where heroes can buy and sell items
+• Inaccessible tiles – cannot be entered
+
+The party can move up, down, left, or right.
+
+HEROES
+
+You start by choosing 1 to 3 heroes.
+
+Each hero has:
+• Name
+• Level
+• Experience
+• HP (health)
+• MP (mana)
+• Strength
+• Dexterity
+• Agility
+• Gold
+• Inventory
+
+Hero classes:
+• Warriors – focus on strength and agility
+• Sorcerers – focus on dexterity and agility
+• Paladins – focus on strength and dexterity
+
+MONSTERS
+
+Monsters appear during battles and match the level of your strongest hero.
+
+Each monster has:
+• Name
+• Level
+• HP
+• Damage
+• Defense
+• Dodge chance
+
+Monster types:
+• Dragons – higher damage
+• Exoskeletons – higher defense
+• Spirits – higher dodge chance
+
+MARKETS
+
+Heroes can enter a market when standing on a market tile.
+
+• Heroes shop individually; gold is not shared
+• Items include weapons, armor, potions, and spells
+• Heroes may only buy items they can afford and that are not above their level
+• Items sell for half their original price
+
+BATTLES
+
+Battles occur randomly on common tiles.
+
+• Each battle has the same number of monsters as heroes
+• Heroes act first
+
+Each hero may choose ONE action per turn:
+• Attack with a weapon
+• Cast a spell
+• Use a potion
+• Equip a weapon or armor
+• View stats (does not consume a turn)
+
+Monsters then attack the heroes.
+
+• Heroes and monsters may dodge attacks
+• A hero at 0 HP faints and cannot act until the battle ends
+• If all heroes faint, the game is over
+• If all monsters are defeated, heroes win the battle
+
+AFTER EACH ROUND
+
+Heroes who are still standing regain:
+• 10% HP
+• 10% MP
+
+REWARDS
+
+If heroes win a battle:
+• Heroes who did not faint gain gold and experience
+• Fainted heroes revive after the battle with half HP and half MP
+• Fainted heroes do NOT receive rewards
+
+LEVELING UP
+
+When a hero gains enough experience, they level up.
+
+• All stats increase by 5%
+• Favored stats gain an additional 5%
+• HP becomes: Level × 100
+• MP increases by 10%
+
+CONTROLS
+
+W – Move up
+A – Move left
+S – Move down
+D – Move right
+M – Enter market (only on market tile)
+I – Show hero and monster information
+Q – Quit the game
+
+WINNING AND LOSING
+
+• You win battles by defeating all monsters
+• You lose the game if all heroes faint

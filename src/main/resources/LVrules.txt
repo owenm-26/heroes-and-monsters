@@ -1,0 +1,157 @@
+LEGENDS OF VALOR – HOW TO PLAY
+
+Legends of Valor is a turn-based, MOBA-style game played on an 8x8 grid. You control a team of 3 heroes and battle waves of monsters. Your goal is to reach the monsters’ Nexus before any monster reaches yours.
+
+GAME OBJECTIVE
+
+• Heroes win if ANY hero reaches the Monsters’ Nexus (top of the board).
+• Heroes lose if ANY monster reaches the Heroes’ Nexus (bottom of the board).
+
+THE BOARD
+
+• The game board is an 8x8 grid divided into 3 lanes:
+
+Top Lane (columns 1–2)
+
+Mid Lane (columns 4–5)
+
+Bottom Lane (columns 7–8)
+• Columns 3 and 6 are walls and cannot be entered.
+• The top row is the Monsters’ Nexus.
+• The bottom row is the Heroes’ Nexus.
+• Each space may contain at most:
+
+One hero
+
+One monster
+
+SPACE TYPES
+
+• Nexus:
+
+Heroes and monsters spawn here.
+
+Heroes’ Nexus is also a market.
+
+Reaching the enemy Nexus ends the game.
+
+• Inaccessible:
+
+Cannot be entered by heroes or monsters.
+
+• Obstacle:
+
+Cannot be entered.
+
+A hero may remove it using a turn, turning it into a Plain.
+
+• Plain:
+
+No special effects.
+
+• Bush:
+
+Increases hero dexterity while inside.
+
+Bonus is lost when leaving.
+
+• Cave:
+
+Increases hero agility while inside.
+
+Bonus is lost when leaving.
+
+• Koulou:
+
+Increases hero strength while inside.
+
+Bonus is lost when leaving.
+
+Special spaces are randomly distributed but every board contains all types.
+
+GAME FLOW
+
+• The game is played in rounds.
+• Each round has:
+
+Heroes’ turn
+
+Monsters’ turn
+
+• At the start:
+
+Player selects 3 heroes and assigns each to a lane.
+
+Heroes spawn in their own Nexus spaces.
+
+One monster spawns in each lane at the Monsters’ Nexus.
+
+HERO ACTIONS (ONE PER HERO PER TURN)
+
+Heroes may take ONE of the following actions:
+
+• Change Weapon or Armor
+• Use a Potion
+• Attack
+• Cast a Spell
+• Move
+• Teleport
+• Recall
+• (Optional) Pass Turn
+
+Buying and selling items does NOT count as an action.
+
+COMBAT RULES
+
+• Attacks and spells may only target enemies in:
+
+The current space
+
+Adjacent spaces (north, south, east, west)
+• A hero or monster may only attack ONE enemy per turn.
+• Damage, armor, spells, gold, and experience work the same as in Monsters and Heroes.
+
+MOVEMENT RULES
+
+• Movement is only north, south, east, or west (no diagonals).
+• A hero cannot:
+
+Move into a space occupied by another hero
+
+Move behind a monster in the same lane unless it is killed
+• Monsters follow the same movement restrictions.
+• Heroes can block monsters by standing in their path.
+
+SPECIAL ACTIONS
+
+• Teleport:
+
+Move to a space adjacent to another hero in a DIFFERENT lane.
+
+Cannot teleport:
+
+Within the same lane
+
+Onto an occupied space
+
+Ahead of the target hero
+
+Behind a monster
+
+• Recall:
+
+Instantly return to the hero’s original Nexus space.
+
+Works from anywhere on the board.
+
+END OF ROUND EFFECTS
+
+• At the end of each round:
+
+All living heroes recover 10% HP and 10% mana.
+• If a hero dies:
+
+They respawn at their Nexus at the start of the next round.
+
+MONSTER SPAWNING
+Every 10 rounds new monsters spawn in their nexus in each lane if there is room for them. All monsters are scaled to the level of heroes.

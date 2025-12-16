@@ -4,9 +4,34 @@ FILE HEADER:
 General prints saved here for consistency and ease
  */
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Collections;
 
 public class GeneralPrints {
+
+    public static void printRules(String resourcePath) {
+        InputStream input = GeneralPrints.class
+                .getClassLoader()
+                .getResourceAsStream(resourcePath);
+
+        if (input == null) {
+            System.out.println("Rules file not found.");
+            return;
+        }
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
+            printHorizontalLine();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                ConsoleColors.printInColor(ConsoleColors.WHITE_BOLD, line, true);
+            }
+            printHorizontalLine();
+        } catch (Exception e) {
+            System.out.println("Error reading rules file.");
+        }
+    }
 
     public static void printHorizontalLine(){
         System.out.println("--------------------------------");

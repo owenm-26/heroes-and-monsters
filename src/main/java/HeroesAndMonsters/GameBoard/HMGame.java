@@ -15,6 +15,7 @@ import HeroesAndMonsters.Battle.BattleCommand;
 import Common.MarketActions;
 import Utility.UI.CommandType;
 import Utility.UI.ConsoleColors;
+import Utility.UI.GeneralPrints;
 import Utility.UI.UserInputs;
 import Utility.Validators.Integers;
 
@@ -61,87 +62,7 @@ public class HMGame extends Game<HMBoard> {
 
     @Override
     public void printRules() {
-        printHorizontalLine();
-        System.out.println("MONSTERS AND HEROES - GAME RULES\n" +
-                "\n" +
-                "Goal of the Game\n" +
-                "Explore the world, fight monsters, earn gold, gain experience, and level up your heroes. If all heroes faint, the game ends.\n" +
-                "\n" +
-                "World Layout\n" +
-                "The world is a grid made of three types of tiles:\n" +
-                "Common tiles: normal areas where battles may occur.\n" +
-                "Market tiles: shops where heroes can buy and sell items.\n" +
-                "Inaccessible tiles: cannot be entered.\n" +
-                "You can move the party up, down, left, or right.\n" +
-                "\n" +
-                "Heroes\n" +
-                "You start by choosing 1 to 3 heroes.\n" +
-                "Each hero has: name, level, experience, HP (health), MP (mana), strength, dexterity, agility, gold, and an inventory.\n" +
-                "Hero classes:\n" +
-                "Warriors focus on strength and agility.\n" +
-                "Sorcerers focus on dexterity and agility.\n" +
-                "Paladins focus on strength and dexterity.\n" +
-                "\n" +
-                "Monsters\n" +
-                "Monsters appear during battles.\n" +
-                "They match the level of your strongest hero.\n" +
-                "Each has: name, level, HP, damage, defense, and dodge chance.\n" +
-                "Monster types:\n" +
-                "Dragons have higher damage.\n" +
-                "Exoskeletons have higher defense.\n" +
-                "Spirits have higher dodge.\n" +
-                "\n" +
-                "Markets\n" +
-                "Heroes can enter a market when standing on a market tile.\n" +
-                "Heroes shop individually; gold is not shared.\n" +
-                "Items include weapons, armor, potions, and spells.\n" +
-                "Heroes may only buy items they can afford and that are not above their level.\n" +
-                "Items sell for half their original price.\n" +
-                "\n" +
-                "Battles\n" +
-                "Battles occur randomly on common tiles.\n" +
-                "Each battle has the same number of monsters as heroes.\n" +
-                "Heroes always act first. Each hero can choose one action:\n" +
-                "Attack with a weapon\n" +
-                "Cast a spell\n" +
-                "Use a potion\n" +
-                "Equip weapon or armor\n" +
-                "View stats (does not use a turn)\n" +
-                "Monsters then attack the heroes.\n" +
-                "Heroes or monsters may dodge attacks.\n" +
-                "If a hero reaches 0 HP, they faint and cannot act until the battle ends.\n" +
-                "If all heroes faint, the game is over.\n" +
-                "If all monsters are defeated, heroes win.\n" +
-                "\n" +
-                "After Each Round\n" +
-                "Heroes who are still standing regain 10 percent HP and 10 percent MP.\n" +
-                "\n" +
-                "Rewards\n" +
-                "If heroes win the battle:\n" +
-                "Heroes who did not faint gain gold and experience.\n" +
-                "Fainted heroes revive after the battle with half HP and half MP, but they do not gain rewards.\n" +
-                "\n" +
-                "Leveling Up\n" +
-                "When a hero gains enough experience, they level up.\n" +
-                "All stats increase by 5 percent and their favored stats increase by an additional 5 percent.\n" +
-                "HP becomes: level times 100.\n" +
-                "MP increases by 10 percent.\n" +
-                "\n" +
-                "Controls\n" +
-                "W: move up\n" +
-                "A: move left\n" +
-                "S: move down\n" +
-                "D: move right\n" +
-                "M: enter market (only on market tile)\n" +
-                "I: show hero and monster information\n" +
-                "Q: quit the game\n" +
-                "\n" +
-                "Winning and Losing\n" +
-                "You win battles by defeating all monsters.\n" +
-                "You lose the game if all heroes faint.");
-
-        printHorizontalLine();
-        System.out.println();
+        GeneralPrints.printRules("HMrules.txt");
     }
 
     private void playGame(){

@@ -21,6 +21,7 @@ import LegendsOfValor.GameBoard.Menus.LVMovementMenuOptions;
 import Utility.UI.CommandType;
 import Utility.UI.ConsoleColors;
 import LegendsOfValor.GameBoard.Menus.LVMainMenuOptions;
+import Utility.UI.GeneralPrints;
 import Utility.UI.UserInputs;
 
 import java.util.*;
@@ -146,8 +147,9 @@ public class LVGame extends Game<LVBoard> {
 
     @Override
     public void printRules() {
-        ConsoleColors.printInColor(ConsoleColors.WHITE_BOLD,
-                "Legends of Valor Rules (see assignment PDF).");
+        GeneralPrints.printRules(
+                "LVrules.txt"
+        );
     }
 
     // ============================================================
