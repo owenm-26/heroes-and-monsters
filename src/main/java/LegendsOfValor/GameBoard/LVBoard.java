@@ -1,4 +1,8 @@
 package LegendsOfValor.GameBoard;
+/*
+FILE HEADER:
+Game board with inaccessible areas and special squares
+ */
 
 import Common.Figures.Figure;
 import Common.Figures.Hero.Hero;

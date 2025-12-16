@@ -1,4 +1,8 @@
 package Common.Items;
+/*
+FILE HEADER:
+Abstract class extended by all Items
+ */
 
 import Utility.UI.ConsoleColors;
 

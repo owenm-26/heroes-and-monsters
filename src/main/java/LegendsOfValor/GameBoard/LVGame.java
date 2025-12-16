@@ -1,4 +1,8 @@
 package LegendsOfValor.GameBoard;
+/*
+FILE HEADER:
+All logic for playing LegendsOfValor, with its own LVBoard and Hero Parties and Monster Parties
+ */
 
 import Common.Figures.Figure;
 import Common.Figures.Hero.Hero;

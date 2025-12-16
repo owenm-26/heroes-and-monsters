@@ -1,4 +1,8 @@
 package Common.Data;
+/*
+FILE HEADER:
+Class for loading from CSV files to populate the various objects of the game. Usable if implements LoadableFromText
+ */
 
 import java.io.BufferedReader;
 import java.io.File;

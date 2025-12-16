@@ -1,4 +1,8 @@
 package Common.Figures.Monster;
+/*
+FILE HEADER:
+Represents the monsters heroes fight, with their own monstertypes and such
+ */
 
 import Common.HMLVEffect;
 import HeroesAndMonsters.GameBoard.HMGameState;

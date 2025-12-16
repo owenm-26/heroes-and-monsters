@@ -1,4 +1,8 @@
 package Common.Figures.Monster.Strategies;
+/*
+FILE HEADER:
+Strategy pattern to be inherited and extended
+ */
 
 import java.util.List;
 

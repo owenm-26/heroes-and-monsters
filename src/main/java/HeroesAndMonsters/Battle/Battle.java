@@ -1,4 +1,8 @@
 package HeroesAndMonsters.Battle;
+/*
+FILE HEADER:
+Has instance and static methods to unify battle logic between heroes and monsters. can have all v all battles
+ */
 
 import Common.Figures.Figure;
 import Common.Figures.Party;

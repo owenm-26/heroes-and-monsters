@@ -1,4 +1,8 @@
 package Utility.UI;
+/*
+FILE HEADER:
+Helpful color printing / returning class
+ */
 
 // Source - https://stackoverflow.com/a
 // Posted by shakram02

@@ -1,4 +1,8 @@
 package Utility.UI;
+/*
+FILE HEADER:
+General prints saved here for consistency and ease
+ */
 
 import java.util.Collections;
 

@@ -1,4 +1,8 @@
 package Common.Gameboard;
+/*
+FILE HEADER:
+Makes up the board and holds pieces -- whether moveable or not
+ */
 
 import java.util.ArrayList;
 import java.util.List;

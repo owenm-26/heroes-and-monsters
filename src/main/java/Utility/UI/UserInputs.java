@@ -1,6 +1,9 @@
 package Utility.UI;
+/*
+FILE HEADER:
+Master class for handling all user inputs and cross-referencing them against CommandTypes
+ */
 
-import Common.Gameboard.Game;
 import HeroesAndMonsters.GameBoard.HMGame;
 import HeroesAndMonsters.GameBoard.HMGameState;
 

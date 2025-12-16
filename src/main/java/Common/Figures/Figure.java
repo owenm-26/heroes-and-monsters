@@ -1,4 +1,8 @@
 package Common.Figures;
+/*
+FILE HEADER:
+Inherited from player and extended by Hero and Monster, but share basic characterstics of both
+ */
 
 import Common.Gameboard.Player;
 import Common.HMLVEffect;

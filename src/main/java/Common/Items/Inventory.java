@@ -1,5 +1,10 @@
 package Common.Items;
 
+/*
+FILE HEADER:
+Acts as a simple way to organize heroes' & markets' gear
+ */
+
 import Utility.UI.ConsoleColors;
 
 import java.util.*;

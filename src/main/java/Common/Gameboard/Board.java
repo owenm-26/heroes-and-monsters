@@ -1,4 +1,8 @@
 package Common.Gameboard;
+/*
+FILE HEADER:
+Abstract class for the Board class, made up of Squares
+ */
 
 import HeroesAndMonsters.GameBoard.HMSquare.HMSquare;
 import Utility.UI.CommandType;

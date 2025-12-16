@@ -1,3 +1,7 @@
+/*
+FILE HEADER:
+Handles basic main-menu logic before initializing the game that users want to play
+ */
 import Common.Gameboard.Game;
 import HeroesAndMonsters.GameBoard.HMGame;
 import LegendsOfValor.GameBoard.LVGame;

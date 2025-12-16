@@ -1,4 +1,8 @@
 package Common.Figures;
+/*
+FILE HEADER:
+Easy way to manage groups of figures and apply logic over them
+ */
 
 import HeroesAndMonsters.GameBoard.HMGame;
 import HeroesAndMonsters.GameBoard.HMGameState;

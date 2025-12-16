@@ -1,4 +1,8 @@
 package Common.Figures.Hero;
+/*
+FILE HEADER:
+The most logic-heavy class that defines the heroes the users play with
+ */
 
 import Common.Data.LoadableFromText;
 import Common.Data.TextDataLoader;
@@ -13,7 +17,6 @@ import HeroesAndMonsters.GameBoard.HMGameState;
 import Utility.UI.ConsoleColors;
 import Utility.UI.GeneralPrints;
 import Utility.Validators.Integers;
-
 
 import java.util.*;
 

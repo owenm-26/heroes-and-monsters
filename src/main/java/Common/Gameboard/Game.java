@@ -1,4 +1,8 @@
 package Common.Gameboard;
+/*
+FILE HEADER:
+Abstracted logic to be shared by inherited game classes that have much overlap
+ */
 
 import Common.Figures.Hero.Hero;
 import Common.Items.Inventory;

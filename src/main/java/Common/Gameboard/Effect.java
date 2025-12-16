@@ -1,4 +1,8 @@
 package Common.Gameboard;
+/*
+FILE HEADER:
+Minimal boilerplate for the sake of inheritance for Effect
+ */
 
 public abstract class Effect {
 
