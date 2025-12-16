@@ -60,6 +60,7 @@ public class LVGame extends Game<LVBoard> {
         round = 1;
 
         // 3. Place heroes (H1/H2/H3) at bottom Nexus
+        GeneralPrints.printHorizontalLine();
         placeHeroes();
 
         // 4. Spawn monsters at top Nexus (one per lane)
@@ -74,14 +75,39 @@ public class LVGame extends Game<LVBoard> {
     private void placeHeroes() {
         figureOriginalLanes = new HashMap<>();
         int row = LVBoard.SIZE - 1;      // bottom Nexus row = 7
-        int[] cols = {0, 3, 6};          // lane 0,1,2
+
+        LinkedHashMap<Integer, Integer> laneOptions = new LinkedHashMap<>();
+        laneOptions.put(1,0); laneOptions.put(2,3); laneOptions.put(3,6);
+        Integer[] optionIndexes;
+        String[] options;
 
         int i = 0;
-        for (Hero h : heroes.getMembers()) {
-            String label = "H" + (i + 1);    // H1, H2, H3
-            figureOriginalLanes.put(h, (i+1));
-            board.placeHero(h, row, cols[i], label);
+        while (i < heroes.size() && !laneOptions.isEmpty()) {
+            optionIndexes = laneOptions.keySet().toArray(new Integer[0]);
+            options = laneOptions.keySet().stream().map(e -> String.format("Lane %d", e)).collect(Collectors.toList()).toArray(new String[0]);
+            Hero h = heroes.getMembers().get(i);
+            ConsoleColors.printInColor(ConsoleColors.WHITE, String.format("Which lane would you like to put %s in?", h.getName()));
+            int laneChoice = UserInputs.showMenuAndGetUserAnswer(options);
+            if (laneChoice < 0) {
+                ConsoleColors.printInColor(ConsoleColors.RED, "Invalid Choice. Please try again");
+                continue;
+            }
+            int actualChoice  = optionIndexes[laneChoice];
+
+            // Give them the lane #
+            String label = "H" + actualChoice;    // H1, H2, H3
+            figureOriginalLanes.put(h, actualChoice);
+
+            // Place the hero in the correct col
+            board.placeHero(h, row, laneOptions.get(actualChoice), label);
+
+            // remove from options
+            laneOptions.remove(actualChoice);
             i++;
+        }
+
+        if(i < heroes.size()){
+            throw new IllegalArgumentException("Hero Party Size is too large to fit on the board such that only one hero is in each lane");
         }
     }
 
