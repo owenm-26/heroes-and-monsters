@@ -42,12 +42,11 @@ Each lane has:
 
 ### Turn System
 
-Lane-based turn order:
+Team based turns (then lane-based inside of):
 
-- Lane 1: Hero → Monster
-- Lane 2: Hero → Monster
-- Lane 3: Hero → Monster
-
+- Hero(es) Lane 1, Lane 2, Lane 3
+- Monster(s) Lane 1, Lane 2, Lane 3
+  
 The sequence repeats every round.
 
 ---
